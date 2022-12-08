@@ -11,6 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ListViewController" customModule="ChatApp" customModuleProvider="target">
             <connections>
+                <outlet property="searchBar" destination="xla-9Z-y3e" id="c4Z-of-GrQ"/>
                 <outlet property="tableView" destination="pOY-6Q-Zaw" id="sLL-fg-vL8"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -20,17 +21,22 @@
             <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="51" translatesAutoresizingMaskIntoConstraints="NO" id="rCM-1P-xCj">
-                    <rect key="frame" x="0.0" y="109" width="393" height="709"/>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="MqK-8G-rbi">
+                    <rect key="frame" x="15" y="59" width="363" height="759"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k2F-pD-110">
-                            <rect key="frame" x="176" y="0.0" width="41.333333333333343" height="20.333333333333332"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                            <nil key="textColor"/>
-                            <nil key="highlightedColor"/>
-                        </label>
+                        <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Search" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xla-9Z-y3e" customClass="BaseTextField" customModule="ChatApp" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="0.0" width="363" height="45"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="45" id="5AY-DS-Ght"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits"/>
+                            <connections>
+                                <action selector="search:" destination="-1" eventType="editingChanged" id="ZAD-Ua-LI5"/>
+                            </connections>
+                        </textField>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="pOY-6Q-Zaw">
-                            <rect key="frame" x="0.0" y="71.333333333333314" width="393" height="637.66666666666674"/>
+                            <rect key="frame" x="0.0" y="55" width="363" height="704"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         </tableView>
                     </subviews>
@@ -39,10 +45,10 @@
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
-                <constraint firstItem="rCM-1P-xCj" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="50" id="FYw-YV-Ksp"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="rCM-1P-xCj" secondAttribute="bottom" id="HlK-TQ-XS6"/>
-                <constraint firstItem="rCM-1P-xCj" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Y29-3z-nap"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="rCM-1P-xCj" secondAttribute="trailing" id="fH7-TB-mMf"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="MqK-8G-rbi" secondAttribute="bottom" id="DRY-da-QxN"/>
+                <constraint firstItem="MqK-8G-rbi" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="hbI-Sc-B9L"/>
+                <constraint firstItem="MqK-8G-rbi" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="15" id="klY-jd-RnC"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="MqK-8G-rbi" secondAttribute="trailing" constant="15" id="l76-Rd-5Ga"/>
             </constraints>
             <point key="canvasLocation" x="90.839694656488547" y="-11.267605633802818"/>
         </view>

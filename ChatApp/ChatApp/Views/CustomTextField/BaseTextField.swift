@@ -14,7 +14,7 @@ class BaseTextField: UITextField {
     override func awakeFromNib() {
         super.awakeFromNib()
         self.layer.cornerRadius = 5
-        self.layer.borderWidth = 1
+        self.layer.borderWidth = 0.25
         self.delegate = self
     }
 }

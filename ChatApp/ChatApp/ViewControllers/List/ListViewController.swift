@@ -7,33 +7,55 @@
 
 import UIKit
 
-class ListViewController: UIViewController {
+final class ListViewController: UIViewController {
 
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet private weak var searchBar: BaseTextField!
+    @IBOutlet private weak var tableView: UITableView!
+    lazy var presenter = ListPresenter(view: self)
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        presenter.fetchUserDetail()
         tableView.register(UINib(nibName: "ListTableViewCell", bundle: .main), forCellReuseIdentifier: "cell")
         tableView.delegate = self
         tableView.dataSource = self
-        navigationController?.navigationBar.isHidden = true
+        searchBar.layer.borderWidth = 1
+        searchBar.layer.cornerRadius = 5
+        searchBar.shouldReturn = { [weak self] in
+            self?.view.endEditing(true)
+        }
     }
     
+    @IBAction private func search(_ sender: UITextField) {
+        if let searchText = sender.text {
+            self.presenter.filterData(text: searchText)
+            self.tableView.reloadData()
+        }
+    }
     
 }
 extension ListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return presenter.getNumberOfFriend()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! ListTableViewCell
-        cell.nameLabel.text = "NQH"
-        cell.messageLabel.text = "haha"
+        cell.fillData(data: presenter.getFriendByIndex(index: indexPath.row))
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(indexPath.row)
+        let vc = DetailViewController()
+        guard let data = presenter.getFriendByIndex(index: indexPath.row) else {return}
+        vc.presenter.setFriend(data: data)
+        vc.presenter.setCurrentId(id: presenter.getCurrentId())
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+}
+
+extension ListViewController: ListProtocol {
+    func didGetUser() {
+        self.tableView.reloadData()
     }
 }

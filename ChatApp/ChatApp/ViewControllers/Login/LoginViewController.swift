@@ -30,7 +30,6 @@ final class LoginViewController: UIViewController {
     private func login() {
         view.endEditing(true)
         presenter.checkLogin(username: userNameLabel.text ?? "", password: passwordLabel.text ?? "")
-        
     }
     
     @IBAction private func checkLogin(_ sender: Any) {
@@ -39,14 +38,13 @@ final class LoginViewController: UIViewController {
 }
 
 extension LoginViewController: LoginProtocol {
-    func didGetLoginResult(result: Bool) {
+    func didGetLoginResult(result: Bool, userId: Int) {
         if result {
-            print("Login Success")
-            self.navigationController?.pushViewController(ListViewController(), animated: true)
+            let vc = ListViewController()
+            vc.presenter.setCurrentId(id: userId)
+            (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first?.rootViewController = UINavigationController(rootViewController: vc)
         } else {
             print("Login failed")
         }
     }
 }
-
-url
