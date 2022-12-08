@@ -8,9 +8,7 @@
 import UIKit
 
 class BaseTextField: UITextField {
-    
     var shouldReturn: (() -> Void)?
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         self.layer.cornerRadius = 5
@@ -18,10 +16,9 @@ class BaseTextField: UITextField {
         self.delegate = self
     }
 }
-
 extension BaseTextField: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        self.shouldReturn?()
+        shouldReturn?()
         return true
     }
 }

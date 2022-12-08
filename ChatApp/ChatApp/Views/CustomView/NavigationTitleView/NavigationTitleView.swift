@@ -8,33 +8,28 @@
 import UIKit
 import SDWebImage
 
-class NavigationTitleView: UIView {
-
+final class NavigationTitleView: UIView {
     @IBOutlet private var contentView: UIView!
-    @IBOutlet weak var img: UIImageView!
+    @IBOutlet private weak var img: UIImageView!
     @IBOutlet private weak var titleLbl: UILabel!
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        initNavBarView()
+        self.initNavBarView()
     }
-    
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        initNavBarView()
+        self.initNavBarView()
     }
-    
-    func initNavBarView() {
+    private func initNavBarView() {
         Bundle.main.loadNibNamed("NavigationTitleView", owner: self, options: nil)
         self.addSubview(contentView)
         self.contentView.frame = self.frame
-        img.layer.cornerRadius = img.layer.frame.width / 3
-        img.contentMode = .scaleToFill
+        self.img.layer.cornerRadius = img.layer.frame.width / 3
+        self.img.contentMode = .scaleToFill
     }
-    
     func setTitle(data: UserDetail?) {
         guard let data = data else { return }
-        img.sd_setImage(with: URL(string: data.imgUrl))
+        self.img.sd_setImage(with: URL(string: data.imgUrl))
         self.titleLbl.text = data.name
     }
 }

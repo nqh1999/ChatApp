@@ -11,10 +11,10 @@ struct User {
     var id: Int
     var username: String
     var password: String
-    init(dict: [String: Any]) {
-        self.id = dict["id"] as? Int ?? 0
-        self.username = dict["username"] as? String ?? ""
-        self.password = dict["password"] as? String ?? ""
+    init(user: [String: Any]) {
+        self.id = user["id"] as? Int ?? 0
+        self.username = user["username"] as? String ?? ""
+        self.password = user["password"] as? String ?? ""
     }
 }
 
@@ -22,10 +22,10 @@ struct UserDetail {
     var id: Int
     var name: String
     var imgUrl: String
-    init(dict: [String: Any]) {
-        self.id = dict["id"] as? Int ?? 0
-        self.name = dict["name"] as? String ?? ""
-        self.imgUrl = dict["imgUrl"] as? String ?? ""
+    init(userDetail: [String: Any]) {
+        self.id = userDetail["id"] as? Int ?? 0
+        self.name = userDetail["name"] as? String ?? ""
+        self.imgUrl = userDetail["imgUrl"] as? String ?? ""
     }
 }
 
@@ -35,12 +35,11 @@ struct Message {
     var text: String
     var img: String
     var time: Date
-    
-    init(dict: [String: Any]) {
-        self.receiverId = dict["receiverId"] as? Int ?? 0
-        self.senderId = dict["senderId"] as? Int ?? 0
-        self.text = dict["text"] as? String ?? ""
-        self.img = dict["img"] as? String ?? ""
-        self.time = dict["time"] as? Date ?? .now
+    init(message: [String: Any]) {
+        self.receiverId = message["receiverId"] as? Int ?? 0
+        self.senderId = message["senderId"] as? Int ?? 0
+        self.text = message["text"] as? String ?? ""
+        self.img = message["img"] as? String ?? ""
+        self.time = message["time"] as? Date ?? .now
     }
 }

@@ -13,24 +13,42 @@ protocol ListProtocol: AnyObject {
 }
 
 class ListPresenter {
+    // MARK: - Properties
     private weak var view: ListProtocol?
     private var db = Firestore.firestore()
     private var userDetails = [UserDetail]()
-    private var currentId: Int = 0
     private var searchData = [UserDetail]()
+    private var currentId: Int = 0
+    // MARK: - Init
     init(view: ListProtocol) {
         self.view = view
     }
+    // MARK: - Getter - Setter
+    func setCurrentId(id: Int) {
+        self.currentId = id
+    }
     
+    func getCurrentId() -> Int {
+        return self.currentId
+    }
+    
+    func getNumberOfUser() -> Int {
+        return self.searchData.count
+    }
+    
+    func getUserByIndex(index: Int) -> UserDetail? {
+        return self.searchData[index]
+    }
+    // MARK: - Handler Methods
     func fetchUserDetail() {
         db.collection("userDetail").getDocuments() { querySnapshot, err in
             if err != nil {
-                print("err")
+                print(err!.localizedDescription)
             } else {
                 guard let querySnapshot = querySnapshot else { return }
-                for document in querySnapshot.documents {
-                    let dict = document.data() as [String: Any]
-                    let value = UserDetail(dict: dict)
+                querySnapshot.documents.forEach { document in
+                    let userDetail = document.data() as [String: Any]
+                    let value = UserDetail(userDetail: userDetail)
                     if value.id != self.currentId {
                         self.userDetails.append(value)
                         self.searchData = self.userDetails
@@ -40,23 +58,6 @@ class ListPresenter {
             }
         }
     }
-    
-    func setCurrentId(id: Int) {
-        self.currentId = id
-    }
-    
-    func getCurrentId() -> Int {
-        return currentId
-    }
-    
-    func getNumberOfFriend() -> Int {
-        return searchData.count
-    }
-    
-    func getFriendByIndex(index: Int) -> UserDetail? {
-        return searchData[index]
-    }
-    
     func filterData(text: String) {
         self.searchData = text.isEmpty ? userDetails : userDetails.filter {
             $0.name.lowercased().contains(text.lowercased())

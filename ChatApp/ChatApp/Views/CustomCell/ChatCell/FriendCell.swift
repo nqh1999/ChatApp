@@ -9,8 +9,8 @@ import UIKit
 
 class FriendCell: UITableViewCell {
 
-    @IBOutlet weak var imgView: UIImageView!
-    @IBOutlet weak var messageLabel: UILabel!
+    @IBOutlet private weak var imgView: UIImageView!
+    @IBOutlet private weak var messageLabel: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
     }
@@ -20,12 +20,11 @@ class FriendCell: UITableViewCell {
     }
     
     func setupData(data: Message) {
-//        guard let data = data else { return }
         if !data.text.isEmpty {
-            messageLabel.text = data.text
+            self.messageLabel.text = data.text
         }
         if !data.img.isEmpty {
-            imgView.sd_setImage(with: URL(string: data.img))
+            self.imgView.sd_setImage(with: URL(string: data.img))
         }
     }
 }

@@ -12,36 +12,40 @@ final class LoginViewController: UIViewController {
     @IBOutlet private weak var loginButton: UIButton!
     @IBOutlet private weak var userNameLabel: BaseTextField!
     @IBOutlet private weak var passwordLabel: BaseTextField!
-    lazy var presenter = LoginPresenter(view: self)
-    // MARK: -
+    lazy private var presenter = LoginPresenter(view: self)
+    // MARK: - Methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        loginButton.layer.cornerRadius = 5
-        userNameLabel.becomeFirstResponder()
-        userNameLabel.shouldReturn = { [weak self] in
+        self.setupUI()
+        self.setupData()
+    }
+    private func setupUI() {
+        self.loginButton.layer.cornerRadius = 5
+        self.userNameLabel.becomeFirstResponder()
+        self.userNameLabel.shouldReturn = { [weak self] in
             self?.passwordLabel.becomeFirstResponder()
         }
-        passwordLabel.shouldReturn = { [weak self] in
+        self.passwordLabel.shouldReturn = { [weak self] in
             self?.login()
         }
-        presenter.fetchUser()
     }
-    
+    private func setupData() {
+        self.presenter.fetchUser()
+    }
     private func login() {
-        view.endEditing(true)
-        presenter.checkLogin(username: userNameLabel.text ?? "", password: passwordLabel.text ?? "")
+        self.view.endEditing(true)
+        self.presenter.checkLogin(username: self.userNameLabel.text ?? "", password: self.passwordLabel.text ?? "")
     }
-    
     @IBAction private func checkLogin(_ sender: Any) {
         self.login()
     }
 }
-
 extension LoginViewController: LoginProtocol {
     func didGetLoginResult(result: Bool, userId: Int) {
         if result {
+            print("Login success")
             let vc = ListViewController()
-            vc.presenter.setCurrentId(id: userId)
+            vc.getPresenter().setCurrentId(id: userId)
             (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first?.rootViewController = UINavigationController(rootViewController: vc)
         } else {
             print("Login failed")
