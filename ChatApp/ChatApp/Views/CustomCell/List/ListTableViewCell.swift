@@ -25,6 +25,6 @@ class ListTableViewCell: UITableViewCell {
         guard let data = data else { return }
         self.avt.sd_setImage(with: URL(string: data.imgUrl))
         self.nameLabel.text = data.name
-        self.messageLabel.text = "Message"
+        self.messageLabel.text = "Tap to chat"
     }
 }

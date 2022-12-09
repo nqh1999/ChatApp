@@ -13,6 +13,7 @@ protocol DetailProtocol: AnyObject {
 }
 
 class DetailPresenter {
+    
     // MARK: - Properties
     private weak var view: DetailProtocol?
     private var db = Firestore.firestore()
@@ -21,10 +22,12 @@ class DetailPresenter {
     private var currentId: Int = 0
     private var receiverData: UserDetail?
     private var messages = [Message]()
+    
     // MARK: - Init
     init(view: DetailProtocol) {
         self.view = view
     }
+    
     // MARK: - Getter - Setter
     func setReceiver(data: UserDetail) {
         self.receiverData = data
@@ -41,6 +44,7 @@ class DetailPresenter {
     func getCurrentId() -> Int {
         return currentId
     }
+    
     func getNumberOfMessage() -> Int {
         return self.messages.count
     }
@@ -48,75 +52,92 @@ class DetailPresenter {
     func getMessageByIndex(index: Int) -> Message {
         return self.messages[index]
     }
+    
     // MARK: Handler Methods
+    // fetch message
     func fetchMessage() {
         self.messages.removeAll()
         self.db.collection("message").getDocuments() { querySnapshot, err in
-            if err != nil {
-                print(err!.localizedDescription)
-            } else {
-                guard let querySnapshot = querySnapshot, let receiverData = self.receiverData  else { return }
-                querySnapshot.documents.forEach { document in
-                    let message = document.data() as [String: Any]
-                    let value = Message(message: message)
-                    if value.receiverId == receiverData.id && value.senderId == self.currentId {
-                        self.messages.append(value)
-                    }
+            guard let querySnapshot = querySnapshot, let receiverData = self.receiverData else { return }
+            if err != nil { return }
+            querySnapshot.documents.forEach { document in
+                let message = document.data() as [String: Any]
+                let value = Message(message: message)
+                if (value.receiverId == receiverData.id && value.senderId == self.currentId) || (value.receiverId == self.currentId && value.senderId == receiverData.id) {
+                    self.messages.append(value)
+                    self.sortedMessage()
                     self.view?.didGetMessage()
                 }
             }
         }
     }
-    // Send Data To DB
-    func sendMessage(text: String) {
-        let docRef = self.db.collection("message")
-        guard let receiverData = self.receiverData else {return}
-        if !text.isEmpty {
-            docRef.addDocument(data: [
-                    "receiverId": receiverData.id,
-                    "senderId": currentId,
-                    "text": text,
-                    "img": "",
-                    "time": Date.now
-            ]) { err in
-                if err != nil {
-                    print(err!.localizedDescription)
-                } else {
-                    print("send message success")
+    
+//    func listenerMessage() {
+//        db.collection("message").document("SF")
+//            .addSnapshotListener { documentSnapshot, error in
+//              guard let document = documentSnapshot else {
+//                print("Error fetching document: \(error!)")
+//                return
+//              }
+//              guard let data = document.data() else {
+//                print("Document data was empty.")
+//                return
+//              }
+//              print("Current data: \(data)")
+//            }
+//    }
+    
+    // sort message by time
+    private func sortedMessage() {
+        var timeArr: [Double] = []
+        var messageArr = [Message]()
+        self.messages.forEach { message in
+            timeArr.append(message.time)
+        }
+        timeArr.sort {
+            $0 < $1
+        }
+        timeArr.forEach { time in
+            self.messages.forEach { message in
+                if message.time == time {
+                    messageArr.append(message)
                 }
             }
-        } else {
-            print("No message")
         }
+        self.messages = messageArr
     }
+    
+    // Send message To DB
+    func sendMessage(text: String) {
+        let docRef = self.db.collection("message")
+        guard let receiverData = self.receiverData else { return }
+        if text.isEmpty { return }
+        docRef.addDocument(data: [
+                "receiverId": receiverData.id,
+                "senderId": currentId,
+                "text": text,
+                "img": "",
+                "time": Date.now.timeIntervalSince1970
+        ])
+    }
+    
+    // Send img url To DB
     func sendImg(img: UIImage) {
         let img = img.jpegData(compressionQuality: 0.5)!
         let keyImg = NSUUID().uuidString
         let imgFolder = storage.child("img_message").child(keyImg)
         storage.child("img_message").child(keyImg).putData(img) { _ , err in
-            if err != nil {
-                print(err!.localizedDescription)
-            } else {
-                imgFolder.downloadURL { url, err in
-                    if err != nil {
-                        print(err!.localizedDescription)
-                    } else {
-                        let docRef = self.db.collection("message")
-                        docRef.addDocument(data: [
-                            "receiverId": self.receiverData!.id,
-                            "senderId": self.currentId,
-                            "text": "",
-                            "img": url?.absoluteString ?? "",
-                            "time": Date.now
-                        ]) { err in
-                            if err != nil {
-                                print(err!.localizedDescription)
-                            } else {
-                                print("success")
-                            }
-                        }
-                    }
-                }
+            if err != nil { return }
+            imgFolder.downloadURL { url, err in
+                if err != nil { return }
+                let docRef = self.db.collection("message")
+                docRef.addDocument(data: [
+                    "receiverId": self.receiverData!.id,
+                    "senderId": self.currentId,
+                    "text": "",
+                    "img": url?.absoluteString ?? "",
+                    "time": Date.now.timeIntervalSince1970
+                ])
             }
         }
     }

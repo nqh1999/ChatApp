@@ -13,29 +13,31 @@ protocol LoginProtocol: AnyObject {
 }
 
 class LoginPresenter {
+    
     // MARK: - Properties
     private weak var view: LoginProtocol?
     private var db = Firestore.firestore()
     private var users = [User]()
+    
     // MARK: - Init
     init(view: LoginProtocol) {
         self.view = view
     }
+    
     // MARK: - Handler Methods
     func fetchUser() {
         self.db.collection("user").getDocuments() { querySnapshot, err in
-            if err != nil {
-                print(err!.localizedDescription)
-            } else {
-                guard let querySnapshot = querySnapshot else { return }
-                querySnapshot.documents.forEach { document in
-                    let user = document.data() as [String: Any]
-                    let value = User(user: user)
-                    self.users.append(value)
-                }
+            guard let querySnapshot = querySnapshot else { return }
+            if err != nil { return }
+            querySnapshot.documents.forEach { document in
+                let user = document.data() as [String: Any]
+                let value = User(user: user)
+                self.users.append(value)
             }
         }
     }
+    
+    // check and send result, user id if login sucess to view
     func checkLogin(username: String, password: String) {
         var result: Bool = false
         var id: Int = 0

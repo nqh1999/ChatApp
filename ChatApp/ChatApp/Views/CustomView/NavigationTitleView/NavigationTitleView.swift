@@ -26,6 +26,7 @@ final class NavigationTitleView: UIView {
         self.contentView.frame = self.frame
         self.img.layer.cornerRadius = img.layer.frame.width / 3
         self.img.contentMode = .scaleToFill
+        self.titleLbl.text = ""
     }
     func setTitle(data: UserDetail?) {
         guard let data = data else { return }

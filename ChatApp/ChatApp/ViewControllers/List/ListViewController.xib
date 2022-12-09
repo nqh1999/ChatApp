@@ -25,9 +25,9 @@
                     <rect key="frame" x="15" y="59" width="363" height="759"/>
                     <subviews>
                         <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Search" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xla-9Z-y3e" customClass="BaseTextField" customModule="ChatApp" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="0.0" width="363" height="45"/>
+                            <rect key="frame" x="0.0" y="0.0" width="363" height="40"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="45" id="5AY-DS-Ght"/>
+                                <constraint firstAttribute="height" constant="40" id="5AY-DS-Ght"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits"/>
@@ -36,7 +36,7 @@
                             </connections>
                         </textField>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="pOY-6Q-Zaw">
-                            <rect key="frame" x="0.0" y="55" width="363" height="704"/>
+                            <rect key="frame" x="0.0" y="50" width="363" height="709"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         </tableView>
                     </subviews>

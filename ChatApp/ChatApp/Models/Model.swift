@@ -34,12 +34,12 @@ struct Message {
     var senderId: Int
     var text: String
     var img: String
-    var time: Date
+    var time: Double
     init(message: [String: Any]) {
         self.receiverId = message["receiverId"] as? Int ?? 0
         self.senderId = message["senderId"] as? Int ?? 0
         self.text = message["text"] as? String ?? ""
         self.img = message["img"] as? String ?? ""
-        self.time = message["time"] as? Date ?? .now
+        self.time = message["time"] as? Double ?? 0.0
     }
 }

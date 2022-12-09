@@ -11,4 +11,5 @@ pod 'FirebaseStorage'
 pod 'FirebaseCore'
 pod 'FirebaseFirestore'
 pod 'SDWebImage'
+# pod 'MessageKit', '~> 3.3.0'
 end

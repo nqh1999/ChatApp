@@ -7,61 +7,72 @@
 
 import UIKit
 
-final class DetailViewController: UIViewController {
+final class DetailViewController: BaseViewController {
+    
     // MARK: - Properties
     @IBOutlet private weak var imgButton: UIButton!
     @IBOutlet private weak var sendButton: UIButton!
     @IBOutlet private weak var messageTf: BaseTextField!
     @IBOutlet private weak var tableView: UITableView!
-    private let titleView = NavigationTitleView()
     private var imgPickerView = UIImagePickerController()
     lazy private var presenter = DetailPresenter(view: self)
-    // MARK: - Methods
+    
+    // MARK: - Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupData()
         self.setupUI()
     }
+    
+    // MARK: - Methods
     func setupUI() {
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "arrow.left"), style: .plain, target: self, action: #selector(backToPreVC))
-        self.navigationItem.titleView = titleView
-        self.titleView.setTitle(data: self.presenter.getReceiver())
+        self.setBackButton()
+        self.getTitleView().setTitle(data: self.presenter.getReceiver())
+        self.messageTf.becomeFirstResponder()
         self.messageTf.shouldReturn = { [weak self] in
             self?.sendMessage()
         }
         self.setupTableView()
     }
+    
     private func setupTableView() {
-        self.tableView.register(UINib(nibName: "MyCell", bundle: .main), forCellReuseIdentifier: "mycell")
-        self.tableView.register(UINib(nibName: "FriendCell", bundle: .main), forCellReuseIdentifier: "friendcell")
+        self.tableView.register(UINib(nibName: "MessageCell", bundle: .main), forCellReuseIdentifier: "messageCell")
+        self.tableView.register(UINib(nibName: "ImgCell", bundle: .main), forCellReuseIdentifier: "imgCell")
         self.tableView.delegate = self
         self.tableView.dataSource = self
-        if self.tableView.rowHeight > 50 {
-            self.tableView.rowHeight = UITableView.automaticDimension
-        } else {
-            self.tableView.rowHeight = 50
+        self.tableView.separatorStyle = .none
+        self.tableView.showsVerticalScrollIndicator = false
+    }
+    
+    private func scrollToBottom(){
+        DispatchQueue.main.async {
+            let indexPath = IndexPath(row: self.presenter.getNumberOfMessage()-1, section: 0)
+            self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
         }
     }
+    
     private func setupPickerView() {
         self.imgPickerView.delegate = self
         self.imgPickerView.sourceType = .photoLibrary
         present(self.imgPickerView, animated: true)
     }
+    
     private func setupData() {
         self.presenter.fetchMessage()
     }
+    
     func getPresenter() -> DetailPresenter {
         return self.presenter
     }
+    
     private func sendMessage() {
         self.presenter.sendMessage(text: self.messageTf.text ?? "")
         self.view.endEditing(true)
         self.messageTf.text = ""
+        self.messageTf.becomeFirstResponder()
         self.presenter.fetchMessage()
     }
-    @objc private func backToPreVC() {
-        self.navigationController?.popViewController(animated: true)
-    }
+    
     @IBAction private func chooseImg(_ sender: Any) {
         self.setupPickerView()
     }
@@ -76,6 +87,7 @@ extension DetailViewController: UIImagePickerControllerDelegate, UINavigationCon
         let img = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
         self.presenter.sendImg(img: img)
         self.imgPickerView.dismiss(animated: true)
+        print("send img")
     }
 }
 
@@ -86,21 +98,34 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let message = self.presenter.getMessageByIndex(index: indexPath.row)
-        // sai
-        if message.senderId == self.presenter.getCurrentId() {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "mycell", for: indexPath) as! MyCell
-            cell.setupData(data: message)
+        if message.text.isEmpty {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "imgCell", for: indexPath) as! ImgCell
+            cell.setupImg(url: message.img)
+            if message.senderId == self.presenter.getCurrentId() {
+                cell.setupSentMessage()
+            } else {
+                cell.setupReceivedMessage()
+            }
             return cell
         } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "friendcell", for: indexPath) as! FriendCell
-            cell.setupData(data: message)
+            let cell = tableView.dequeueReusableCell(withIdentifier: "messageCell", for: indexPath) as! MessageCell
+            cell.setupData(text: message.text)
+            if message.senderId == self.presenter.getCurrentId() {
+                cell.setupSentMessage()
+            } else {
+                cell.setupReceivedMessage()
+            }
             return cell
         }
+    }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
     }
 }
 
 extension DetailViewController: DetailProtocol {
     func didGetMessage() {
         self.tableView.reloadData()
+        self.scrollToBottom()
     }
 }
