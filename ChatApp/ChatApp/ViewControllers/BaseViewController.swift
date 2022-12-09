@@ -14,7 +14,9 @@ class BaseViewController: UIViewController {
     // MARK: - Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.layer.contents = UIImage(named: "bgr")?.cgImage
         self.navigationItem.titleView = titleView
+        self.navigationController?.navigationBar.tintColor = .black
     }
     
     // MARK: - Methods

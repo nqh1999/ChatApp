@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import IQKeyboardManager
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -17,6 +18,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window.rootViewController = UINavigationController(rootViewController: LoginViewController())
         self.window = window
         window.makeKeyAndVisible()
+        IQKeyboardManager.shared().isEnabled = true
     }
 }
 

@@ -14,8 +14,8 @@ class MessageCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         self.messageLabel.layer.masksToBounds = true
-        self.messageLabel.layer.cornerRadius = 10
-        self.messageLabel.layer.borderWidth = 1
+        self.messageLabel.layer.cornerRadius = 6
+        self.messageLabel.layer.borderWidth = 0.2
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -29,7 +29,7 @@ class MessageCell: UITableViewCell {
         self.stackView.alignment = .trailing
     }
     func setupReceivedMessage() {
-        self.messageLabel.backgroundColor = UIColor(named: "lightYellow")
+        self.messageLabel.backgroundColor = .white
         self.stackView.alignment = .leading
     }
 }

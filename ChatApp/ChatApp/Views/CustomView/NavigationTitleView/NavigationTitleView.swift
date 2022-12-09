@@ -1,8 +1,8 @@
 //
-//  NavigationTitleView.swift
-//  StaffManagementApp
+//  ListTableViewCell.swift
+//  ChatApp
 //
-//  Created by Nguyen Quang Huy on 02/11/2022.
+//  Created by BeeTech on 07/12/2022.
 //
 
 import UIKit
@@ -24,7 +24,7 @@ final class NavigationTitleView: UIView {
         Bundle.main.loadNibNamed("NavigationTitleView", owner: self, options: nil)
         self.addSubview(contentView)
         self.contentView.frame = self.frame
-        self.img.layer.cornerRadius = img.layer.frame.width / 3
+        self.img.layer.cornerRadius = img.layer.frame.width / 2
         self.img.contentMode = .scaleToFill
         self.titleLbl.text = ""
     }

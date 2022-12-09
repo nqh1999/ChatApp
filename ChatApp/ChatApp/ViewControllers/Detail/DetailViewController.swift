@@ -28,7 +28,6 @@ final class DetailViewController: BaseViewController {
     func setupUI() {
         self.setBackButton()
         self.getTitleView().setTitle(data: self.presenter.getReceiver())
-        self.messageTf.becomeFirstResponder()
         self.messageTf.shouldReturn = { [weak self] in
             self?.sendMessage()
         }

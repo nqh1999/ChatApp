@@ -9,11 +9,17 @@ import UIKit
 import SDWebImage
 
 class ListTableViewCell: UITableViewCell {
+    // MARK: - Properties
     @IBOutlet private weak var avt: UIImageView!
     @IBOutlet private weak var messageLabel: UILabel!
     @IBOutlet private weak var nameLabel: UILabel!
+    @IBOutlet weak var containerView: UIView!
+    
+    // MARK: -
     override func awakeFromNib() {
         super.awakeFromNib()
+        self.selectionStyle = .none
+        self.containerView.layer.cornerRadius = 10
         self.avt.layer.cornerRadius = avt.layer.frame.width / 2
         self.avt.layer.borderWidth = 0.5
         self.avt.contentMode = .scaleToFill

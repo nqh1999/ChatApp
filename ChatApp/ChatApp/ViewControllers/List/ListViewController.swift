@@ -36,11 +36,13 @@ final class ListViewController: BaseViewController {
         self.tableView.register(UINib(nibName: "ListTableViewCell", bundle: .main), forCellReuseIdentifier: "cell")
         self.tableView.delegate = self
         self.tableView.dataSource = self
+        self.tableView.separatorStyle = .none
+        self.tableView.showsVerticalScrollIndicator = false
     }
     
     private func setupSearchBar() {
-        self.searchBar.layer.borderWidth = 1
-        self.searchBar.layer.cornerRadius = 5
+        self.searchBar.layer.cornerRadius = 10
+        self.searchBar.layer.masksToBounds = true
         self.searchBar.shouldReturn = { [weak self] in
             self?.view.endEditing(true)
         }
