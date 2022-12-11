@@ -9,7 +9,7 @@ import UIKit
 import SDWebImage
 
 class ImgCell: UITableViewCell {
-    @IBOutlet weak var stackView: UIStackView!
+    @IBOutlet private weak var stackView: UIStackView!
     @IBOutlet private weak var imgView: UIImageView!
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -22,10 +22,10 @@ class ImgCell: UITableViewCell {
         self.imgView.sd_setImage(with: URL(string: url))
         self.imgView.contentMode = .scaleToFill
     }
-    func setupSentMessage() {
+    func setupSentImg() {
         self.stackView.alignment = .trailing
     }
-    func setupReceivedMessage() {
+    func setupReceivedImg() {
         self.stackView.alignment = .leading
     }
 }

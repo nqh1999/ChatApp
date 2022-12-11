@@ -21,9 +21,13 @@ final class ListViewController: BaseViewController {
         self.setupUI()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.setLogoutButton()
+    }
+    
     // MARK: - Methods
     private func setupUI() {
-        self.setLogoutButton()
         self.setupTableView()
         self.setupSearchBar()
     }
@@ -42,6 +46,7 @@ final class ListViewController: BaseViewController {
     
     private func setupSearchBar() {
         self.searchBar.layer.cornerRadius = 10
+        self.searchBar.layer.borderWidth = 1
         self.searchBar.layer.masksToBounds = true
         self.searchBar.shouldReturn = { [weak self] in
             self?.view.endEditing(true)

@@ -16,7 +16,6 @@ class BaseViewController: UIViewController {
         super.viewDidLoad()
         self.view.layer.contents = UIImage(named: "bgr")?.cgImage
         self.navigationItem.titleView = titleView
-        self.navigationController?.navigationBar.tintColor = .black
     }
     
     // MARK: - Methods
@@ -27,11 +26,20 @@ class BaseViewController: UIViewController {
     // back button
     func setBackButton() {
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "arrow.left"), style: .plain, target: self, action: #selector(backToPreVC))
+        self.navigationController?.navigationBar.tintColor = .black
     }
     
     // logout button
     func setLogoutButton() {
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "rectangle.portrait.and.arrow.right"), style: .plain, target: self, action: #selector(logout))
+        self.navigationController?.navigationBar.tintColor = .white
+    }
+    
+    func showAler(text: String) {
+        let alert = UIAlertController(title: "Error", message: text, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .cancel)
+        alert.addAction(okAction)
+        present(alert, animated: true)
     }
     
     @objc private func backToPreVC() {

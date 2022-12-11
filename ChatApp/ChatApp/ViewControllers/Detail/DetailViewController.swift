@@ -24,10 +24,14 @@ final class DetailViewController: BaseViewController {
         self.setupUI()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.setBackButton()
+    }
+    
     // MARK: - Methods
     func setupUI() {
-        self.setBackButton()
-        self.getTitleView().setTitle(data: self.presenter.getReceiver())
+        self.getTitleView().setTitleView(data: self.presenter.getReceiver())
         self.messageTf.shouldReturn = { [weak self] in
             self?.sendMessage()
         }
@@ -86,7 +90,7 @@ extension DetailViewController: UIImagePickerControllerDelegate, UINavigationCon
         let img = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
         self.presenter.sendImg(img: img)
         self.imgPickerView.dismiss(animated: true)
-        print("send img")
+        self.presenter.fetchMessage()
     }
 }
 
@@ -101,9 +105,9 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: "imgCell", for: indexPath) as! ImgCell
             cell.setupImg(url: message.img)
             if message.senderId == self.presenter.getCurrentId() {
-                cell.setupSentMessage()
+                cell.setupSentImg()
             } else {
-                cell.setupReceivedMessage()
+                cell.setupReceivedImg()
             }
             return cell
         } else {

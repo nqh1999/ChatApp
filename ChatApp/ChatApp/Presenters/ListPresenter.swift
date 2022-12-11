@@ -46,7 +46,7 @@ class ListPresenter {
     // MARK: - Handler Methods
     // fetch user
     func fetchUserDetail() {
-        db.collection("userDetail").getDocuments() { querySnapshot, err in
+        self.db.collection("userDetail").getDocuments() { querySnapshot, err in
             guard let querySnapshot = querySnapshot else { return }
             if err != nil { return }
             querySnapshot.documents.forEach { document in

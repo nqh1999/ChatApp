@@ -34,7 +34,7 @@ class DetailPresenter {
     }
     
     func getReceiver() -> UserDetail? {
-        return receiverData
+        return self.receiverData
     }
     
     func setCurrentId(id: Int) {
@@ -42,7 +42,7 @@ class DetailPresenter {
     }
     
     func getCurrentId() -> Int {
-        return currentId
+        return self.currentId
     }
     
     func getNumberOfMessage() -> Int {
@@ -73,18 +73,10 @@ class DetailPresenter {
     }
     
 //    func listenerMessage() {
-//        db.collection("message").document("SF")
-//            .addSnapshotListener { documentSnapshot, error in
-//              guard let document = documentSnapshot else {
-//                print("Error fetching document: \(error!)")
-//                return
-//              }
-//              guard let data = document.data() else {
-//                print("Document data was empty.")
-//                return
-//              }
-//              print("Current data: \(data)")
-//            }
+//        db.collection("message").addSnapshotListener { querySnapshot, err in
+//            guard let documents = querySnapshot?.documents else { return }
+//            print(documents)
+//        }
 //    }
     
     // sort message by time

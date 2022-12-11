@@ -9,8 +9,8 @@ import UIKit
 
 class MessageCell: UITableViewCell {
     
-    @IBOutlet weak var stackView: UIStackView!
-    @IBOutlet weak var messageLabel: CustomLabel!
+    @IBOutlet private weak var stackView: UIStackView!
+    @IBOutlet private weak var messageLabel: CustomLabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         self.messageLabel.layer.masksToBounds = true

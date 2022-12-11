@@ -17,12 +17,12 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="0Mf-DR-2wC">
-                        <rect key="frame" x="0.0" y="5" width="35.5" height="34"/>
+                        <rect key="frame" x="0.0" y="5" width="39.5" height="34"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BUq-1a-PWB" customClass="CustomLabel" customModule="ChatApp" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="35.5" height="34"/>
+                                <rect key="frame" x="0.0" y="0.0" width="39.5" height="34"/>
                                 <color key="backgroundColor" red="0.39584183119999999" green="1" blue="0.4631048841" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="14"/>
+                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="16"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                                 <userDefinedRuntimeAttributes>

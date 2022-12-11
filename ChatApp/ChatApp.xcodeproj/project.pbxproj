@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1399B19129458761001B872B /* PasswordTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1399B19029458761001B872B /* PasswordTextField.swift */; };
 		4FA0D6904C8AD6830CD8AFA8 /* Pods_ChatApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7266BF7FD7B514CEEA8FC86B /* Pods_ChatApp.framework */; };
 		9D3532DD29406CBB00F12230 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3532DB29406CBB00F12230 /* LoginViewController.swift */; };
 		9D3532DE29406CBB00F12230 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9D3532DC29406CBB00F12230 /* LoginViewController.xib */; };
@@ -37,6 +38,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1399B19029458761001B872B /* PasswordTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordTextField.swift; sourceTree = "<group>"; };
 		29849066BE9438EB2E20FBBA /* Pods-ChatApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatApp.debug.xcconfig"; path = "Target Support Files/Pods-ChatApp/Pods-ChatApp.debug.xcconfig"; sourceTree = "<group>"; };
 		7266BF7FD7B514CEEA8FC86B /* Pods_ChatApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ChatApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D3532DB29406CBB00F12230 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -112,6 +114,7 @@
 			isa = PBXGroup;
 			children = (
 				9D3532EB29407AEB00F12230 /* BaseTextField.swift */,
+				1399B19029458761001B872B /* PasswordTextField.swift */,
 			);
 			path = CustomTextField;
 			sourceTree = "<group>";
@@ -399,6 +402,7 @@
 				9DA5E87829405228001CABB8 /* AppDelegate.swift in Sources */,
 				9DBF68E92942E664008F0262 /* BaseViewController.swift in Sources */,
 				9DE2BB4E294191AA002731D3 /* DetailPresenter.swift in Sources */,
+				1399B19129458761001B872B /* PasswordTextField.swift in Sources */,
 				9DB9BC0D294314C200D6B049 /* CustomLabel.swift in Sources */,
 				9D3532EC29407AEB00F12230 /* BaseTextField.swift in Sources */,
 				9D3532E62940739300F12230 /* DetailViewController.swift in Sources */,

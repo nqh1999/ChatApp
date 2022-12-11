@@ -41,7 +41,7 @@ class LoginPresenter {
     func checkLogin(username: String, password: String) {
         var result: Bool = false
         var id: Int = 0
-        users.forEach { user in
+        self.users.forEach { user in
             if user.username == username && user.password == password {
                 result = true
                 id = user.id

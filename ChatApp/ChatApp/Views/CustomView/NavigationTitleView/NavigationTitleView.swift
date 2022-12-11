@@ -12,14 +12,17 @@ final class NavigationTitleView: UIView {
     @IBOutlet private var contentView: UIView!
     @IBOutlet private weak var img: UIImageView!
     @IBOutlet private weak var titleLbl: UILabel!
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.initNavBarView()
     }
+    
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         self.initNavBarView()
     }
+    
     private func initNavBarView() {
         Bundle.main.loadNibNamed("NavigationTitleView", owner: self, options: nil)
         self.addSubview(contentView)
@@ -28,7 +31,8 @@ final class NavigationTitleView: UIView {
         self.img.contentMode = .scaleToFill
         self.titleLbl.text = ""
     }
-    func setTitle(data: UserDetail?) {
+    
+    func setTitleView(data: UserDetail?) {
         guard let data = data else { return }
         self.img.sd_setImage(with: URL(string: data.imgUrl))
         self.titleLbl.text = data.name
