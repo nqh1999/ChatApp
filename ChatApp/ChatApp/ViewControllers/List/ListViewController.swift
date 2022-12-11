@@ -17,7 +17,6 @@ final class ListViewController: BaseViewController {
     // MARK: - Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.setupData()
         self.setupUI()
     }
     
@@ -30,10 +29,6 @@ final class ListViewController: BaseViewController {
     private func setupUI() {
         self.setupTableView()
         self.setupSearchBar()
-    }
-    
-    private func setupData() {
-        self.presenter.fetchUserDetail()
     }
     
     private func setupTableView() {
@@ -59,10 +54,9 @@ final class ListViewController: BaseViewController {
     
     // send data and go to detail view controller when click to row of table view
     private func goToDetailVCByIndex(index: Int) {
-        guard let data = self.presenter.getUserByIndex(index: index) else { return }
+        guard let sender = self.presenter.getSender(), let receiver = self.presenter.getUserByIndex(index: index) else { return }
         let vc = DetailViewController()
-        vc.getPresenter().setReceiver(data: data)
-        vc.getPresenter().setCurrentId(id: self.presenter.getCurrentId())
+        vc.getPresenter().setData(sender: sender, receiver: receiver)
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -92,7 +86,5 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
 }
 
 extension ListViewController: ListProtocol {
-    func didGetUser() {
-        self.tableView.reloadData()
-    }
+    
 }

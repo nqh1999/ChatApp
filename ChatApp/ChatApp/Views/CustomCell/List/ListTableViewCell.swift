@@ -22,14 +22,13 @@ class ListTableViewCell: UITableViewCell {
         self.containerView.layer.borderWidth = 1
         self.avt.layer.cornerRadius = avt.layer.frame.width / 2
         self.avt.layer.borderWidth = 0.5
-        self.avt.contentMode = .scaleToFill
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
     
-    func fillData(data: UserDetail?) {
+    func fillData(data: User?) {
         guard let data = data else { return }
         self.avt.sd_setImage(with: URL(string: data.imgUrl))
         self.nameLabel.text = data.name

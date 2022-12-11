@@ -9,7 +9,7 @@ import Foundation
 import Firebase
 
 protocol DetailProtocol: AnyObject {
-    func didGetMessage()
+
 }
 
 class DetailPresenter {
@@ -18,9 +18,8 @@ class DetailPresenter {
     private weak var view: DetailProtocol?
     private var db = Firestore.firestore()
     private var storage = Storage.storage().reference()
-    private var currentUser: UserDetail? = nil
-    private var currentId: Int = 0
-    private var receiverData: UserDetail?
+    private var sender: User?
+    private var receiver: User?
     private var messages = [Message]()
     
     // MARK: - Init
@@ -29,20 +28,9 @@ class DetailPresenter {
     }
     
     // MARK: - Getter - Setter
-    func setReceiver(data: UserDetail) {
-        self.receiverData = data
-    }
-    
-    func getReceiver() -> UserDetail? {
-        return self.receiverData
-    }
-    
-    func setCurrentId(id: Int) {
-        self.currentId = id
-    }
-    
-    func getCurrentId() -> Int {
-        return self.currentId
+    func setData(sender: User, receiver: User) {
+        self.sender = sender
+        self.receiver = receiver
     }
     
     func getNumberOfMessage() -> Int {
@@ -53,31 +41,30 @@ class DetailPresenter {
         return self.messages[index]
     }
     
-    // MARK: Handler Methods
-    // fetch message
-    func fetchMessage() {
-        self.messages.removeAll()
-        self.db.collection("message").getDocuments() { querySnapshot, err in
-            guard let querySnapshot = querySnapshot, let receiverData = self.receiverData else { return }
-            if err != nil { return }
-            querySnapshot.documents.forEach { document in
-                let message = document.data() as [String: Any]
-                let value = Message(message: message)
-                if (value.receiverId == receiverData.id && value.senderId == self.currentId) || (value.receiverId == self.currentId && value.senderId == receiverData.id) {
-                    self.messages.append(value)
-                    self.sortedMessage()
-                    self.view?.didGetMessage()
-                }
-            }
-        }
+    func getReceiver() -> User? {
+        return self.receiver
     }
     
-//    func listenerMessage() {
-//        db.collection("message").addSnapshotListener { querySnapshot, err in
-//            guard let documents = querySnapshot?.documents else { return }
-//            print(documents)
-//        }
-//    }
+    func getSender() -> User? {
+        return self.sender
+    }
+    
+    // MARK: Handler Methods
+    // fetch message
+    func fetchMessage(completed: @escaping () -> Void) {
+        self.db.collection("message").addSnapshotListener { querySnapshot, err in
+            guard let querySnapshot = querySnapshot, let sender = self.sender, let receiver = self.receiver, err == nil else { return completed() }
+            self.messages.removeAll()
+            querySnapshot.documents.forEach { document in
+                let message = Message(message: document.data())
+                if (message.receiverId == receiver.id && message.senderId == sender.id) || (message.receiverId == sender.id && message.senderId == receiver.id) {
+                    self.messages.append(message)
+                    self.sortedMessage()
+                }
+            }
+            completed()
+        }
+    }
     
     // sort message by time
     private func sortedMessage() {
@@ -102,11 +89,11 @@ class DetailPresenter {
     // Send message To DB
     func sendMessage(text: String) {
         let docRef = self.db.collection("message")
-        guard let receiverData = self.receiverData else { return }
+        guard let receiver = self.receiver, let sender = self.sender else { return }
         if text.isEmpty { return }
         docRef.addDocument(data: [
-                "receiverId": receiverData.id,
-                "senderId": currentId,
+                "receiverId": receiver.id,
+                "senderId": sender.id,
                 "text": text,
                 "img": "",
                 "time": Date.now.timeIntervalSince1970
@@ -114,23 +101,24 @@ class DetailPresenter {
     }
     
     // Send img url To DB
-    func sendImg(img: UIImage) {
+    func sendImg(img: UIImage, completed: @escaping () -> Void) {
         let img = img.jpegData(compressionQuality: 0.5)!
         let keyImg = NSUUID().uuidString
         let imgFolder = storage.child("img_message").child(keyImg)
         storage.child("img_message").child(keyImg).putData(img) { _ , err in
-            if err != nil { return }
+            guard err == nil else { return }
             imgFolder.downloadURL { url, err in
-                if err != nil { return }
+                guard err == nil, let url = url, let sender = self.sender, let receiver = self.receiver else { return }
                 let docRef = self.db.collection("message")
                 docRef.addDocument(data: [
-                    "receiverId": self.receiverData!.id,
-                    "senderId": self.currentId,
+                    "receiverId": receiver.id,
+                    "senderId": sender.id,
                     "text": "",
-                    "img": url?.absoluteString ?? "",
+                    "img": url.absoluteString,
                     "time": Date.now.timeIntervalSince1970
                 ])
             }
         }
+        completed()
     }
 }

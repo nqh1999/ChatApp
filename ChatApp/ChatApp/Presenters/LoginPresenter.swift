@@ -9,7 +9,7 @@ import Foundation
 import Firebase
 
 protocol LoginProtocol: AnyObject {
-    func didGetLoginResult(result: Bool, userId: Int)
+    func didGetLoginResult(result: Bool, sender: User?, receivers: [User])
 }
 
 class LoginPresenter {
@@ -18,6 +18,8 @@ class LoginPresenter {
     private weak var view: LoginProtocol?
     private var db = Firestore.firestore()
     private var users = [User]()
+    private var receivers = [User]()
+    private var sender: User?
     
     // MARK: - Init
     init(view: LoginProtocol) {
@@ -26,13 +28,21 @@ class LoginPresenter {
     
     // MARK: - Handler Methods
     func fetchUser() {
-        self.db.collection("user").getDocuments() { querySnapshot, err in
-            guard let querySnapshot = querySnapshot else { return }
-            if err != nil { return }
+        self.db.collection("user").addSnapshotListener { querySnapshot, err in
+            guard let querySnapshot = querySnapshot, err == nil else { return }
             querySnapshot.documents.forEach { document in
-                let user = document.data() as [String: Any]
-                let value = User(user: user)
-                self.users.append(value)
+                let user = User(user: document.data())
+                self.users.append(user)
+            }
+        }
+    }
+    
+    func setupData(senderId: Int) {
+        users.forEach { user in
+            if user.id == senderId {
+                self.sender = user
+            } else {
+                receivers.append(user)
             }
         }
     }
@@ -40,13 +50,12 @@ class LoginPresenter {
     // check and send result, user id if login sucess to view
     func checkLogin(username: String, password: String) {
         var result: Bool = false
-        var id: Int = 0
         self.users.forEach { user in
             if user.username == username && user.password == password {
                 result = true
-                id = user.id
+                self.setupData(senderId: user.id)
             }
         }
-        self.view?.didGetLoginResult(result: result, userId: id)
+        self.view?.didGetLoginResult(result: result, sender: self.sender, receivers: self.receivers)
     }
 }

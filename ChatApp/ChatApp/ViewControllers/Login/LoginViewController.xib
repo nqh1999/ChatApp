@@ -38,7 +38,7 @@
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="B1N-Z5-QNc">
                                     <rect key="frame" x="0.0" y="0.0" width="350" height="145"/>
                                     <subviews>
-                                        <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="x5O-IB-xYX" customClass="BaseTextField" customModule="ChatApp" customModuleProvider="target">
+                                        <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="x5O-IB-xYX" customClass="BaseTextField" customModule="ChatApp" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="0.0" width="350" height="45"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
@@ -64,7 +64,7 @@
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="7F9-Kf-UQf">
                                             <rect key="frame" x="0.0" y="65" width="350" height="80"/>
                                             <subviews>
-                                                <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="0oU-Uo-MqV" customClass="PasswordTextField" customModule="ChatApp" customModuleProvider="target">
+                                                <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="0oU-Uo-MqV" customClass="PasswordTextField" customModule="ChatApp" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="0.0" width="350" height="45"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
@@ -149,14 +149,6 @@
             <point key="canvasLocation" x="-13.043478260869566" y="-11.413043478260871"/>
         </view>
     </objects>
-    <designables>
-        <designable name="0oU-Uo-MqV">
-            <size key="intrinsicContentSize" width="133.33333333333334" height="34"/>
-        </designable>
-        <designable name="x5O-IB-xYX">
-            <size key="intrinsicContentSize" width="138" height="34"/>
-        </designable>
-    </designables>
     <resources>
         <image name="envelope" catalog="system" width="128" height="93"/>
         <image name="lock" catalog="system" width="128" height="128"/>

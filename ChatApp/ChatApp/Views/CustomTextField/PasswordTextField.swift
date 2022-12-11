@@ -50,7 +50,7 @@ class PasswordTextField: BaseTextField {
             self.setText()
             self.pass += string
         } else {
-            if pass.count > 0 {
+            if pass.count >= range.length {
                 self.pass.removeLast(range.length)
             } else {
                 self.pass = ""

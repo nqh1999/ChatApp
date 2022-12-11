@@ -20,8 +20,8 @@ final class DetailViewController: BaseViewController {
     // MARK: - Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.setupData()
         self.setupUI()
+        self.setupData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -49,6 +49,7 @@ final class DetailViewController: BaseViewController {
     
     private func scrollToBottom(){
         DispatchQueue.main.async {
+            guard self.presenter.getNumberOfMessage() > 0 else { return }
             let indexPath = IndexPath(row: self.presenter.getNumberOfMessage()-1, section: 0)
             self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
         }
@@ -61,7 +62,13 @@ final class DetailViewController: BaseViewController {
     }
     
     private func setupData() {
-        self.presenter.fetchMessage()
+        UIView.animate(withDuration: 0, delay: 0, options: .curveEaseInOut) {
+            self.view.layoutIfNeeded()
+        } completion: { _ in
+            self.presenter.fetchMessage {
+                self.reloadData()
+            }
+        }
     }
     
     func getPresenter() -> DetailPresenter {
@@ -73,7 +80,14 @@ final class DetailViewController: BaseViewController {
         self.view.endEditing(true)
         self.messageTf.text = ""
         self.messageTf.becomeFirstResponder()
-        self.presenter.fetchMessage()
+        self.presenter.fetchMessage {
+            self.reloadData()
+        }
+    }
+    
+    private func reloadData() {
+        self.tableView.reloadData()
+        self.scrollToBottom()
     }
     
     @IBAction private func chooseImg(_ sender: Any) {
@@ -88,9 +102,12 @@ final class DetailViewController: BaseViewController {
 extension DetailViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         let img = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
-        self.presenter.sendImg(img: img)
+        self.presenter.sendImg(img: img) {
+            self.presenter.fetchMessage {
+                self.reloadData()
+            }
+        }
         self.imgPickerView.dismiss(animated: true)
-        self.presenter.fetchMessage()
     }
 }
 
@@ -104,7 +121,7 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
         if message.text.isEmpty {
             let cell = tableView.dequeueReusableCell(withIdentifier: "imgCell", for: indexPath) as! ImgCell
             cell.setupImg(url: message.img)
-            if message.senderId == self.presenter.getCurrentId() {
+            if message.senderId == self.presenter.getSender()?.id {
                 cell.setupSentImg()
             } else {
                 cell.setupReceivedImg()
@@ -113,7 +130,7 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "messageCell", for: indexPath) as! MessageCell
             cell.setupData(text: message.text)
-            if message.senderId == self.presenter.getCurrentId() {
+            if message.senderId == self.presenter.getSender()?.id {
                 cell.setupSentMessage()
             } else {
                 cell.setupReceivedMessage()
@@ -127,8 +144,5 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
 }
 
 extension DetailViewController: DetailProtocol {
-    func didGetMessage() {
-        self.tableView.reloadData()
-        self.scrollToBottom()
-    }
+   
 }

@@ -26,7 +26,7 @@ final class LoginViewController: BaseViewController {
     // MARK: - Methods
     private func setupUI() {
         self.view.layer.contents = UIImage(named: "bgrLogin")?.cgImage
-        self.userNameTf.text = "a@a.com"
+        self.userNameTf.text = "1@1.com"
         self.passwordTf.text = "123456"
         self.loginButton.layer.cornerRadius = 5
         self.userNameTf.shouldReturn = { [weak self] in
@@ -61,12 +61,13 @@ final class LoginViewController: BaseViewController {
 }
 
 extension LoginViewController: LoginProtocol {
-    func didGetLoginResult(result: Bool, userId: Int) {
+    func didGetLoginResult(result: Bool, sender: User?, receivers: [User]) {
         if !result {
             self.showAler(text: "username or password is incorrect")
         } else {
+            guard let sender = sender else { return }
             let vc = ListViewController()
-            vc.getPresenter().setCurrentId(id: userId)
+            vc.getPresenter().setData(sender: sender, receivers: receivers)
             (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first?.rootViewController = UINavigationController(rootViewController: vc)
         }
     }

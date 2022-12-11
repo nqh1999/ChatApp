@@ -9,23 +9,16 @@ import Foundation
 
 struct User {
     var id: Int
+    var name: String
+    var imgUrl: String
     var username: String
     var password: String
     init(user: [String: Any]) {
         self.id = user["id"] as? Int ?? 0
         self.username = user["username"] as? String ?? ""
         self.password = user["password"] as? String ?? ""
-    }
-}
-
-struct UserDetail {
-    var id: Int
-    var name: String
-    var imgUrl: String
-    init(userDetail: [String: Any]) {
-        self.id = userDetail["id"] as? Int ?? 0
-        self.name = userDetail["name"] as? String ?? ""
-        self.imgUrl = userDetail["imgUrl"] as? String ?? ""
+        self.name = user["name"] as? String ?? ""
+        self.imgUrl = user["imgUrl"] as? String ?? ""
     }
 }
 

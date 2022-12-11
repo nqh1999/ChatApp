@@ -7,7 +7,6 @@
 
 import UIKit
 
-@IBDesignable
 class BaseTextField: UITextField {
     
     @IBInspectable private var leftImage: UIImage? {

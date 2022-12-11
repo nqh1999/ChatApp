@@ -9,7 +9,7 @@ import Foundation
 import Firebase
 
 protocol ListProtocol: AnyObject {
-    func didGetUser()
+    
 }
 
 class ListPresenter {
@@ -17,9 +17,9 @@ class ListPresenter {
     // MARK: - Properties
     private weak var view: ListProtocol?
     private var db = Firestore.firestore()
-    private var userDetails = [UserDetail]()
-    private var searchData = [UserDetail]()
-    private var currentId: Int = 0
+    private var receivers = [User]()
+    private var sender: User?
+    private var searchData = [User]()
     
     // MARK: - Init
     init(view: ListProtocol) {
@@ -27,43 +27,28 @@ class ListPresenter {
     }
     
     // MARK: - Getter - Setter
-    func setCurrentId(id: Int) {
-        self.currentId = id
-    }
-    
-    func getCurrentId() -> Int {
-        return self.currentId
-    }
-    
     func getNumberOfUser() -> Int {
         return self.searchData.count
     }
     
-    func getUserByIndex(index: Int) -> UserDetail? {
+    func getUserByIndex(index: Int) -> User? {
         return self.searchData[index]
     }
     
-    // MARK: - Handler Methods
-    // fetch user
-    func fetchUserDetail() {
-        self.db.collection("userDetail").getDocuments() { querySnapshot, err in
-            guard let querySnapshot = querySnapshot else { return }
-            if err != nil { return }
-            querySnapshot.documents.forEach { document in
-                let userDetail = document.data() as [String: Any]
-                let value = UserDetail(userDetail: userDetail)
-                if value.id != self.currentId {
-                    self.userDetails.append(value)
-                    self.searchData = self.userDetails
-                    self.view?.didGetUser()
-                }
-            }
-        }
+    func setData(sender: User, receivers: [User]) {
+        self.sender = sender
+        self.receivers = receivers
+        self.searchData = receivers
     }
     
+    func getSender() -> User? {
+        return self.sender
+    }
+    
+    // MARK: - Handler Methods
     // fill data after search
     func filterData(text: String) {
-        self.searchData = text.isEmpty ? userDetails : userDetails.filter {
+        self.searchData = text.isEmpty ? receivers : receivers.filter {
             $0.name.lowercased().contains(text.lowercased())
         }
     }

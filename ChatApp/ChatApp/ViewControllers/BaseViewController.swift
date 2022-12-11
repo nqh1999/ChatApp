@@ -15,8 +15,7 @@ class BaseViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.layer.contents = UIImage(named: "bgr")?.cgImage
-        self.navigationItem.titleView = titleView
-    }
+        self.navigationItem.titleView = titleView    }
     
     // MARK: - Methods
     func getTitleView() -> NavigationTitleView {

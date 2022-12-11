@@ -28,11 +28,10 @@ final class NavigationTitleView: UIView {
         self.addSubview(contentView)
         self.contentView.frame = self.frame
         self.img.layer.cornerRadius = img.layer.frame.width / 2
-        self.img.contentMode = .scaleToFill
         self.titleLbl.text = ""
     }
     
-    func setTitleView(data: UserDetail?) {
+    func setTitleView(data: User?) {
         guard let data = data else { return }
         self.img.sd_setImage(with: URL(string: data.imgUrl))
         self.titleLbl.text = data.name
