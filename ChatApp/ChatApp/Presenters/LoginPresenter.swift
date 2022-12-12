@@ -9,7 +9,7 @@ import Foundation
 import Firebase
 
 protocol LoginProtocol: AnyObject {
-    func didGetLoginResult(result: Bool, sender: User?, receivers: [User])
+    func didGetLoginResult(result: Bool, senderId: Int)
 }
 
 class LoginPresenter {
@@ -18,32 +18,23 @@ class LoginPresenter {
     private weak var view: LoginProtocol?
     private var db = Firestore.firestore()
     private var users = [User]()
-    private var receivers = [User]()
-    private var sender: User?
+    private var senderId: Int = 0
+    private var service = FirebaseService()
     
     // MARK: - Init
     init(view: LoginProtocol) {
         self.view = view
     }
     
-    // MARK: - Handler Methods
-    func fetchUser() {
-        self.db.collection("user").addSnapshotListener { querySnapshot, err in
-            guard let querySnapshot = querySnapshot, err == nil else { return }
-            querySnapshot.documents.forEach { document in
-                let user = User(user: document.data())
-                self.users.append(user)
-            }
-        }
+    // MARK: - Getter - setter
+    func getAllUser() -> [User] {
+        return self.users
     }
     
-    func setupData(senderId: Int) {
-        users.forEach { user in
-            if user.id == senderId {
-                self.sender = user
-            } else {
-                receivers.append(user)
-            }
+    // MARK: - Handler Methods
+    func fetchUser() {
+        self.service.fetchUser { users in
+            self.users = users
         }
     }
     
@@ -53,9 +44,9 @@ class LoginPresenter {
         self.users.forEach { user in
             if user.username == username && user.password == password {
                 result = true
-                self.setupData(senderId: user.id)
+                self.senderId = user.id
             }
         }
-        self.view?.didGetLoginResult(result: result, sender: self.sender, receivers: self.receivers)
+        self.view?.didGetLoginResult(result: result, senderId: self.senderId)
     }
 }

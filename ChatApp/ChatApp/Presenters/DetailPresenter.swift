@@ -118,7 +118,7 @@ class DetailPresenter {
                     "time": Date.now.timeIntervalSince1970
                 ])
             }
+            completed()
         }
-        completed()
     }
 }

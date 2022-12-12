@@ -8,7 +8,6 @@
 import UIKit
 
 class BaseTextField: UITextField {
-    
     @IBInspectable private var leftImage: UIImage? {
         didSet {
             self.updateView()

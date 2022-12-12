@@ -7,6 +7,15 @@
 
 import Foundation
 
+enum Err: String {
+    case nameIsEmpty = "Fullname can't be blank"
+    case usernameIsEmpty = "Username can't be blank"
+    case passwordIsEmpty = "Password can't be blank"
+    case imgIsEmpty = "Please choose your image"
+    case usernameExist = "Username already exists"
+    case loginFailed = "username or password is incorrect"
+}
+
 struct User {
     var id: Int
     var name: String

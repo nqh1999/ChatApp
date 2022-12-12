@@ -20,7 +20,7 @@ final class ListViewController: BaseViewController {
         self.setupUI()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.setLogoutButton()
     }
@@ -50,6 +50,12 @@ final class ListViewController: BaseViewController {
     
     func getPresenter() -> ListPresenter {
         return self.presenter
+    }
+    
+    func setupData() {
+        UIView.animate(withDuration: 0, delay: 0) {
+            self.presenter.fetchUser()
+        }
     }
     
     // send data and go to detail view controller when click to row of table view
@@ -83,8 +89,24 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.goToDetailVCByIndex(index: indexPath.row)
     }
+    
+//    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+//        return true
+//    }
+//
+//    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+//        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { (action, view, completion) in
+//            self.presenter.removeReceiverAt(index: indexPath.row)
+//            self.tableView.reloadData()
+//            completion(true)
+//        }
+//        deleteAction.image = UIImage(systemName: "trash.circle.fill")
+//        return UISwipeActionsConfiguration(actions: [deleteAction])
+//    }
+    
 }
 
 extension ListViewController: ListProtocol {
     
 }
+

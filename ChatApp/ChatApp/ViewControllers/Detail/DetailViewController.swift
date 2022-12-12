@@ -14,6 +14,7 @@ final class DetailViewController: BaseViewController {
     @IBOutlet private weak var sendButton: UIButton!
     @IBOutlet private weak var messageTf: BaseTextField!
     @IBOutlet private weak var tableView: UITableView!
+    @IBOutlet weak var spinner: UIActivityIndicatorView!
     private var imgPickerView = UIImagePickerController()
     lazy private var presenter = DetailPresenter(view: self)
     
@@ -36,6 +37,7 @@ final class DetailViewController: BaseViewController {
             self?.sendMessage()
         }
         self.setupTableView()
+        self.spinner.isHidden = true
     }
     
     private func setupTableView() {
@@ -105,9 +107,12 @@ extension DetailViewController: UIImagePickerControllerDelegate, UINavigationCon
         self.presenter.sendImg(img: img) {
             self.presenter.fetchMessage {
                 self.reloadData()
+                self.spinner.stopAnimating()
             }
         }
         self.imgPickerView.dismiss(animated: true)
+        self.spinner.isHidden = false
+        self.spinner.startAnimating()
     }
 }
 
