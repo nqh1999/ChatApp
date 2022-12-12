@@ -125,7 +125,7 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
         let message = self.presenter.getMessageByIndex(index: indexPath.row)
         if message.text.isEmpty {
             let cell = tableView.dequeueReusableCell(withIdentifier: "imgCell", for: indexPath) as! ImgCell
-            cell.setupImg(url: message.img)
+            cell.setupImg(message)
             if message.senderId == self.presenter.getSender()?.id {
                 cell.setupSentImg()
             } else {
@@ -134,7 +134,7 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "messageCell", for: indexPath) as! MessageCell
-            cell.setupData(text: message.text)
+            cell.setupData(message)
             if message.senderId == self.presenter.getSender()?.id {
                 cell.setupSentMessage()
             } else {

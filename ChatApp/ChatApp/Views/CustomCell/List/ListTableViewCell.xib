@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -21,7 +20,7 @@
                         <rect key="frame" x="0.0" y="7" width="320" height="76"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="Lhh-oY-at1">
-                                <rect key="frame" x="10" y="10" width="300" height="56"/>
+                                <rect key="frame" x="10" y="10" width="310" height="56"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="nGr-yI-gbq">
                                         <rect key="frame" x="0.0" y="3" width="50" height="50"/>
@@ -31,20 +30,34 @@
                                         </constraints>
                                     </imageView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="SQJ-AY-xPw">
-                                        <rect key="frame" x="70" y="3.5" width="230" height="49"/>
+                                        <rect key="frame" x="70" y="3.5" width="240" height="49"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QDv-4r-Seu">
-                                                <rect key="frame" x="0.0" y="0.0" width="230" height="24"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="240" height="24"/>
                                                 <fontDescription key="fontDescription" name="AppleSDGothicNeo-Bold" family="Apple SD Gothic Neo" pointSize="20"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yiL-o4-IN3">
-                                                <rect key="frame" x="0.0" y="28" width="230" height="21"/>
-                                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="16"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
+                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="kyR-Vk-zQ4">
+                                                <rect key="frame" x="0.0" y="28" width="240" height="21"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yiL-o4-IN3">
+                                                        <rect key="frame" x="0.0" y="0.0" width="197" height="21"/>
+                                                        <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="16"/>
+                                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q8z-6C-zDE">
+                                                        <rect key="frame" x="200" y="0.0" width="40" height="21"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="40" id="RAp-Hw-7Uy"/>
+                                                        </constraints>
+                                                        <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="12"/>
+                                                        <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                            </stackView>
                                         </subviews>
                                     </stackView>
                                 </subviews>
@@ -53,7 +66,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="Lhh-oY-at1" secondAttribute="bottom" constant="10" id="03z-kd-0QG"/>
-                            <constraint firstAttribute="trailing" secondItem="Lhh-oY-at1" secondAttribute="trailing" constant="10" id="MSb-on-QaE"/>
+                            <constraint firstAttribute="trailing" secondItem="Lhh-oY-at1" secondAttribute="trailing" id="MSb-on-QaE"/>
                             <constraint firstItem="Lhh-oY-at1" firstAttribute="leading" secondItem="rqM-AN-jc8" secondAttribute="leading" constant="10" id="Mxg-Yi-aa0"/>
                             <constraint firstItem="Lhh-oY-at1" firstAttribute="top" secondItem="rqM-AN-jc8" secondAttribute="top" constant="10" id="foa-13-T7K"/>
                         </constraints>
@@ -73,6 +86,7 @@
                 <outlet property="containerView" destination="rqM-AN-jc8" id="Cdb-Vy-Ehe"/>
                 <outlet property="messageLabel" destination="yiL-o4-IN3" id="BEO-EY-dpx"/>
                 <outlet property="nameLabel" destination="QDv-4r-Seu" id="gbd-vM-LlY"/>
+                <outlet property="timeLabel" destination="Q8z-6C-zDE" id="u2i-QP-VXw"/>
             </connections>
             <point key="canvasLocation" x="126.08695652173914" y="12.053571428571429"/>
         </tableViewCell>

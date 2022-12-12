@@ -11,6 +11,8 @@ import SDWebImage
 class ImgCell: UITableViewCell {
     @IBOutlet private weak var stackView: UIStackView!
     @IBOutlet private weak var imgView: UIImageView!
+    @IBOutlet weak var timeSend: UILabel!
+    @IBOutlet weak var timeReceive: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
     }
@@ -18,9 +20,11 @@ class ImgCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
-    func setupImg(url: String) {
-        self.imgView.sd_setImage(with: URL(string: url))
+    func setupImg(_ message: Message) {
+        self.imgView.sd_setImage(with: URL(string: message.img))
         self.imgView.contentMode = .scaleToFill
+        self.timeSend.text = self.setTimestamp(epochTime: message.time)
+        self.timeReceive.text = self.setTimestamp(epochTime: message.time)
     }
     func setupSentImg() {
         self.stackView.alignment = .trailing

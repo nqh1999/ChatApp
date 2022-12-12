@@ -20,6 +20,11 @@ final class ListViewController: BaseViewController {
         self.setupUI()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.setupData()
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.setLogoutButton()
@@ -54,7 +59,11 @@ final class ListViewController: BaseViewController {
     
     func setupData() {
         UIView.animate(withDuration: 0, delay: 0) {
-            self.presenter.fetchUser()
+            self.presenter.fetchUser() {
+                self.presenter.fetchMessage {
+                    self.tableView.reloadData()
+                }
+            }
         }
     }
     
@@ -82,7 +91,8 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! ListTableViewCell
-        cell.fillData(data: self.presenter.getUserByIndex(index: indexPath.row))
+//        cell.fillData(data: self.presenter.getUserByIndex(index: indexPath.row))
+        cell.fillData(user: self.presenter.getUserByIndex(index: indexPath.row), message: self.presenter.getMessageById(self.presenter.getUserByIndex(index: indexPath.row)!.id))
         return cell
     }
     

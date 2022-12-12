@@ -21,7 +21,7 @@ class ListPresenter {
     private var sender: User?
     private var searchData = [User]()
     private var allMessage = [Message]()
-    private var message: [String: Message] = [:]
+    private var message: [Int: Message] = [:]
     private var service = FirebaseService()
     private var senderId: Int = 0
     // MARK: - Init
@@ -38,11 +38,17 @@ class ListPresenter {
         return self.searchData[index]
     }
     
+    func getMessageById(_ id: Int) -> Message? {
+        return message[id]
+    }
+    
     func setData(_ id: Int) {
         self.senderId = id
     }
     
-    func fetchUser() {
+    func fetchUser(completed: @escaping () -> Void) {
+        self.receivers.removeAll()
+        self.allMessage.removeAll()
         self.service.fetchUser { users in
             users.forEach { user in
                 if user.id == self.senderId {
@@ -52,21 +58,23 @@ class ListPresenter {
                 }
             }
             self.searchData = self.receivers
+            completed()
         }
     }
     
     func fetchMessage(completed: @escaping () -> Void) {
-        self.allMessage.removeAll()
+        self.message.removeAll()
         self.service.fetchMessage { messages in
             self.receivers.forEach { receiver in
+                self.allMessage.removeAll()
                 messages.forEach { message in
-                    if message.senderId == self.senderId && message.receiverId == receiver.id {
+                    if (message.senderId == self.senderId && message.receiverId == receiver.id) || (message.senderId == receiver.id && message.receiverId == self.senderId) {
                         self.allMessage.append(message)
                     }
                 }
-                self.message["\(receiver.id)"] = self.allMessage.last
+                self.message[receiver.id] = self.allMessage.last
             }
-            print(self.message)
+            completed()
         }
     }
     
