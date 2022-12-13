@@ -13,6 +13,7 @@
                 <outlet property="imgButton" destination="4rx-QE-RFS" id="w6p-0W-XOY"/>
                 <outlet property="messageTf" destination="bkZ-Cr-xdC" id="9QO-G7-tLj"/>
                 <outlet property="sendButton" destination="4rx-QE-RFS" id="qlm-n9-CWN"/>
+                <outlet property="spinner" destination="mB8-nH-2Wa" id="Y5B-Nv-f2r"/>
                 <outlet property="tableView" destination="sCK-1Z-WYS" id="CIf-3f-wqh"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -22,6 +23,9 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="mB8-nH-2Wa">
+                    <rect key="frame" x="197" y="423" width="20" height="20"/>
+                </activityIndicatorView>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="PlR-a4-pqC">
                     <rect key="frame" x="15" y="79" width="384" height="768"/>
                     <subviews>
@@ -75,9 +79,11 @@
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="top" secondItem="PlR-a4-pqC" secondAttribute="top" constant="-35" id="Bvp-bR-QzH"/>
+                <constraint firstItem="mB8-nH-2Wa" firstAttribute="centerX" secondItem="sCK-1Z-WYS" secondAttribute="centerX" id="EhP-L0-zH9"/>
                 <constraint firstItem="PlR-a4-pqC" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="15" id="FPf-1l-mDz"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="PlR-a4-pqC" secondAttribute="trailing" constant="15" id="QE7-hh-Ad7"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="PlR-a4-pqC" secondAttribute="bottom" constant="15" id="X5Z-Yr-rAL"/>
+                <constraint firstItem="mB8-nH-2Wa" firstAttribute="centerY" secondItem="sCK-1Z-WYS" secondAttribute="centerY" id="ndn-IP-DR4"/>
             </constraints>
             <point key="canvasLocation" x="116.79389312977099" y="-12.67605633802817"/>
         </view>

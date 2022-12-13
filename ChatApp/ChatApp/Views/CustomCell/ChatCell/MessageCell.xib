@@ -45,9 +45,28 @@
                             <constraint firstItem="BUq-1a-PWB" firstAttribute="width" relation="lessThanOrEqual" secondItem="0Mf-DR-2wC" secondAttribute="width" multiplier="0.8" id="LgV-tf-AXn"/>
                         </constraints>
                     </stackView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nbp-wr-ofY">
+                        <rect key="frame" x="45.5" y="23" width="40" height="16"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="40" id="eFo-gd-h48"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="12"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3g5-tX-tnF">
+                        <rect key="frame" x="-35.5" y="23" width="29.5" height="16"/>
+                        <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="12"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="3g5-tX-tnF" firstAttribute="bottom" secondItem="0Mf-DR-2wC" secondAttribute="bottom" id="Doh-VT-L7R"/>
+                    <constraint firstItem="3g5-tX-tnF" firstAttribute="trailing" secondItem="BUq-1a-PWB" secondAttribute="leading" constant="-6" id="GjD-GN-T7J"/>
                     <constraint firstItem="0Mf-DR-2wC" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="YzY-rt-fOQ"/>
+                    <constraint firstItem="nbp-wr-ofY" firstAttribute="bottom" secondItem="0Mf-DR-2wC" secondAttribute="bottom" id="cer-KD-KUZ"/>
+                    <constraint firstItem="BUq-1a-PWB" firstAttribute="trailing" secondItem="nbp-wr-ofY" secondAttribute="leading" constant="-6" id="dDA-L3-utX"/>
                     <constraint firstAttribute="bottom" secondItem="0Mf-DR-2wC" secondAttribute="bottom" constant="5" id="r48-mH-5dJ"/>
                     <constraint firstAttribute="trailing" secondItem="0Mf-DR-2wC" secondAttribute="trailing" id="tWv-8F-thd"/>
                     <constraint firstItem="0Mf-DR-2wC" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="yla-go-25q"/>
@@ -58,8 +77,10 @@
             <connections>
                 <outlet property="messageLabel" destination="BUq-1a-PWB" id="1dO-hi-VqX"/>
                 <outlet property="stackView" destination="0Mf-DR-2wC" id="fkM-UW-iHd"/>
+                <outlet property="timeReceive" destination="nbp-wr-ofY" id="3b5-pH-V7q"/>
+                <outlet property="timeSend" destination="3g5-tX-tnF" id="Tm4-QY-FjG"/>
             </connections>
-            <point key="canvasLocation" x="32.061068702290072" y="-11.267605633802818"/>
+            <point key="canvasLocation" x="31.884057971014496" y="-11.383928571428571"/>
         </tableViewCell>
     </objects>
 </document>

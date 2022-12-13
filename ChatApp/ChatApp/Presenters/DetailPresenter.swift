@@ -5,7 +5,6 @@
 //  Created by BeeTech on 08/12/2022.
 //
 
-import Foundation
 import Firebase
 
 protocol DetailProtocol: AnyObject {
@@ -21,6 +20,7 @@ class DetailPresenter {
     private var sender: User?
     private var receiver: User?
     private var messages = [Message]()
+    private var service = FirebaseService()
     
     // MARK: - Init
     init(view: DetailProtocol) {
@@ -49,76 +49,40 @@ class DetailPresenter {
         return self.sender
     }
     
-    // MARK: Handler Methods
-    // fetch message
+    // MARK: fetch message
     func fetchMessage(completed: @escaping () -> Void) {
-        self.db.collection("message").addSnapshotListener { querySnapshot, err in
-            guard let querySnapshot = querySnapshot, let sender = self.sender, let receiver = self.receiver, err == nil else { return completed() }
+        self.service.fetchMessage { messages in
+            guard let sender = self.sender, let receiver = self.receiver else { return }
             self.messages.removeAll()
-            querySnapshot.documents.forEach { document in
-                let message = Message(message: document.data())
+            messages.forEach { message in
                 if (message.receiverId == receiver.id && message.senderId == sender.id) || (message.receiverId == sender.id && message.senderId == receiver.id) {
                     self.messages.append(message)
-                    self.sortedMessage()
                 }
+                completed()
             }
-            completed()
         }
     }
     
-    // sort message by time
-    private func sortedMessage() {
-        var timeArr: [Double] = []
-        var messageArr = [Message]()
+    // MARK: Delete message
+    func deleteAllMessage(_ completed: @escaping () -> Void) {
         self.messages.forEach { message in
-            timeArr.append(message.time)
-        }
-        timeArr.sort {
-            $0 < $1
-        }
-        timeArr.forEach { time in
-            self.messages.forEach { message in
-                if message.time == time {
-                    messageArr.append(message)
-                }
-            }
-        }
-        self.messages = messageArr
-    }
-    
-    // Send message To DB
-    func sendMessage(text: String) {
-        let docRef = self.db.collection("message")
-        guard let receiver = self.receiver, let sender = self.sender else { return }
-        if text.isEmpty { return }
-        docRef.addDocument(data: [
-                "receiverId": receiver.id,
-                "senderId": sender.id,
-                "text": text,
-                "img": "",
-                "time": Date.now.timeIntervalSince1970
-        ])
-    }
-    
-    // Send img url To DB
-    func sendImg(img: UIImage, completed: @escaping () -> Void) {
-        let img = img.jpegData(compressionQuality: 0.5)!
-        let keyImg = NSUUID().uuidString
-        let imgFolder = storage.child("img_message").child(keyImg)
-        storage.child("img_message").child(keyImg).putData(img) { _ , err in
-            guard err == nil else { return }
-            imgFolder.downloadURL { url, err in
-                guard err == nil, let url = url, let sender = self.sender, let receiver = self.receiver else { return }
-                let docRef = self.db.collection("message")
-                docRef.addDocument(data: [
-                    "receiverId": receiver.id,
-                    "senderId": sender.id,
-                    "text": "",
-                    "img": url.absoluteString,
-                    "time": Date.now.timeIntervalSince1970
-                ])
-            }
+            self.service.delete(id: message.messageId)
         }
         completed()
+    }
+    
+    // MARK: Send message To DB
+    func sendMessage(_ text: String) {
+        guard let receiver = self.receiver, let sender = self.sender else { return }
+        if text.isEmpty { return }
+        self.service.sendMessage(text, receiver, sender)
+    }
+    
+    // MARK: Send img url To DB
+    func sendImg(img: UIImage, completed: @escaping () -> Void) {
+        guard let receiver = self.receiver, let sender = self.sender else { return }
+        self.service.sendImg(img, receiver, sender) {
+            completed()
+        }
     }
 }

@@ -18,9 +18,9 @@ class ImgCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
-    func setupImg(url: String) {
-        self.imgView.sd_setImage(with: URL(string: url))
-        self.imgView.contentMode = .scaleToFill
+    func setupImg(_ message: Message) {
+        self.imgView.sd_setImage(with: URL(string: message.img))
+    
     }
     func setupSentImg() {
         self.stackView.alignment = .trailing

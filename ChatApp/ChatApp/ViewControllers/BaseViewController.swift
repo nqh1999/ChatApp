@@ -15,31 +15,36 @@ class BaseViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.layer.contents = UIImage(named: "bgr")?.cgImage
-        self.navigationItem.titleView = titleView    }
+        self.navigationItem.titleView = titleView
+    }
     
     // MARK: - Methods
     func getTitleView() -> NavigationTitleView {
         return titleView
     }
     
-    // back button
     func setBackButton() {
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "arrow.left"), style: .plain, target: self, action: #selector(backToPreVC))
         self.navigationController?.navigationBar.tintColor = .black
     }
     
-    // logout button
     func setLogoutButton() {
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "rectangle.portrait.and.arrow.right"), style: .plain, target: self, action: #selector(logout))
         self.navigationController?.navigationBar.tintColor = .white
     }
     
-    func showAler(text: String) {
+    func setDeleteButton() {
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "trash.fill"), style: .plain, target: self, action: #selector(deleteMessage))
+    }
+    
+    func showAlert(text: String) {
         let alert = UIAlertController(title: "Error", message: text, preferredStyle: .alert)
         let okAction = UIAlertAction(title: "OK", style: .cancel)
         alert.addAction(okAction)
         present(alert, animated: true)
     }
+    
+    @objc func deleteMessage() {}
     
     @objc private func backToPreVC() {
         self.navigationController?.popViewController(animated: true)

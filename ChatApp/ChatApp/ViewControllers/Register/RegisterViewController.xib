@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RegisterViewController" customModule="ChatApp" customModuleProvider="target">
+            <connections>
+                <outlet property="avt" destination="xlf-DD-J1j" id="S1u-N8-ukR"/>
+                <outlet property="backToLoginButton" destination="YVZ-4g-KcO" id="MD1-LL-ajk"/>
+                <outlet property="chooseImgButton" destination="JQ9-Cb-04X" id="XkQ-8L-Tus"/>
+                <outlet property="nameTf" destination="l75-4I-xQj" id="hQH-mB-h2v"/>
+                <outlet property="passwordTf" destination="vob-wd-TYg" id="sWs-1Z-jP7"/>
+                <outlet property="registerButton" destination="Dxk-Bw-268" id="rRf-Kz-AsD"/>
+                <outlet property="spinner" destination="QK8-kL-xxa" id="1Yu-2g-kMZ"/>
+                <outlet property="usernameTf" destination="NXl-Ha-R67" id="vw3-Hn-wDW"/>
+                <outlet property="view" destination="5kh-aK-8cb" id="4dm-0O-NVj"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="5kh-aK-8cb">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="nrs-FG-Ugc">
+                    <rect key="frame" x="20" y="30" width="335" height="512.5"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Register" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="65w-vp-Z5z">
+                            <rect key="frame" x="0.0" y="0.0" width="335" height="80"/>
+                            <fontDescription key="fontDescription" name="Noteworthy-Bold" family="Noteworthy" pointSize="50"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="eVX-TD-V6V">
+                            <rect key="frame" x="0.0" y="120" width="335" height="392.5"/>
+                            <subviews>
+                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="Qjh-Hf-fDo">
+                                    <rect key="frame" x="0.0" y="0.0" width="335" height="280"/>
+                                    <subviews>
+                                        <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Fullname" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="l75-4I-xQj" customClass="BaseTextField" customModule="ChatApp" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="0.0" width="335" height="45"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="45" id="IDz-Yb-RRx"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
+                                            <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="image" keyPath="leftImage">
+                                                    <imageReference key="value" image="person.fill" catalog="system" symbolScale="medium" renderingMode="hierarchical-single">
+                                                        <hierarchicalColors>
+                                                            <color systemColor="labelColor"/>
+                                                            <color systemColor="secondaryLabelColor"/>
+                                                            <color systemColor="tertiaryLabelColor"/>
+                                                        </hierarchicalColors>
+                                                    </imageReference>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="leftPadding">
+                                                    <real key="value" value="10"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                        </textField>
+                                        <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="NXl-Ha-R67" customClass="BaseTextField" customModule="ChatApp" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="60" width="335" height="45"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="45" id="D6i-RK-caT"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
+                                            <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="emailAddress" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="image" keyPath="leftImage">
+                                                    <imageReference key="value" image="envelope" catalog="system" symbolScale="medium" renderingMode="hierarchical-single">
+                                                        <hierarchicalColors>
+                                                            <color systemColor="labelColor"/>
+                                                            <color systemColor="secondaryLabelColor"/>
+                                                            <color systemColor="tertiaryLabelColor"/>
+                                                        </hierarchicalColors>
+                                                    </imageReference>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="leftPadding">
+                                                    <real key="value" value="10"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                        </textField>
+                                        <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="vob-wd-TYg" customClass="BaseTextField" customModule="ChatApp" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="120" width="335" height="45"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="45" id="wHM-lK-9Ha"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
+                                            <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" secureTextEntry="YES" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="image" keyPath="leftImage">
+                                                    <imageReference key="value" image="lock" catalog="system" symbolScale="large" renderingMode="hierarchical-single">
+                                                        <hierarchicalColors>
+                                                            <color systemColor="labelColor"/>
+                                                            <color systemColor="secondaryLabelColor"/>
+                                                            <color systemColor="tertiaryLabelColor"/>
+                                                        </hierarchicalColors>
+                                                    </imageReference>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="leftPadding">
+                                                    <real key="value" value="10"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                        </textField>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8td-c0-TFs">
+                                            <rect key="frame" x="0.0" y="180" width="335" height="100"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JQ9-Cb-04X">
+                                                    <rect key="frame" x="0.0" y="34" width="116" height="32.5"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="116" id="Xum-QC-Gft"/>
+                                                    </constraints>
+                                                    <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <state key="normal" title="Button"/>
+                                                    <buttonConfiguration key="configuration" style="plain" title="Choose Image">
+                                                        <fontDescription key="titleFontDescription" name="Futura-Medium" family="Futura" pointSize="14"/>
+                                                    </buttonConfiguration>
+                                                    <connections>
+                                                        <action selector="chooseImage:" destination="-1" eventType="touchUpInside" id="YRu-Ub-yQz"/>
+                                                    </connections>
+                                                </button>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="xlf-DD-J1j">
+                                                    <rect key="frame" x="235" y="0.0" width="100" height="100"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="100" id="1fZ-cD-xO8"/>
+                                                        <constraint firstAttribute="width" constant="100" id="SVz-bR-lbi"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="QK8-kL-xxa">
+                                                    <rect key="frame" x="157.5" y="40" width="20" height="20"/>
+                                                </activityIndicatorView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="QK8-kL-xxa" firstAttribute="centerX" secondItem="8td-c0-TFs" secondAttribute="centerX" id="56h-dy-idh"/>
+                                                <constraint firstAttribute="height" constant="100" id="Agf-NJ-t95"/>
+                                                <constraint firstItem="JQ9-Cb-04X" firstAttribute="leading" secondItem="8td-c0-TFs" secondAttribute="leading" id="CBr-CD-BoN"/>
+                                                <constraint firstItem="JQ9-Cb-04X" firstAttribute="centerY" secondItem="8td-c0-TFs" secondAttribute="centerY" id="H1g-1f-VV4"/>
+                                                <constraint firstItem="QK8-kL-xxa" firstAttribute="centerY" secondItem="8td-c0-TFs" secondAttribute="centerY" id="bvj-z8-1wP"/>
+                                                <constraint firstAttribute="trailing" secondItem="xlf-DD-J1j" secondAttribute="trailing" id="gIt-xl-tKy"/>
+                                                <constraint firstItem="xlf-DD-J1j" firstAttribute="centerY" secondItem="8td-c0-TFs" secondAttribute="centerY" id="kBe-ff-2zt"/>
+                                            </constraints>
+                                        </view>
+                                    </subviews>
+                                </stackView>
+                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="k3l-X2-zC8">
+                                    <rect key="frame" x="0.0" y="305" width="335" height="87.5"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dxk-Bw-268">
+                                            <rect key="frame" x="0.0" y="0.0" width="335" height="45"/>
+                                            <color key="backgroundColor" red="0.91955732489999997" green="0.82925601879999999" blue="0.6164999203" alpha="1" colorSpace="calibratedRGB"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="45" id="AOP-vS-vaX"/>
+                                            </constraints>
+                                            <state key="normal" title="Button"/>
+                                            <buttonConfiguration key="configuration" style="plain" title="Register">
+                                                <fontDescription key="titleFontDescription" name="Futura-Medium" family="Futura" pointSize="20"/>
+                                                <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </buttonConfiguration>
+                                            <connections>
+                                                <action selector="register:" destination="-1" eventType="touchUpInside" id="Gj6-cD-gL3"/>
+                                            </connections>
+                                        </button>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YVZ-4g-KcO" userLabel="back">
+                                            <rect key="frame" x="127.5" y="50" width="80.5" height="37.5"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <state key="normal" title="Button"/>
+                                            <buttonConfiguration key="configuration" style="plain" title="Cancel">
+                                                <fontDescription key="titleFontDescription" name="Futura-Medium" family="Futura" pointSize="18"/>
+                                            </buttonConfiguration>
+                                            <connections>
+                                                <action selector="backToLogin:" destination="-1" eventType="touchUpInside" id="Djf-Gc-Hhr"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="Dxk-Bw-268" firstAttribute="width" secondItem="k3l-X2-zC8" secondAttribute="width" id="Tzf-B2-DD2"/>
+                                    </constraints>
+                                </stackView>
+                            </subviews>
+                        </stackView>
+                    </subviews>
+                </stackView>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="JDX-cY-y6s"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="JDX-cY-y6s" firstAttribute="leading" secondItem="nrs-FG-Ugc" secondAttribute="leading" constant="-20" id="Kdb-tU-CjJ"/>
+                <constraint firstItem="nrs-FG-Ugc" firstAttribute="top" secondItem="JDX-cY-y6s" secondAttribute="top" constant="30" id="P8T-Cb-U8C"/>
+                <constraint firstItem="JDX-cY-y6s" firstAttribute="trailing" secondItem="nrs-FG-Ugc" secondAttribute="trailing" constant="20" id="esd-yE-Lck"/>
+            </constraints>
+            <point key="canvasLocation" x="-13.043478260869566" y="-11.413043478260871"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="envelope" catalog="system" width="128" height="93"/>
+        <image name="lock" catalog="system" width="125" height="128"/>
+        <image name="person.fill" catalog="system" width="128" height="120"/>
+        <systemColor name="labelColor">
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="secondaryLabelColor">
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="tertiaryLabelColor">
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.29803921568627451" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

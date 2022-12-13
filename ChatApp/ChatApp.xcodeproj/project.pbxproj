@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		1399B19129458761001B872B /* PasswordTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1399B19029458761001B872B /* PasswordTextField.swift */; };
 		4FA0D6904C8AD6830CD8AFA8 /* Pods_ChatApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7266BF7FD7B514CEEA8FC86B /* Pods_ChatApp.framework */; };
+		9D2DE0712946F82500F4FD9C /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D2DE06F2946F82500F4FD9C /* RegisterViewController.swift */; };
+		9D2DE0722946F82500F4FD9C /* RegisterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9D2DE0702946F82500F4FD9C /* RegisterViewController.xib */; };
+		9D2DE0742947089500F4FD9C /* RegisterPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D2DE0732947089500F4FD9C /* RegisterPresenter.swift */; };
 		9D3532DD29406CBB00F12230 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3532DB29406CBB00F12230 /* LoginViewController.swift */; };
 		9D3532DE29406CBB00F12230 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9D3532DC29406CBB00F12230 /* LoginViewController.xib */; };
 		9D3532E62940739300F12230 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3532E42940739300F12230 /* DetailViewController.swift */; };
@@ -21,10 +24,12 @@
 		9D383CF62940884600769F0C /* ListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D383CF42940884600769F0C /* ListTableViewCell.swift */; };
 		9D383CF72940884600769F0C /* ListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9D383CF52940884600769F0C /* ListTableViewCell.xib */; };
 		9D383CFA29409A0900769F0C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9D383CF929409A0900769F0C /* GoogleService-Info.plist */; };
+		9D704C03294816A500E6ECC4 /* ExtensionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D704C02294816A500E6ECC4 /* ExtensionCell.swift */; };
 		9DA5E87829405228001CABB8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA5E87729405228001CABB8 /* AppDelegate.swift */; };
 		9DA5E87A29405228001CABB8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA5E87929405228001CABB8 /* SceneDelegate.swift */; };
 		9DA5E8812940522A001CABB8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9DA5E8802940522A001CABB8 /* Assets.xcassets */; };
 		9DA5E8842940522A001CABB8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9DA5E8822940522A001CABB8 /* LaunchScreen.storyboard */; };
+		9DB8280729472F0500069E3A /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB8280629472F0500069E3A /* FirebaseService.swift */; };
 		9DB9BC0D294314C200D6B049 /* CustomLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB9BC0C294314C200D6B049 /* CustomLabel.swift */; };
 		9DB9BC1A2943328B00D6B049 /* ImgCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9DB9BC162943328800D6B049 /* ImgCell.xib */; };
 		9DB9BC1B2943328B00D6B049 /* MessageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9DB9BC172943328900D6B049 /* MessageCell.xib */; };
@@ -41,6 +46,9 @@
 		1399B19029458761001B872B /* PasswordTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordTextField.swift; sourceTree = "<group>"; };
 		29849066BE9438EB2E20FBBA /* Pods-ChatApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatApp.debug.xcconfig"; path = "Target Support Files/Pods-ChatApp/Pods-ChatApp.debug.xcconfig"; sourceTree = "<group>"; };
 		7266BF7FD7B514CEEA8FC86B /* Pods_ChatApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ChatApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9D2DE06F2946F82500F4FD9C /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		9D2DE0702946F82500F4FD9C /* RegisterViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RegisterViewController.xib; sourceTree = "<group>"; };
+		9D2DE0732947089500F4FD9C /* RegisterPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterPresenter.swift; sourceTree = "<group>"; };
 		9D3532DB29406CBB00F12230 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		9D3532DC29406CBB00F12230 /* LoginViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
 		9D3532E42940739300F12230 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
@@ -53,12 +61,14 @@
 		9D383CF42940884600769F0C /* ListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableViewCell.swift; sourceTree = "<group>"; };
 		9D383CF52940884600769F0C /* ListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ListTableViewCell.xib; sourceTree = "<group>"; };
 		9D383CF929409A0900769F0C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		9D704C02294816A500E6ECC4 /* ExtensionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionCell.swift; sourceTree = "<group>"; };
 		9DA5E87429405228001CABB8 /* ChatApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChatApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9DA5E87729405228001CABB8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9DA5E87929405228001CABB8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		9DA5E8802940522A001CABB8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9DA5E8832940522A001CABB8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9DA5E8852940522A001CABB8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9DB8280629472F0500069E3A /* FirebaseService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
 		9DB9BC0C294314C200D6B049 /* CustomLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLabel.swift; sourceTree = "<group>"; };
 		9DB9BC162943328800D6B049 /* ImgCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImgCell.xib; sourceTree = "<group>"; };
 		9DB9BC172943328900D6B049 /* MessageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessageCell.xib; sourceTree = "<group>"; };
@@ -92,6 +102,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		9D2DE06E2946F80300F4FD9C /* Register */ = {
+			isa = PBXGroup;
+			children = (
+				9D2DE06F2946F82500F4FD9C /* RegisterViewController.swift */,
+				9D2DE0702946F82500F4FD9C /* RegisterViewController.xib */,
+			);
+			path = Register;
+			sourceTree = "<group>";
+		};
 		9D3532DA29406CAF00F12230 /* Login */ = {
 			isa = PBXGroup;
 			children = (
@@ -122,6 +141,7 @@
 		9D383CF32940882500769F0C /* CustomCell */ = {
 			isa = PBXGroup;
 			children = (
+				9D704C02294816A500E6ECC4 /* ExtensionCell.swift */,
 				9DD64A072941E54500B93550 /* ChatCell */,
 				9D383CF82940884A00769F0C /* List */,
 			);
@@ -142,6 +162,7 @@
 			children = (
 				9DBF68E82942E664008F0262 /* BaseViewController.swift */,
 				9D3532DA29406CAF00F12230 /* Login */,
+				9D2DE06E2946F80300F4FD9C /* Register */,
 				9D71B92B294067ED006FD8C1 /* List */,
 				9D3532E32940738300F12230 /* Detail */,
 			);
@@ -160,6 +181,7 @@
 		9D71B92829406768006FD8C1 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				9DB8280629472F0500069E3A /* FirebaseService.swift */,
 				9D3532E82940788900F12230 /* Model.swift */,
 			);
 			path = Models;
@@ -169,6 +191,7 @@
 			isa = PBXGroup;
 			children = (
 				9D3532ED294082BD00F12230 /* LoginPresenter.swift */,
+				9D2DE0732947089500F4FD9C /* RegisterPresenter.swift */,
 				9DE2BB4B29417C6E002731D3 /* ListPresenter.swift */,
 				9DE2BB4D294191AA002731D3 /* DetailPresenter.swift */,
 			);
@@ -334,6 +357,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9D2DE0722946F82500F4FD9C /* RegisterViewController.xib in Resources */,
 				9D3532DE29406CBB00F12230 /* LoginViewController.xib in Resources */,
 				9DB9BC1B2943328B00D6B049 /* MessageCell.xib in Resources */,
 				9D383CF72940884600769F0C /* ListTableViewCell.xib in Resources */,
@@ -397,15 +421,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				9DE2BB4C29417C6E002731D3 /* ListPresenter.swift in Sources */,
+				9D704C03294816A500E6ECC4 /* ExtensionCell.swift in Sources */,
 				9D3532EE294082BD00F12230 /* LoginPresenter.swift in Sources */,
 				9D3532DD29406CBB00F12230 /* LoginViewController.swift in Sources */,
 				9DA5E87829405228001CABB8 /* AppDelegate.swift in Sources */,
 				9DBF68E92942E664008F0262 /* BaseViewController.swift in Sources */,
 				9DE2BB4E294191AA002731D3 /* DetailPresenter.swift in Sources */,
+				9DB8280729472F0500069E3A /* FirebaseService.swift in Sources */,
 				1399B19129458761001B872B /* PasswordTextField.swift in Sources */,
 				9DB9BC0D294314C200D6B049 /* CustomLabel.swift in Sources */,
 				9D3532EC29407AEB00F12230 /* BaseTextField.swift in Sources */,
+				9D2DE0712946F82500F4FD9C /* RegisterViewController.swift in Sources */,
 				9D3532E62940739300F12230 /* DetailViewController.swift in Sources */,
+				9D2DE0742947089500F4FD9C /* RegisterPresenter.swift in Sources */,
 				9D383CF62940884600769F0C /* ListTableViewCell.swift in Sources */,
 				9DB9BC1C2943328B00D6B049 /* ImgCell.swift in Sources */,
 				9D3532E92940788900F12230 /* Model.swift in Sources */,

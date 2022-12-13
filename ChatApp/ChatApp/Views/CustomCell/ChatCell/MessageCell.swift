@@ -10,7 +10,10 @@ import UIKit
 class MessageCell: UITableViewCell {
     
     @IBOutlet private weak var stackView: UIStackView!
+    @IBOutlet private weak var timeSend: UILabel!
     @IBOutlet private weak var messageLabel: CustomLabel!
+    @IBOutlet private weak var timeReceive: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         self.messageLabel.layer.masksToBounds = true
@@ -21,8 +24,10 @@ class MessageCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
-    func setupData(text: String) {
-        self.messageLabel.text = text
+    func setupData(_ message: Message) {
+        self.messageLabel.text = message.text
+        self.timeSend.text = self.setTimestamp(epochTime: message.time)
+        self.timeReceive.text = self.setTimestamp(epochTime: message.time)
     }
     func setupSentMessage() {
         self.messageLabel.backgroundColor = UIColor(named: "lightGreen")
