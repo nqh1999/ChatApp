@@ -32,6 +32,11 @@ final class DetailViewController: BaseViewController {
     }
     
     // MARK: - Methods
+    override func backToPreVC() {
+        super.backToPreVC()
+        self.presenter.setState()
+    }
+    
     override func deleteMessage() {
         super.deleteMessage()
         let alert = UIAlertController(title: "Alert", message: "Do you want delete all message?", preferredStyle: .alert)

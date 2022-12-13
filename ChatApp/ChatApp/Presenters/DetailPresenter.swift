@@ -61,6 +61,11 @@ class DetailPresenter {
         }
     }
     
+    func setState() {
+        guard let sender = self.sender, let receiver = self.receiver else { return }
+        self.service.setStateUnreadMessage(sender, receiver)
+    }
+    
     // MARK: Delete message
     func deleteAllMessage(_ completed: @escaping () -> Void) {
         self.messages.forEach { message in

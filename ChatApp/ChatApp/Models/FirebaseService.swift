@@ -116,9 +116,15 @@ class FirebaseService {
             querySnapshot.documents.forEach { document in
                 let message = Message(message: document.data())
                 if (message.senderId == sender.id && message.receiverId == receiver.id) || (message.senderId == receiver.id && message.receiverId == sender.id) {
+                    self.messages.append(message)
                     self.setState(id: message.messageId)
                 }
             }
+//            self.messages.forEach { message in
+//                if message.receiverId == receiver.id {
+//                    self.setState(id: message.messageId)
+//                }
+//            }
         }
     }
     

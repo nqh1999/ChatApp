@@ -83,6 +83,13 @@ class ListPresenter {
                 }
                 self.message[receiver.id] = self.allMessage.last
             }
+            
+        // MARK: new message is top
+//            self.receivers = self.receivers.sorted {
+//                guard let preUser = self.message[$0.id], let nextUser = self.message[$1.id] else { return false }
+//                return preUser.time > nextUser.time
+//            }
+//            self.searchData = self.receivers
             completed()
         }
     }

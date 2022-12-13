@@ -46,11 +46,11 @@ class BaseViewController: UIViewController {
     
     @objc func deleteMessage() {}
     
-    @objc private func backToPreVC() {
+    @objc func backToPreVC() {
         self.navigationController?.popViewController(animated: true)
     }
     
-    @objc private func logout() {
+    @objc func logout() {
         (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first?.rootViewController = UINavigationController(rootViewController: LoginViewController())
     }
 }
