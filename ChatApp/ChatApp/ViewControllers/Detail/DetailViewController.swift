@@ -28,7 +28,7 @@ final class DetailViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.setBackButton()
-        self.setDeleteButton()
+//        self.setDeleteButton()
     }
     
     // MARK: - Methods

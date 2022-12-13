@@ -5,7 +5,7 @@
 //  Created by BeeTech on 08/12/2022.
 //
 
-import Firebase
+import Foundation
 
 protocol ListProtocol: AnyObject {
     
@@ -15,7 +15,6 @@ class ListPresenter {
     
     // MARK: - Properties
     private weak var view: ListProtocol?
-    private var db = Firestore.firestore()
     private var receivers = [User]()
     private var sender: User?
     private var searchData = [User]()
@@ -39,7 +38,7 @@ class ListPresenter {
     }
     
     func getMessageById(_ id: Int) -> Message? {
-        return message[id]
+        return self.message[id]
     }
     
     func setData(_ id: Int) {

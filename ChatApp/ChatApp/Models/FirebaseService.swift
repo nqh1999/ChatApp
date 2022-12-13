@@ -14,7 +14,18 @@ class FirebaseService {
     private var messages = [Message]()
     private var users = [User]()
     
-    // MARK: - Handler Methods
+    // MARK: Register
+    func Register(_ id: Int,_ name: String,_ username: String,_ password: String,_ imgUrl: String) {
+        let docRef = self.db.collection("user").document("\(id)")
+        docRef.setData([
+            "id": id,
+            "username": username,
+            "password": password,
+            "name": name,
+            "imgUrl": imgUrl
+        ])
+    }
+    // MARK: Fetch User
     func fetchUser(completed: @escaping ([User]) -> Void) {
         self.db.collection("user").addSnapshotListener { querySnapshot, err in
             guard let querySnapshot = querySnapshot, err == nil else { return }
@@ -35,7 +46,9 @@ class FirebaseService {
             querySnapshot.documents.forEach { document in
                 let message = Message(message: document.data())
                 self.messages.append(message)
-                self.sortedMessage()
+                self.messages = self.messages.sorted {
+                    return $0.time < $1.time
+                }
             }
             completed(self.messages)
         }
@@ -123,25 +136,5 @@ class FirebaseService {
                 self.db.collection("message").document(id).updateData(["read" : true])
             }
         }
-    }
-    
-    // MARK: sort message by time
-    private func sortedMessage() {
-        var timeArr: [Double] = []
-        var messageArr = [Message]()
-        self.messages.forEach { message in
-            timeArr.append(message.time)
-        }
-        timeArr.sort {
-            $0 < $1
-        }
-        timeArr.forEach { time in
-            self.messages.forEach { message in
-                if message.time == time {
-                    messageArr.append(message)
-                }
-            }
-        }
-        self.messages = messageArr
     }
 }

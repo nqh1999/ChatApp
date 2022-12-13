@@ -5,7 +5,7 @@
 //  Created by BeeTech on 08/12/2022.
 //
 
-import Firebase
+import UIKit
 
 protocol DetailProtocol: AnyObject {
 
@@ -15,8 +15,6 @@ class DetailPresenter {
     
     // MARK: - Properties
     private weak var view: DetailProtocol?
-    private var db = Firestore.firestore()
-    private var storage = Storage.storage().reference()
     private var sender: User?
     private var receiver: User?
     private var messages = [Message]()

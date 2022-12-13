@@ -5,7 +5,7 @@
 //  Created by BeeTech on 07/12/2022.
 //
 
-import Firebase
+import Foundation
 
 protocol LoginProtocol: AnyObject {
     func didGetLoginResult(result: Bool, senderId: Int)
@@ -15,7 +15,6 @@ class LoginPresenter {
     
     // MARK: - Properties
     private weak var view: LoginProtocol?
-    private var db = Firestore.firestore()
     private var users = [User]()
     private var senderId: Int = 0
     private var service = FirebaseService()

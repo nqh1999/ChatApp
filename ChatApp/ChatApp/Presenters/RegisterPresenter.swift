@@ -5,7 +5,7 @@
 //  Created by BeeTech on 12/12/2022.
 //
 
-import Firebase
+import UIKit
 
 protocol RegisterProtocol: AnyObject {
     func didGetRegisterResult(result: String?)
@@ -15,13 +15,8 @@ class RegisterPresenter {
     
     // MARK: - Properties
     private weak var view: RegisterProtocol?
-    private var db = Firestore.firestore()
-    private var storage = Storage.storage().reference()
     private var users = [User]()
     private var imgUrl: String = ""
-    private var name: String = ""
-    private var username: String = ""
-    private var password: String = ""
     private var service = FirebaseService()
     
     // MARK: - Init
@@ -58,14 +53,7 @@ class RegisterPresenter {
             } else if user.username == username {
                 self.view?.didGetRegisterResult(result: Err.usernameExist.rawValue)
             } else {
-                let docRef = self.db.collection("user").document("\(self.users.count + 1)")
-                docRef.setData([
-                    "id": self.users.count + 1,
-                    "username": username,
-                    "password": password,
-                    "name": name,
-                    "imgUrl": self.imgUrl
-                ])
+                self.service.Register(self.users.count + 1, name, username, password, self.imgUrl)
                 self.view?.didGetRegisterResult(result: nil)
             }
         }

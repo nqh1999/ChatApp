@@ -22,11 +22,11 @@
                         <rect key="frame" x="0.0" y="7" width="320" height="76"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GQt-ei-TWc">
-                                <rect key="frame" x="304" y="10" width="6" height="6"/>
+                                <rect key="frame" x="300" y="10" width="10" height="10"/>
                                 <color key="backgroundColor" systemColor="systemRedColor"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="6" id="gSC-B3-PW4"/>
-                                    <constraint firstAttribute="width" constant="6" id="q1W-jm-m2W"/>
+                                    <constraint firstAttribute="height" constant="10" id="gSC-B3-PW4"/>
+                                    <constraint firstAttribute="width" constant="10" id="q1W-jm-m2W"/>
                                 </constraints>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain"/>

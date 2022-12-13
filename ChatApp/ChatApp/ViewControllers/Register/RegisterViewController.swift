@@ -60,7 +60,7 @@ final class RegisterViewController: BaseViewController {
     private func setupPickerView() {
         self.imgPickerView.delegate = self
         self.imgPickerView.sourceType = .photoLibrary
-        present(self.imgPickerView, animated: true)
+        self.present(self.imgPickerView, animated: true)
     }
     
     @IBAction private func chooseImage(_ sender: Any) {

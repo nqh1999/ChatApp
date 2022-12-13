@@ -31,6 +31,15 @@ final class ListViewController: BaseViewController {
     }
     
     // MARK: - Methods
+    private func setupData() {
+        UIView.animate(withDuration: 0, delay: 0) {
+            self.presenter.fetchUser() {
+                self.presenter.fetchMessage {
+                    self.tableView.reloadData()
+                }
+            }
+        }
+    }
     private func setupUI() {
         self.setupTableView()
         self.setupSearchBar()
@@ -57,16 +66,6 @@ final class ListViewController: BaseViewController {
         return self.presenter
     }
     
-    private func setupData() {
-        UIView.animate(withDuration: 0, delay: 0) {
-            self.presenter.fetchUser() {
-                self.presenter.fetchMessage {
-                    self.tableView.reloadData()
-                }
-            }
-        }
-    }
-    
     // send data and go to detail view controller when click to row of table view
     private func goToDetailVCByIndex(index: Int) {
         guard let sender = self.presenter.getSender(), let receiver = self.presenter.getUserByIndex(index: index) else { return }
@@ -91,7 +90,7 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! ListTableViewCell
-        cell.fillData(user: self.presenter.getUserByIndex(index: indexPath.row), message: self.presenter.getMessageById(self.presenter.getUserByIndex(index: indexPath.row)!.id))
+        cell.fillData(self.presenter.getUserByIndex(index: indexPath.row), self.presenter.getMessageById(self.presenter.getUserByIndex(index: indexPath.row)!.id))
         return cell
     }
     

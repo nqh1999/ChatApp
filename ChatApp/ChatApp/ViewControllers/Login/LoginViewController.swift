@@ -45,9 +45,7 @@ final class LoginViewController: BaseViewController {
     }
     
     private func setupData() {
-        UIView.animate(withDuration: 0, delay: 0) {
-            self.presenter.fetchUser()
-        }
+        self.presenter.fetchUser()
     }
     
     private func login() {
