@@ -55,9 +55,9 @@ class ListPresenter {
     
     // MARK: - Fetch User
     func fetchUser(completed: @escaping () -> Void) {
-        self.receivers.removeAll()
-        self.allMessage.removeAll()
         self.service.fetchUser { users in
+            self.receivers.removeAll()
+            self.searchData.removeAll()
             users.forEach { user in
                 if user.id == self.senderId {
                     self.sender = user
