@@ -14,7 +14,7 @@ final class DetailViewController: BaseViewController {
     @IBOutlet private weak var sendButton: UIButton!
     @IBOutlet private weak var messageTf: BaseTextField!
     @IBOutlet private weak var tableView: UITableView!
-    @IBOutlet weak var spinner: UIActivityIndicatorView!
+    @IBOutlet private weak var spinner: UIActivityIndicatorView!
     private var imgPickerView = UIImagePickerController()
     lazy private var presenter = DetailPresenter(view: self)
     
@@ -28,10 +28,31 @@ final class DetailViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.setBackButton()
+        self.setDeleteButton()
     }
     
     // MARK: - Methods
-    func setupUI() {
+    override func deleteMessage() {
+        super.deleteMessage()
+        let alert = UIAlertController(title: "Alert", message: "Do you want delete all message?", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Yes", style: .destructive) { _ in
+            self.spinner.isHidden = false
+            self.spinner.startAnimating()
+            self.presenter.deleteAllMessage {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    self.tableView.reloadData()
+                    self.spinner.stopAnimating()
+                }
+            }
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        alert.addAction(okAction)
+        alert.addAction(cancelAction)
+        self.present(alert, animated: true)
+        
+    }
+    
+    private func setupUI() {
         self.getTitleView().setTitleView(data: self.presenter.getReceiver())
         self.messageTf.shouldReturn = { [weak self] in
             self?.sendMessage()
@@ -60,13 +81,11 @@ final class DetailViewController: BaseViewController {
     private func setupPickerView() {
         self.imgPickerView.delegate = self
         self.imgPickerView.sourceType = .photoLibrary
-        present(self.imgPickerView, animated: true)
+        self.present(self.imgPickerView, animated: true)
     }
     
     private func setupData() {
-        UIView.animate(withDuration: 0, delay: 0, options: .curveEaseInOut) {
-            self.view.layoutIfNeeded()
-        } completion: { _ in
+        UIView.animate(withDuration: 0, delay: 0) {
             self.presenter.fetchMessage {
                 self.reloadData()
             }
@@ -78,7 +97,7 @@ final class DetailViewController: BaseViewController {
     }
     
     private func sendMessage() {
-        self.presenter.sendMessage(text: self.messageTf.text ?? "")
+        self.presenter.sendMessage(self.messageTf.text ?? "")
         self.view.endEditing(true)
         self.messageTf.text = ""
         self.messageTf.becomeFirstResponder()

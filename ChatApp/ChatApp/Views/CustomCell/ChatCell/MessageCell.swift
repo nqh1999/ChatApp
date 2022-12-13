@@ -10,9 +10,9 @@ import UIKit
 class MessageCell: UITableViewCell {
     
     @IBOutlet private weak var stackView: UIStackView!
-    @IBOutlet weak var timeSend: UILabel!
+    @IBOutlet private weak var timeSend: UILabel!
     @IBOutlet private weak var messageLabel: CustomLabel!
-    @IBOutlet weak var timeReceive: UILabel!
+    @IBOutlet private weak var timeReceive: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

@@ -5,7 +5,6 @@
 //  Created by BeeTech on 12/12/2022.
 //
 
-import Foundation
 import Firebase
 
 protocol RegisterProtocol: AnyObject {
@@ -30,27 +29,22 @@ class RegisterPresenter {
         self.view = view
     }
     
-    // MARK: - Handler Methods
+    // MARK: Fetch user
     func fetchUser() {
         self.service.fetchUser { users in
             self.users = users
         }
     }
     
+    // MARK: Get img url from firestore and save to property
     func setImgUrl(img: UIImage, completed: @escaping () -> Void) {
-        let img = img.jpegData(compressionQuality: 0.5)!
-        let keyImg = NSUUID().uuidString
-        let imgFolder = storage.child("img_avt").child(keyImg)
-        storage.child("img_avt").child(keyImg).putData(img) { _ , err in
-            guard err == nil else { return }
-            imgFolder.downloadURL { url, err in
-                guard err == nil, let url = url else { return }
-                self.imgUrl = url.absoluteString
-                completed()
-            }
+        self.service.fetchAvtUrl(img: img) { url in
+            self.imgUrl = url
+            completed()
         }
     }
     
+    // MARK: check register and send data if check success
     func register(_ name: String,_ username: String,_ password: String) {
         self.users.forEach { user in
             if name.isEmpty {

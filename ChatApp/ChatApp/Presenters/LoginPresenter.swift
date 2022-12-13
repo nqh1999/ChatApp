@@ -5,7 +5,6 @@
 //  Created by BeeTech on 07/12/2022.
 //
 
-import Foundation
 import Firebase
 
 protocol LoginProtocol: AnyObject {
@@ -31,14 +30,14 @@ class LoginPresenter {
         return self.users
     }
     
-    // MARK: - Handler Methods
+    // MARK: fetch user
     func fetchUser() {
         self.service.fetchUser { users in
             self.users = users
         }
     }
     
-    // check and send result, user id if login sucess to view
+    // MARK: check and send (result, senderid) to view if login sucess
     func checkLogin(username: String, password: String) {
         var result: Bool = false
         self.users.forEach { user in

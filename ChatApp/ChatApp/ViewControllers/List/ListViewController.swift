@@ -57,7 +57,7 @@ final class ListViewController: BaseViewController {
         return self.presenter
     }
     
-    func setupData() {
+    private func setupData() {
         UIView.animate(withDuration: 0, delay: 0) {
             self.presenter.fetchUser() {
                 self.presenter.fetchMessage {
@@ -91,29 +91,18 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! ListTableViewCell
-//        cell.fillData(data: self.presenter.getUserByIndex(index: indexPath.row))
         cell.fillData(user: self.presenter.getUserByIndex(index: indexPath.row), message: self.presenter.getMessageById(self.presenter.getUserByIndex(index: indexPath.row)!.id))
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.goToDetailVCByIndex(index: indexPath.row)
+        guard let sender = self.presenter.getSender(), let receiver = self.presenter.getUserByIndex(index: indexPath.row) else { return }
+        guard let message = self.presenter.getMessageById(receiver.id) else { return }
+        if message.receiverId == sender.id {
+            self.presenter.setState(sender, receiver)
+        }
     }
-    
-//    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-//        return true
-//    }
-//
-//    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-//        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { (action, view, completion) in
-//            self.presenter.removeReceiverAt(index: indexPath.row)
-//            self.tableView.reloadData()
-//            completion(true)
-//        }
-//        deleteAction.image = UIImage(systemName: "trash.circle.fill")
-//        return UISwipeActionsConfiguration(actions: [deleteAction])
-//    }
-    
 }
 
 extension ListViewController: ListProtocol {

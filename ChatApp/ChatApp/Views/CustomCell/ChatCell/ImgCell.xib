@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -16,24 +17,6 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="175"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ceq-iv-sDa">
-                        <rect key="frame" x="-46" y="149" width="40" height="16"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="40" id="Yrd-7M-mqJ"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="12"/>
-                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kbn-ye-0kV">
-                        <rect key="frame" x="246" y="149" width="40" height="16"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="40" id="d9z-qn-G5f"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="12"/>
-                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <nil key="highlightedColor"/>
-                    </label>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="ZSp-re-O6l">
                         <rect key="frame" x="0.0" y="5" width="240" height="160"/>
                         <subviews>
@@ -54,12 +37,8 @@
                 <constraints>
                     <constraint firstItem="ZSp-re-O6l" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="9GY-yS-7Dr"/>
                     <constraint firstItem="ZSp-re-O6l" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="Lnr-p3-Cqa"/>
-                    <constraint firstItem="Ceq-iv-sDa" firstAttribute="bottom" secondItem="muk-Zq-W4F" secondAttribute="bottom" id="OQG-06-qHk"/>
-                    <constraint firstItem="Ceq-iv-sDa" firstAttribute="trailing" secondItem="muk-Zq-W4F" secondAttribute="leading" constant="-6" id="VUf-qq-KHq"/>
-                    <constraint firstItem="Kbn-ye-0kV" firstAttribute="bottom" secondItem="muk-Zq-W4F" secondAttribute="bottom" id="bx6-xl-dW9"/>
                     <constraint firstAttribute="bottom" secondItem="ZSp-re-O6l" secondAttribute="bottom" constant="5" id="ucm-lJ-aZd"/>
                     <constraint firstAttribute="trailing" secondItem="ZSp-re-O6l" secondAttribute="trailing" id="vCf-Ge-U4j"/>
-                    <constraint firstItem="Kbn-ye-0kV" firstAttribute="leading" secondItem="muk-Zq-W4F" secondAttribute="trailing" constant="6" id="yOj-UY-9G4"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
@@ -67,8 +46,6 @@
             <connections>
                 <outlet property="imgView" destination="muk-Zq-W4F" id="C7f-FR-G3k"/>
                 <outlet property="stackView" destination="ZSp-re-O6l" id="kbi-T9-fzh"/>
-                <outlet property="timeReceive" destination="Kbn-ye-0kV" id="l11-Nh-JT4"/>
-                <outlet property="timeSend" destination="Ceq-iv-sDa" id="SP6-qm-vXs"/>
             </connections>
             <point key="canvasLocation" x="59.420289855072468" y="39.84375"/>
         </tableViewCell>

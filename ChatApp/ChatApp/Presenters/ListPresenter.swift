@@ -5,7 +5,6 @@
 //  Created by BeeTech on 08/12/2022.
 //
 
-import Foundation
 import Firebase
 
 protocol ListProtocol: AnyObject {
@@ -24,6 +23,7 @@ class ListPresenter {
     private var message: [Int: Message] = [:]
     private var service = FirebaseService()
     private var senderId: Int = 0
+    
     // MARK: - Init
     init(view: ListProtocol) {
         self.view = view
@@ -46,6 +46,15 @@ class ListPresenter {
         self.senderId = id
     }
     
+    func setState(_ sender: User, _ receiver: User) {
+        self.service.setStateUnreadMessage(sender, receiver)
+    }
+    
+    func getSender() -> User? {
+        return self.sender
+    }
+    
+    // MARK: - Fetch User
     func fetchUser(completed: @escaping () -> Void) {
         self.receivers.removeAll()
         self.allMessage.removeAll()
@@ -62,6 +71,7 @@ class ListPresenter {
         }
     }
     
+    // MARK: Fetch Message
     func fetchMessage(completed: @escaping () -> Void) {
         self.message.removeAll()
         self.service.fetchMessage { messages in
@@ -78,16 +88,7 @@ class ListPresenter {
         }
     }
     
-    func getSender() -> User? {
-        return self.sender
-    }
-    
-    func removeReceiverAt(index: Int) {
-        self.searchData.remove(at: index)
-    }
-    
-    // MARK: - Handler Methods
-    // fill data after search
+    // MARK: search user
     func filterData(text: String) {
         self.searchData = text.isEmpty ? receivers : receivers.filter {
             $0.name.lowercased().contains(text.lowercased())

@@ -74,7 +74,7 @@ final class LoginViewController: BaseViewController {
 extension LoginViewController: LoginProtocol {
     func didGetLoginResult(result: Bool, senderId: Int) {
         if !result {
-            self.showAler(text: Err.loginFailed.rawValue)
+            self.showAlert(text: Err.loginFailed.rawValue)
         } else {
             let vc = ListViewController()
             vc.getPresenter().setData(senderId)

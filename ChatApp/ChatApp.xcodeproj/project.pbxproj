@@ -24,6 +24,7 @@
 		9D383CF62940884600769F0C /* ListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D383CF42940884600769F0C /* ListTableViewCell.swift */; };
 		9D383CF72940884600769F0C /* ListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9D383CF52940884600769F0C /* ListTableViewCell.xib */; };
 		9D383CFA29409A0900769F0C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9D383CF929409A0900769F0C /* GoogleService-Info.plist */; };
+		9D704C03294816A500E6ECC4 /* ExtensionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D704C02294816A500E6ECC4 /* ExtensionCell.swift */; };
 		9DA5E87829405228001CABB8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA5E87729405228001CABB8 /* AppDelegate.swift */; };
 		9DA5E87A29405228001CABB8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA5E87929405228001CABB8 /* SceneDelegate.swift */; };
 		9DA5E8812940522A001CABB8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9DA5E8802940522A001CABB8 /* Assets.xcassets */; };
@@ -60,6 +61,7 @@
 		9D383CF42940884600769F0C /* ListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableViewCell.swift; sourceTree = "<group>"; };
 		9D383CF52940884600769F0C /* ListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ListTableViewCell.xib; sourceTree = "<group>"; };
 		9D383CF929409A0900769F0C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		9D704C02294816A500E6ECC4 /* ExtensionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionCell.swift; sourceTree = "<group>"; };
 		9DA5E87429405228001CABB8 /* ChatApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChatApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9DA5E87729405228001CABB8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9DA5E87929405228001CABB8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -139,6 +141,7 @@
 		9D383CF32940882500769F0C /* CustomCell */ = {
 			isa = PBXGroup;
 			children = (
+				9D704C02294816A500E6ECC4 /* ExtensionCell.swift */,
 				9DD64A072941E54500B93550 /* ChatCell */,
 				9D383CF82940884A00769F0C /* List */,
 			);
@@ -418,6 +421,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9DE2BB4C29417C6E002731D3 /* ListPresenter.swift in Sources */,
+				9D704C03294816A500E6ECC4 /* ExtensionCell.swift in Sources */,
 				9D3532EE294082BD00F12230 /* LoginPresenter.swift in Sources */,
 				9D3532DD29406CBB00F12230 /* LoginViewController.swift in Sources */,
 				9DA5E87829405228001CABB8 /* AppDelegate.swift in Sources */,

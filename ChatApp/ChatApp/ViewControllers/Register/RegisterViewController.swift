@@ -7,7 +7,7 @@
 
 import UIKit
 
-class RegisterViewController: BaseViewController {
+final class RegisterViewController: BaseViewController {
     // MARK: - Properties
     @IBOutlet private weak var nameTf: BaseTextField!
     @IBOutlet private weak var usernameTf: BaseTextField!
@@ -23,23 +23,16 @@ class RegisterViewController: BaseViewController {
     // MARK: - Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupUI()
+        self.setupUI()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.setupUserData()
-        self.setupMessageData()
+        self.setupData()
     }
     
     // MARK: - Methods
-    private func setupUserData() {
-        UIView.animate(withDuration: 0, delay: 0) {
-            self.presenter.fetchUser()
-        }
-    }
-    
-    private func setupMessageData() {
+    private func setupData() {
         UIView.animate(withDuration: 0, delay: 0) {
             self.presenter.fetchUser()
         }
@@ -105,7 +98,7 @@ extension RegisterViewController: UIImagePickerControllerDelegate, UINavigationC
 extension RegisterViewController: RegisterProtocol {
     func didGetRegisterResult(result: String?) {
         if let result = result {
-            self.showAler(text: result)
+            self.showAlert(text: result)
         } else {
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 self.navigationController?.popToRootViewController(animated: true)

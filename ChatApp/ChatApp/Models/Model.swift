@@ -7,6 +7,7 @@
 
 import Foundation
 
+// MARK: Enum error
 enum Err: String {
     case nameIsEmpty = "Fullname can't be blank"
     case usernameIsEmpty = "Username can't be blank"
@@ -16,6 +17,7 @@ enum Err: String {
     case loginFailed = "username or password is incorrect"
 }
 
+// MARK: User Model
 struct User {
     var id: Int
     var name: String
@@ -31,17 +33,22 @@ struct User {
     }
 }
 
+// MARK: Message Model
 struct Message {
+    var messageId: String
     var receiverId: Int
     var senderId: Int
     var text: String
     var img: String
     var time: Double
+    var read: Bool
     init(message: [String: Any]) {
+        self.messageId = message["messageId"] as? String ?? ""
         self.receiverId = message["receiverId"] as? Int ?? 0
         self.senderId = message["senderId"] as? Int ?? 0
         self.text = message["text"] as? String ?? ""
         self.img = message["img"] as? String ?? ""
         self.time = message["time"] as? Double ?? 0.0
+        self.read = message["read"] as? Bool ?? false
     }
 }
