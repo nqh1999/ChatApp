@@ -10,8 +10,8 @@ import UIKit
 final class LoginViewController: BaseViewController {
     
     // MARK: - Properties
-    @IBOutlet private weak var loginButton: UIButton!
-    @IBOutlet private weak var registerButton: UIButton!
+    @IBOutlet private weak var loginButton: CustomButton!
+    @IBOutlet private weak var registerButton: CustomButton!
     @IBOutlet private weak var userNameTf: BaseTextField!
     @IBOutlet private weak var passwordTf: PasswordTextField!
     @IBOutlet private weak var showPasswordButton: UIButton!
@@ -32,8 +32,6 @@ final class LoginViewController: BaseViewController {
         self.view.layer.contents = UIImage(named: "bgrLogin")?.cgImage
         self.userNameTf.text = "1@1.com"
         self.passwordTf.text = "123456"
-        self.loginButton.layer.cornerRadius = 5
-        self.registerButton.layer.cornerRadius = 5
         self.userNameTf.shouldReturn = { [weak self] in
             self?.passwordTf.becomeFirstResponder()
         }

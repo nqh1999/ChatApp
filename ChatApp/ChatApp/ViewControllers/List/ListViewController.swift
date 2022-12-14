@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 final class ListViewController: BaseViewController {
     
@@ -27,7 +28,7 @@ final class ListViewController: BaseViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.setLogoutButton()
+        self.setSettingButton()
     }
     
     // MARK: - Methods
@@ -40,9 +41,12 @@ final class ListViewController: BaseViewController {
             }
         }
     }
+    
     private func setupUI() {
         self.setupTableView()
         self.setupSearchBar()
+        self.navigationItem.titleView = nil
+        self.title = "Chats"
     }
     
     private func setupTableView() {
@@ -60,6 +64,14 @@ final class ListViewController: BaseViewController {
         self.searchBar.shouldReturn = { [weak self] in
             self?.view.endEditing(true)
         }
+    }
+    
+    @objc override func setting() {
+        super.setting()
+        guard let sender = self.presenter.getSender() else { return }
+        let vc = SettingViewController()
+        vc.getPresenter().setUserId(sender.id)
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     func getPresenter() -> ListPresenter {

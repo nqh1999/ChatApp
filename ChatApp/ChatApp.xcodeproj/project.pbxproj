@@ -36,6 +36,10 @@
 		9DB9BC1C2943328B00D6B049 /* ImgCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB9BC182943328900D6B049 /* ImgCell.swift */; };
 		9DB9BC1D2943328B00D6B049 /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB9BC192943328A00D6B049 /* MessageCell.swift */; };
 		9DBF68E92942E664008F0262 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DBF68E82942E664008F0262 /* BaseViewController.swift */; };
+		9DC40F582949A19100A763B9 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC40F572949A19100A763B9 /* CustomButton.swift */; };
+		9DC40F5A2949A47000A763B9 /* SettingPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC40F592949A47000A763B9 /* SettingPresenter.swift */; };
+		9DC6B637294968A000D3EF44 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC6B635294968A000D3EF44 /* SettingViewController.swift */; };
+		9DC6B638294968A000D3EF44 /* SettingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9DC6B636294968A000D3EF44 /* SettingViewController.xib */; };
 		9DE2BB4C29417C6E002731D3 /* ListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DE2BB4B29417C6E002731D3 /* ListPresenter.swift */; };
 		9DE2BB4E294191AA002731D3 /* DetailPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DE2BB4D294191AA002731D3 /* DetailPresenter.swift */; };
 		9DE2BB5529419887002731D3 /* NavigationTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DE2BB5329419887002731D3 /* NavigationTitleView.swift */; };
@@ -75,6 +79,10 @@
 		9DB9BC182943328900D6B049 /* ImgCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImgCell.swift; sourceTree = "<group>"; };
 		9DB9BC192943328A00D6B049 /* MessageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
 		9DBF68E82942E664008F0262 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		9DC40F572949A19100A763B9 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
+		9DC40F592949A47000A763B9 /* SettingPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingPresenter.swift; sourceTree = "<group>"; };
+		9DC6B635294968A000D3EF44 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
+		9DC6B636294968A000D3EF44 /* SettingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingViewController.xib; sourceTree = "<group>"; };
 		9DE2BB4B29417C6E002731D3 /* ListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListPresenter.swift; sourceTree = "<group>"; };
 		9DE2BB4D294191AA002731D3 /* DetailPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPresenter.swift; sourceTree = "<group>"; };
 		9DE2BB5329419887002731D3 /* NavigationTitleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationTitleView.swift; sourceTree = "<group>"; };
@@ -165,6 +173,7 @@
 				9D2DE06E2946F80300F4FD9C /* Register */,
 				9D71B92B294067ED006FD8C1 /* List */,
 				9D3532E32940738300F12230 /* Detail */,
+				9DC6B6342949688A00D3EF44 /* Setting */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -194,6 +203,7 @@
 				9D2DE0732947089500F4FD9C /* RegisterPresenter.swift */,
 				9DE2BB4B29417C6E002731D3 /* ListPresenter.swift */,
 				9DE2BB4D294191AA002731D3 /* DetailPresenter.swift */,
+				9DC40F592949A47000A763B9 /* SettingPresenter.swift */,
 			);
 			path = Presenters;
 			sourceTree = "<group>";
@@ -201,6 +211,8 @@
 		9D71B92A29406779006FD8C1 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				9DB9BC0B294314AF00D6B049 /* CustomLabel */,
+				9DC40F562949A16500A763B9 /* CustomButton */,
 				9DE2BB4F29419859002731D3 /* CustomView */,
 				9D383CF32940882500769F0C /* CustomCell */,
 				9D3532EA29407ACF00F12230 /* CustomTextField */,
@@ -259,6 +271,23 @@
 			path = CustomLabel;
 			sourceTree = "<group>";
 		};
+		9DC40F562949A16500A763B9 /* CustomButton */ = {
+			isa = PBXGroup;
+			children = (
+				9DC40F572949A19100A763B9 /* CustomButton.swift */,
+			);
+			path = CustomButton;
+			sourceTree = "<group>";
+		};
+		9DC6B6342949688A00D3EF44 /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				9DC6B635294968A000D3EF44 /* SettingViewController.swift */,
+				9DC6B636294968A000D3EF44 /* SettingViewController.xib */,
+			);
+			path = Setting;
+			sourceTree = "<group>";
+		};
 		9DD64A072941E54500B93550 /* ChatCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -273,7 +302,6 @@
 		9DE2BB4F29419859002731D3 /* CustomView */ = {
 			isa = PBXGroup;
 			children = (
-				9DB9BC0B294314AF00D6B049 /* CustomLabel */,
 				9DE2BB5229419887002731D3 /* NavigationTitleView */,
 			);
 			path = CustomView;
@@ -364,6 +392,7 @@
 				9DA5E8842940522A001CABB8 /* LaunchScreen.storyboard in Resources */,
 				9DB9BC1A2943328B00D6B049 /* ImgCell.xib in Resources */,
 				9D383CF2294086D900769F0C /* ListViewController.xib in Resources */,
+				9DC6B638294968A000D3EF44 /* SettingViewController.xib in Resources */,
 				9D3532E72940739300F12230 /* DetailViewController.xib in Resources */,
 				9DE2BB5629419887002731D3 /* NavigationTitleView.xib in Resources */,
 				9DA5E8812940522A001CABB8 /* Assets.xcassets in Resources */,
@@ -421,11 +450,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				9DE2BB4C29417C6E002731D3 /* ListPresenter.swift in Sources */,
+				9DC6B637294968A000D3EF44 /* SettingViewController.swift in Sources */,
 				9D704C03294816A500E6ECC4 /* ExtensionCell.swift in Sources */,
 				9D3532EE294082BD00F12230 /* LoginPresenter.swift in Sources */,
 				9D3532DD29406CBB00F12230 /* LoginViewController.swift in Sources */,
 				9DA5E87829405228001CABB8 /* AppDelegate.swift in Sources */,
 				9DBF68E92942E664008F0262 /* BaseViewController.swift in Sources */,
+				9DC40F5A2949A47000A763B9 /* SettingPresenter.swift in Sources */,
 				9DE2BB4E294191AA002731D3 /* DetailPresenter.swift in Sources */,
 				9DB8280729472F0500069E3A /* FirebaseService.swift in Sources */,
 				1399B19129458761001B872B /* PasswordTextField.swift in Sources */,
@@ -436,6 +467,7 @@
 				9D2DE0742947089500F4FD9C /* RegisterPresenter.swift in Sources */,
 				9D383CF62940884600769F0C /* ListTableViewCell.swift in Sources */,
 				9DB9BC1C2943328B00D6B049 /* ImgCell.swift in Sources */,
+				9DC40F582949A19100A763B9 /* CustomButton.swift in Sources */,
 				9D3532E92940788900F12230 /* Model.swift in Sources */,
 				9DE2BB5529419887002731D3 /* NavigationTitleView.swift in Sources */,
 				9D383CF1294086D900769F0C /* ListViewController.swift in Sources */,

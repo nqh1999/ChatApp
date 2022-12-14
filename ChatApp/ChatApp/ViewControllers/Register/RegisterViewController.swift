@@ -14,7 +14,7 @@ final class RegisterViewController: BaseViewController {
     @IBOutlet private weak var avt: UIImageView!
     @IBOutlet private weak var chooseImgButton: UIButton!
     @IBOutlet private weak var backToLoginButton: UIButton!
-    @IBOutlet private weak var registerButton: UIButton!
+    @IBOutlet private weak var registerButton: CustomButton!
     @IBOutlet private weak var passwordTf: BaseTextField!
     @IBOutlet private weak var spinner: UIActivityIndicatorView!
     lazy private var presenter = RegisterPresenter(view: self)
@@ -42,7 +42,6 @@ final class RegisterViewController: BaseViewController {
         self.view.layer.contents = UIImage(named: "bgrLogin")?.cgImage
         self.navigationController?.navigationBar.isHidden = true
         self.chooseImgButton.layer.cornerRadius = 5
-        self.registerButton.layer.cornerRadius = 5
         self.avt.layer.borderWidth = 1
         self.avt.layer.borderColor = UIColor.white.cgColor
         self.nameTf.shouldReturn = { [weak self] in

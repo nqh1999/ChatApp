@@ -156,16 +156,16 @@
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="k3l-X2-zC8">
                                     <rect key="frame" x="0.0" y="305" width="335" height="87.5"/>
                                     <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dxk-Bw-268">
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dxk-Bw-268" customClass="CustomButton" customModule="ChatApp" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="0.0" width="335" height="45"/>
-                                            <color key="backgroundColor" red="0.91955732489999997" green="0.82925601879999999" blue="0.6164999203" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="backgroundColor" red="0.14901960780000001" green="0.0" blue="0.42578000440000002" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="45" id="AOP-vS-vaX"/>
                                             </constraints>
                                             <state key="normal" title="Button"/>
                                             <buttonConfiguration key="configuration" style="plain" title="Register">
                                                 <fontDescription key="titleFontDescription" name="Futura-Medium" family="Futura" pointSize="20"/>
-                                                <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </buttonConfiguration>
                                             <connections>
                                                 <action selector="register:" destination="-1" eventType="touchUpInside" id="Gj6-cD-gL3"/>

@@ -41,7 +41,7 @@ class ListTableViewCell: UITableViewCell {
             if !message.text.isEmpty {
                 self.messageLabel.text = message.senderId == user.id ? message.text : "you: \(message.text)"
             } else if !message.img.isEmpty {
-                self.messageLabel.text = message.senderId == user.id ? "\(user.name) send a photo" : "you send a photo"
+                self.messageLabel.text = message.senderId == user.id ? "\(user.name) sent a photo" : "you sent a photo"
             }
             self.timeLabel.text = self.setTimestamp(epochTime: message.time)
             if !message.read {

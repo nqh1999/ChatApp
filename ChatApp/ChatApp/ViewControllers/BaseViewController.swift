@@ -16,6 +16,7 @@ class BaseViewController: UIViewController {
         super.viewDidLoad()
         self.view.layer.contents = UIImage(named: "bgr")?.cgImage
         self.navigationItem.titleView = titleView
+        self.navigationController?.navigationBar.tintColor = .white
     }
     
     // MARK: - Methods
@@ -25,12 +26,10 @@ class BaseViewController: UIViewController {
     
     func setBackButton() {
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "arrow.left"), style: .plain, target: self, action: #selector(backToPreVC))
-        self.navigationController?.navigationBar.tintColor = .black
     }
     
-    func setLogoutButton() {
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "rectangle.portrait.and.arrow.right"), style: .plain, target: self, action: #selector(logout))
-        self.navigationController?.navigationBar.tintColor = .white
+    func setSettingButton() {
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "gearshape.fill"), style: .plain, target: self, action: #selector(setting))
     }
     
     func setDeleteButton() {
@@ -50,7 +49,5 @@ class BaseViewController: UIViewController {
         self.navigationController?.popViewController(animated: true)
     }
     
-    @objc func logout() {
-        (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first?.rootViewController = UINavigationController(rootViewController: LoginViewController())
-    }
+    @objc func setting() {}
 }

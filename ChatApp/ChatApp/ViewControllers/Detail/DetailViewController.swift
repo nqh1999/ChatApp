@@ -28,7 +28,7 @@ final class DetailViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.setBackButton()
-//        self.setDeleteButton()
+        self.setDeleteButton()
     }
     
     // MARK: - Methods
@@ -54,7 +54,6 @@ final class DetailViewController: BaseViewController {
         alert.addAction(okAction)
         alert.addAction(cancelAction)
         self.present(alert, animated: true)
-        
     }
     
     private func setupUI() {
@@ -106,9 +105,6 @@ final class DetailViewController: BaseViewController {
         self.view.endEditing(true)
         self.messageTf.text = ""
         self.messageTf.becomeFirstResponder()
-        self.presenter.fetchMessage {
-            self.reloadData()
-        }
     }
     
     private func reloadData() {
@@ -129,10 +125,7 @@ extension DetailViewController: UIImagePickerControllerDelegate, UINavigationCon
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         let img = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
         self.presenter.sendImg(img: img) {
-            self.presenter.fetchMessage {
-                self.reloadData()
-                self.spinner.stopAnimating()
-            }
+            self.spinner.stopAnimating()
         }
         self.imgPickerView.dismiss(animated: true)
         self.spinner.isHidden = false

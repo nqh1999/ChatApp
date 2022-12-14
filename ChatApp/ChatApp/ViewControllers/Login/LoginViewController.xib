@@ -124,16 +124,16 @@
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="72R-1j-5Z7">
                                     <rect key="frame" x="0.0" y="215" width="280" height="137.5"/>
                                     <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O1p-gS-8xv">
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O1p-gS-8xv" customClass="CustomButton" customModule="ChatApp" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="0.0" width="280" height="45"/>
-                                            <color key="backgroundColor" red="0.16722428717580781" green="0.59708991018282309" blue="0.93715330370429417" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="backgroundColor" red="0.15067753175488946" green="0.0" blue="0.42907673323235546" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="45" id="KT0-z0-iLW"/>
                                             </constraints>
                                             <state key="normal" title="Button"/>
                                             <buttonConfiguration key="configuration" style="plain" title="Login">
                                                 <fontDescription key="titleFontDescription" name="Futura-Medium" family="Futura" pointSize="20"/>
-                                                <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </buttonConfiguration>
                                             <connections>
                                                 <action selector="checkLogin:" destination="-1" eventType="touchUpInside" id="fhY-Fs-eRT"/>
@@ -145,16 +145,16 @@
                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xxt-1F-u2J">
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xxt-1F-u2J" customClass="CustomButton" customModule="ChatApp" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="92.5" width="280" height="45"/>
-                                            <color key="backgroundColor" red="0.91955732488307829" green="0.82925601881377553" blue="0.61649992028061229" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="backgroundColor" red="0.25619818239795916" green="0.34953422286883501" blue="0.42578000438456631" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="45" id="qBn-Z8-v6F"/>
                                             </constraints>
                                             <state key="normal" title="Button"/>
                                             <buttonConfiguration key="configuration" style="plain" title="Register">
                                                 <fontDescription key="titleFontDescription" name="Futura-Medium" family="Futura" pointSize="20"/>
-                                                <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </buttonConfiguration>
                                             <connections>
                                                 <action selector="register:" destination="-1" eventType="touchUpInside" id="tEj-LU-aUa"/>
