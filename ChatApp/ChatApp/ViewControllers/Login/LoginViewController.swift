@@ -70,11 +70,13 @@ final class LoginViewController: BaseViewController {
 extension LoginViewController: LoginProtocol {
     func didGetLoginResult(result: Bool, senderId: Int) {
         if !result {
-            self.showAlert(text: Err.loginFailed.rawValue)
+            self.showAlert(text: Err.loginFailed.rawValue) {}
         } else {
             let vc = ListViewController()
             vc.getPresenter().setData(senderId)
-            (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first?.rootViewController = UINavigationController(rootViewController: vc)
+            self.showAlert(text: Err.loginSuccess.rawValue) {
+                (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first?.rootViewController = UINavigationController(rootViewController: vc)
+            }
         }
     }
 }

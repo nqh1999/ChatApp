@@ -29,6 +29,10 @@ class SettingPresenter {
         self.userId = id
     }
     
+    func getUser() -> User? {
+        return self.user
+    }
+    
     // MARK: Fetch user
     func fetchUser(completed: @escaping (User?) -> Void) {
         self.service.fetchUser { users in
@@ -42,9 +46,14 @@ class SettingPresenter {
     }
     
     // MARK: Get img url from firestore and save to property
-    func setImgUrl(img: UIImage, completed: @escaping () -> Void) {
-        self.service.fetchAvtUrl(img: img) { url in
-            self.imgUrl = url
+    func setImgUrl(_ img: UIImage, completed: @escaping () -> Void) {
+        self.service.changeAvt(self.userId, img) {
+            completed()
+        }
+    }
+    
+    func changeName(_ name: String, completed: @escaping () -> Void) {
+        self.service.changeName(self.userId, name) {
             completed()
         }
     }

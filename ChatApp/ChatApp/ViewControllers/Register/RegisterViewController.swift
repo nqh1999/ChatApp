@@ -97,9 +97,9 @@ extension RegisterViewController: UIImagePickerControllerDelegate, UINavigationC
 extension RegisterViewController: RegisterProtocol {
     func didGetRegisterResult(result: String?) {
         if let result = result {
-            self.showAlert(text: result)
+            self.showAlert(text: result) {}
         } else {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            self.showAlert(text: Err.registerSuccess.rawValue) {
                 self.navigationController?.popToRootViewController(animated: true)
             }
         }

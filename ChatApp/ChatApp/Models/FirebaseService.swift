@@ -15,7 +15,7 @@ class FirebaseService {
     private var users = [User]()
     
     // MARK: Register
-    func Register(_ id: Int,_ name: String,_ username: String,_ password: String,_ imgUrl: String) {
+    func register(_ id: Int,_ name: String,_ username: String,_ password: String,_ imgUrl: String, completed: @escaping () -> Void) {
         let docRef = self.db.collection("user").document("\(id)")
         docRef.setData([
             "id": id,
@@ -24,6 +24,7 @@ class FirebaseService {
             "name": name,
             "imgUrl": imgUrl
         ])
+        completed()
     }
     // MARK: Fetch User
     func fetchUser(completed: @escaping ([User]) -> Void) {
@@ -66,6 +67,30 @@ class FirebaseService {
                 completed(url.absoluteString)
             }
         }
+    }
+    
+    func changeAvt(_ id: Int,_ img: UIImage, completed: @escaping () -> Void) {
+        let img = img.jpegData(compressionQuality: 0.5)!
+        let keyImg = NSUUID().uuidString
+        let imgFolder = storage.child("img_avt").child(keyImg)
+        storage.child("img_avt").child(keyImg).putData(img) { _ , err in
+            guard err == nil else { return }
+            imgFolder.downloadURL { url, err in
+                guard err == nil, let url = url else { return }
+                self.db.collection("user").document("\(id)").updateData(["imgUrl" : url.absoluteString])
+                completed()
+            }
+        }
+    }
+    
+    func changeName(_ id: Int,_ name: String, completed: @escaping () -> Void) {
+        self.db.collection("user").document("\(id)").updateData(["name": name])
+        completed()
+    }
+    
+    func changePassword(_ id: Int,_ password: String, completed: @escaping () -> Void) {
+        self.db.collection("user").document("\(id)").updateData(["password": password])
+        completed()
     }
     
     // MARK: send message to firestore

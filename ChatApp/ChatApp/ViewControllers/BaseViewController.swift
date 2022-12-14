@@ -17,6 +17,8 @@ class BaseViewController: UIViewController {
         self.view.layer.contents = UIImage(named: "bgr")?.cgImage
         self.navigationItem.titleView = titleView
         self.navigationController?.navigationBar.tintColor = .white
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.font: UIFont(name: "futura-medium", size: 24)!
+            ]
     }
     
     // MARK: - Methods
@@ -36,9 +38,11 @@ class BaseViewController: UIViewController {
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "trash.fill"), style: .plain, target: self, action: #selector(deleteMessage))
     }
     
-    func showAlert(text: String) {
-        let alert = UIAlertController(title: "Error", message: text, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK", style: .cancel)
+    func showAlert(text: String, completed: @escaping () -> Void) {
+        let alert = UIAlertController(title: text, message: "", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .cancel) { _ in
+            completed()
+        }
         alert.addAction(okAction)
         present(alert, animated: true)
     }

@@ -53,8 +53,9 @@ class RegisterPresenter {
             } else if user.username == username {
                 self.view?.didGetRegisterResult(result: Err.usernameExist.rawValue)
             } else {
-                self.service.Register(self.users.count + 1, name, username, password, self.imgUrl)
-                self.view?.didGetRegisterResult(result: nil)
+                self.service.register(self.users.count + 1, name, username, password, self.imgUrl) {
+                    self.view?.didGetRegisterResult(result: nil)
+                }
             }
         }
     }

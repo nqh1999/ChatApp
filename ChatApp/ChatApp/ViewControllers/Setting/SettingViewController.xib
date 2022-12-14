@@ -12,10 +12,12 @@
             <connections>
                 <outlet property="changePasswordButton" destination="xmU-P4-sdN" id="zf6-Gr-cQK"/>
                 <outlet property="chooseImageButton" destination="cQ9-Bv-Rf3" id="7pn-7L-lTi"/>
+                <outlet property="editName" destination="kiT-ic-S7B" id="1zy-Ne-luZ"/>
                 <outlet property="editProfileButton" destination="avp-JJ-ydz" id="OMh-D7-bfG"/>
                 <outlet property="imgView" destination="7XB-vs-m5T" id="gTm-JB-dPR"/>
                 <outlet property="logoutButton" destination="f6U-Q2-D67" id="CSs-JQ-Uyl"/>
                 <outlet property="nameLabel" destination="d7s-fu-2q1" id="51E-zZ-gRn"/>
+                <outlet property="spinner" destination="Bbo-a8-LeO" id="hl2-ws-Zww"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -25,10 +27,10 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="iON-UK-fOg">
-                    <rect key="frame" x="20" y="30" width="280" height="287.5"/>
+                    <rect key="frame" x="20" y="30" width="280" height="290"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="KAG-pV-tJG">
-                            <rect key="frame" x="0.0" y="0.0" width="280" height="163.5"/>
+                            <rect key="frame" x="0.0" y="0.0" width="280" height="166"/>
                             <subviews>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bgr" translatesAutoresizingMaskIntoConstraints="NO" id="7XB-vs-m5T">
                                     <rect key="frame" x="80" y="0.0" width="120" height="120"/>
@@ -37,16 +39,34 @@
                                         <constraint firstAttribute="width" constant="120" id="PIs-Bs-xiV"/>
                                     </constraints>
                                 </imageView>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nguyen Quang Huy" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" translatesAutoresizingMaskIntoConstraints="NO" id="d7s-fu-2q1">
-                                    <rect key="frame" x="29" y="132" width="222" height="31.5"/>
-                                    <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="24"/>
-                                    <nil key="textColor"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
+                                <stackView opaque="NO" contentMode="scaleToFill" spacing="7" translatesAutoresizingMaskIntoConstraints="NO" id="gC5-o7-adK">
+                                    <rect key="frame" x="15.5" y="132" width="249" height="34"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nguyen Quang Huy" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" translatesAutoresizingMaskIntoConstraints="NO" id="d7s-fu-2q1">
+                                            <rect key="frame" x="0.0" y="0.0" width="222" height="34"/>
+                                            <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="24"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kiT-ic-S7B">
+                                            <rect key="frame" x="229" y="0.0" width="20" height="34"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="20" id="PGW-bm-aGg"/>
+                                            </constraints>
+                                            <state key="normal" title="Button"/>
+                                            <buttonConfiguration key="configuration" style="plain" image="pencil.line" catalog="system">
+                                                <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </buttonConfiguration>
+                                            <connections>
+                                                <action selector="editName:" destination="-1" eventType="touchUpInside" id="4vU-Fv-X7I"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                </stackView>
                             </subviews>
                         </stackView>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="bfo-00-i8o">
-                            <rect key="frame" x="0.0" y="187.5" width="280" height="100"/>
+                            <rect key="frame" x="0.0" y="190" width="280" height="100"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="avp-JJ-ydz" customClass="CustomButton" customModule="ChatApp" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="0.0" width="280" height="45"/>
@@ -110,7 +130,7 @@
                         <action selector="logout:" destination="-1" eventType="touchUpInside" id="VxS-8l-xnl"/>
                     </connections>
                 </button>
-                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="Bbo-a8-LeO">
+                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="Bbo-a8-LeO">
                     <rect key="frame" x="150" y="80" width="20" height="20"/>
                 </activityIndicatorView>
             </subviews>
@@ -134,5 +154,6 @@
     <resources>
         <image name="bgr" width="788" height="1024"/>
         <image name="camera.fill" catalog="system" width="128" height="93"/>
+        <image name="pencil.line" catalog="system" width="128" height="98"/>
     </resources>
 </document>

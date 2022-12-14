@@ -38,6 +38,9 @@
 		9DBF68E92942E664008F0262 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DBF68E82942E664008F0262 /* BaseViewController.swift */; };
 		9DC40F582949A19100A763B9 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC40F572949A19100A763B9 /* CustomButton.swift */; };
 		9DC40F5A2949A47000A763B9 /* SettingPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC40F592949A47000A763B9 /* SettingPresenter.swift */; };
+		9DC40F5E2949C98000A763B9 /* ChangePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC40F5C2949C98000A763B9 /* ChangePasswordViewController.swift */; };
+		9DC40F5F2949C98000A763B9 /* ChangePasswordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9DC40F5D2949C98000A763B9 /* ChangePasswordViewController.xib */; };
+		9DC40F622949CA9A00A763B9 /* ChangePassworPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC40F612949CA9A00A763B9 /* ChangePassworPresenter.swift */; };
 		9DC6B637294968A000D3EF44 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC6B635294968A000D3EF44 /* SettingViewController.swift */; };
 		9DC6B638294968A000D3EF44 /* SettingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9DC6B636294968A000D3EF44 /* SettingViewController.xib */; };
 		9DE2BB4C29417C6E002731D3 /* ListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DE2BB4B29417C6E002731D3 /* ListPresenter.swift */; };
@@ -81,6 +84,9 @@
 		9DBF68E82942E664008F0262 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		9DC40F572949A19100A763B9 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		9DC40F592949A47000A763B9 /* SettingPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingPresenter.swift; sourceTree = "<group>"; };
+		9DC40F5C2949C98000A763B9 /* ChangePasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewController.swift; sourceTree = "<group>"; };
+		9DC40F5D2949C98000A763B9 /* ChangePasswordViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChangePasswordViewController.xib; sourceTree = "<group>"; };
+		9DC40F612949CA9A00A763B9 /* ChangePassworPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePassworPresenter.swift; sourceTree = "<group>"; };
 		9DC6B635294968A000D3EF44 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		9DC6B636294968A000D3EF44 /* SettingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingViewController.xib; sourceTree = "<group>"; };
 		9DE2BB4B29417C6E002731D3 /* ListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListPresenter.swift; sourceTree = "<group>"; };
@@ -174,6 +180,7 @@
 				9D71B92B294067ED006FD8C1 /* List */,
 				9D3532E32940738300F12230 /* Detail */,
 				9DC6B6342949688A00D3EF44 /* Setting */,
+				9DC40F5B2949C95B00A763B9 /* ChangePassword */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -204,6 +211,7 @@
 				9DE2BB4B29417C6E002731D3 /* ListPresenter.swift */,
 				9DE2BB4D294191AA002731D3 /* DetailPresenter.swift */,
 				9DC40F592949A47000A763B9 /* SettingPresenter.swift */,
+				9DC40F612949CA9A00A763B9 /* ChangePassworPresenter.swift */,
 			);
 			path = Presenters;
 			sourceTree = "<group>";
@@ -277,6 +285,15 @@
 				9DC40F572949A19100A763B9 /* CustomButton.swift */,
 			);
 			path = CustomButton;
+			sourceTree = "<group>";
+		};
+		9DC40F5B2949C95B00A763B9 /* ChangePassword */ = {
+			isa = PBXGroup;
+			children = (
+				9DC40F5C2949C98000A763B9 /* ChangePasswordViewController.swift */,
+				9DC40F5D2949C98000A763B9 /* ChangePasswordViewController.xib */,
+			);
+			path = ChangePassword;
 			sourceTree = "<group>";
 		};
 		9DC6B6342949688A00D3EF44 /* Setting */ = {
@@ -386,6 +403,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9D2DE0722946F82500F4FD9C /* RegisterViewController.xib in Resources */,
+				9DC40F5F2949C98000A763B9 /* ChangePasswordViewController.xib in Resources */,
 				9D3532DE29406CBB00F12230 /* LoginViewController.xib in Resources */,
 				9DB9BC1B2943328B00D6B049 /* MessageCell.xib in Resources */,
 				9D383CF72940884600769F0C /* ListTableViewCell.xib in Resources */,
@@ -463,10 +481,12 @@
 				9DB9BC0D294314C200D6B049 /* CustomLabel.swift in Sources */,
 				9D3532EC29407AEB00F12230 /* BaseTextField.swift in Sources */,
 				9D2DE0712946F82500F4FD9C /* RegisterViewController.swift in Sources */,
+				9DC40F622949CA9A00A763B9 /* ChangePassworPresenter.swift in Sources */,
 				9D3532E62940739300F12230 /* DetailViewController.swift in Sources */,
 				9D2DE0742947089500F4FD9C /* RegisterPresenter.swift in Sources */,
 				9D383CF62940884600769F0C /* ListTableViewCell.swift in Sources */,
 				9DB9BC1C2943328B00D6B049 /* ImgCell.swift in Sources */,
+				9DC40F5E2949C98000A763B9 /* ChangePasswordViewController.swift in Sources */,
 				9DC40F582949A19100A763B9 /* CustomButton.swift in Sources */,
 				9D3532E92940788900F12230 /* Model.swift in Sources */,
 				9DE2BB5529419887002731D3 /* NavigationTitleView.swift in Sources */,
