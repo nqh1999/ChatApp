@@ -5,7 +5,7 @@
 //  Created by BeeTech on 08/12/2022.
 //
 
-import Firebase
+import Foundation
 
 protocol ListProtocol: AnyObject {
     
@@ -15,7 +15,6 @@ class ListPresenter {
     
     // MARK: - Properties
     private weak var view: ListProtocol?
-    private var db = Firestore.firestore()
     private var receivers = [User]()
     private var sender: User?
     private var searchData = [User]()
@@ -35,11 +34,12 @@ class ListPresenter {
     }
     
     func getUserByIndex(index: Int) -> User? {
+        self.sortMessage()
         return self.searchData[index]
     }
     
     func getMessageById(_ id: Int) -> Message? {
-        return message[id]
+        return self.message[id]
     }
     
     func setData(_ id: Int) {
@@ -56,9 +56,9 @@ class ListPresenter {
     
     // MARK: - Fetch User
     func fetchUser(completed: @escaping () -> Void) {
-        self.receivers.removeAll()
-        self.allMessage.removeAll()
         self.service.fetchUser { users in
+            self.receivers.removeAll()
+            self.searchData.removeAll()
             users.forEach { user in
                 if user.id == self.senderId {
                     self.sender = user
@@ -86,6 +86,14 @@ class ListPresenter {
             }
             completed()
         }
+    }
+    
+    // sort by time
+    func sortMessage() {
+//        self.searchData = self.searchData.sorted {
+//            guard let preUser = self.message[$0.id], let nextUser = self.message[$1.id] else { return false }
+//            return preUser.time > nextUser.time
+//        }
     }
     
     // MARK: search user

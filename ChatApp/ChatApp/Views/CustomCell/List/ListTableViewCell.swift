@@ -31,7 +31,7 @@ class ListTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
-    func fillData(user: User?, message: Message?) {
+    func fillData(_ user: User?,_ message: Message?) {
         guard let user = user else { return }
         self.timeLabel.isHidden = false
         self.avt.sd_setImage(with: URL(string: user.imgUrl))
@@ -41,7 +41,7 @@ class ListTableViewCell: UITableViewCell {
             if !message.text.isEmpty {
                 self.messageLabel.text = message.senderId == user.id ? message.text : "you: \(message.text)"
             } else if !message.img.isEmpty {
-                self.messageLabel.text = message.senderId == user.id ? "\(user.name) send a photo" : "you send a photo"
+                self.messageLabel.text = message.senderId == user.id ? "\(user.name) sent a photo" : "you sent a photo"
             }
             self.timeLabel.text = self.setTimestamp(epochTime: message.time)
             if !message.read {
@@ -53,6 +53,8 @@ class ListTableViewCell: UITableViewCell {
             }
         } else {
             self.messageLabel.text = "Tap to chat"
+            self.messageLabel.textColor = UIColor.systemGray
+            self.timeLabel.textColor = UIColor.systemGray
             self.timeLabel.isHidden = true
             self.notifyButton.isHidden = true
         }

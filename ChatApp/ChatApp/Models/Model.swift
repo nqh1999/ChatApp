@@ -12,9 +12,20 @@ enum Err: String {
     case nameIsEmpty = "Fullname can't be blank"
     case usernameIsEmpty = "Username can't be blank"
     case passwordIsEmpty = "Password can't be blank"
+    case currentPasswordIsEmpty = "Current password can't be blank"
+    case newPasswordIsEmpty = "New password can't be blank"
+    case reEnterNewPasswordIsEmpty = "You can re-enter new password"
     case imgIsEmpty = "Please choose your image"
     case usernameExist = "Username already exists"
-    case loginFailed = "username or password is incorrect"
+    case loginFailed = "Login failed"
+    case passwordIncorrect = "Password is incorrect"
+    case passwordNotSame = "Re-entered password is incorrect"
+    case usernameIncorrect = "Username is incorrect"
+    case loginSuccess = "Login success"
+    case registerSuccess = "Register Success"
+    case changePasswordSuccess = "Change password success"
+    case invalidUsername = "Invalid username"
+    case invalidPassword = "Invalid password"
 }
 
 // MARK: User Model

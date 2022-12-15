@@ -5,7 +5,7 @@
 //  Created by BeeTech on 07/12/2022.
 //
 
-import Firebase
+import Foundation
 
 protocol LoginProtocol: AnyObject {
     func didGetLoginResult(result: Bool, senderId: Int)
@@ -15,10 +15,9 @@ class LoginPresenter {
     
     // MARK: - Properties
     private weak var view: LoginProtocol?
-    private var db = Firestore.firestore()
     private var users = [User]()
-    private var senderId: Int = 0
     private var service = FirebaseService()
+    private var validateService = ValidateService()
     
     // MARK: - Init
     init(view: LoginProtocol) {
@@ -39,13 +38,8 @@ class LoginPresenter {
     
     // MARK: check and send (result, senderid) to view if login sucess
     func checkLogin(username: String, password: String) {
-        var result: Bool = false
-        self.users.forEach { user in
-            if user.username == username && user.password == password {
-                result = true
-                self.senderId = user.id
-            }
+        self.validateService.checkLogin(users, username, password) { result, senderId in
+            self.view?.didGetLoginResult(result: result, senderId: senderId)
         }
-        self.view?.didGetLoginResult(result: result, senderId: self.senderId)
     }
 }

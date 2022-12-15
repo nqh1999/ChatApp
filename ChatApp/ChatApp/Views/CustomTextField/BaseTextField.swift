@@ -46,6 +46,7 @@ class BaseTextField: UITextField {
         self.layer.cornerRadius = 5
         self.layer.borderWidth = 0.25
         self.delegate = self
+        self.font = UIFont(name: "futura-medium", size: 17)
     }
 }
 

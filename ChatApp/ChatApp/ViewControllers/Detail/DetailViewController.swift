@@ -14,6 +14,7 @@ final class DetailViewController: BaseViewController {
     @IBOutlet private weak var sendButton: UIButton!
     @IBOutlet private weak var messageTf: BaseTextField!
     @IBOutlet private weak var tableView: UITableView!
+    @IBOutlet weak var messageView: MessageView!
     @IBOutlet private weak var spinner: UIActivityIndicatorView!
     private var imgPickerView = UIImagePickerController()
     lazy private var presenter = DetailPresenter(view: self)
@@ -32,24 +33,9 @@ final class DetailViewController: BaseViewController {
     }
     
     // MARK: - Methods
-    override func deleteMessage() {
-        super.deleteMessage()
-        let alert = UIAlertController(title: "Alert", message: "Do you want delete all message?", preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "Yes", style: .destructive) { _ in
-            self.spinner.isHidden = false
-            self.spinner.startAnimating()
-            self.presenter.deleteAllMessage {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                    self.tableView.reloadData()
-                    self.spinner.stopAnimating()
-                }
-            }
-        }
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
-        alert.addAction(okAction)
-        alert.addAction(cancelAction)
-        self.present(alert, animated: true)
-        
+    override func backToPreVC() {
+        super.backToPreVC()
+        self.presenter.setState()
     }
     
     private func setupUI() {
@@ -59,6 +45,23 @@ final class DetailViewController: BaseViewController {
         }
         self.setupTableView()
         self.spinner.isHidden = true
+        self.messageView.isHidden = true
+    }
+    
+    override func deleteMessage() {
+        super.deleteMessage()
+        self.messageView.isHidden = false
+        self.messageView.showDeleteMessage("Delete all message?")
+        self.messageView.confirm = { [weak self] _ in
+            self?.spinner.isHidden = false
+            self?.spinner.startAnimating()
+            self?.presenter.deleteAllMessage {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    self?.tableView.reloadData()
+                    self?.spinner.stopAnimating()
+                }
+            }
+        }
     }
     
     private func setupTableView() {
@@ -101,9 +104,6 @@ final class DetailViewController: BaseViewController {
         self.view.endEditing(true)
         self.messageTf.text = ""
         self.messageTf.becomeFirstResponder()
-        self.presenter.fetchMessage {
-            self.reloadData()
-        }
     }
     
     private func reloadData() {
@@ -124,10 +124,7 @@ extension DetailViewController: UIImagePickerControllerDelegate, UINavigationCon
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         let img = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
         self.presenter.sendImg(img: img) {
-            self.presenter.fetchMessage {
-                self.reloadData()
-                self.spinner.stopAnimating()
-            }
+            self.spinner.stopAnimating()
         }
         self.imgPickerView.dismiss(animated: true)
         self.spinner.isHidden = false

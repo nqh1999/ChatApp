@@ -16,6 +16,9 @@ class BaseViewController: UIViewController {
         super.viewDidLoad()
         self.view.layer.contents = UIImage(named: "bgr")?.cgImage
         self.navigationItem.titleView = titleView
+        self.navigationController?.navigationBar.tintColor = .white
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.font: UIFont(name: "futura-medium", size: 24)!
+            ]
     }
     
     // MARK: - Methods
@@ -25,32 +28,21 @@ class BaseViewController: UIViewController {
     
     func setBackButton() {
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "arrow.left"), style: .plain, target: self, action: #selector(backToPreVC))
-        self.navigationController?.navigationBar.tintColor = .black
     }
     
-    func setLogoutButton() {
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "rectangle.portrait.and.arrow.right"), style: .plain, target: self, action: #selector(logout))
-        self.navigationController?.navigationBar.tintColor = .white
+    func setSettingButton() {
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "gearshape.fill"), style: .plain, target: self, action: #selector(setting))
     }
     
     func setDeleteButton() {
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "trash.fill"), style: .plain, target: self, action: #selector(deleteMessage))
     }
     
-    func showAlert(text: String) {
-        let alert = UIAlertController(title: "Error", message: text, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK", style: .cancel)
-        alert.addAction(okAction)
-        present(alert, animated: true)
-    }
-    
     @objc func deleteMessage() {}
     
-    @objc private func backToPreVC() {
+    @objc func backToPreVC() {
         self.navigationController?.popViewController(animated: true)
     }
     
-    @objc private func logout() {
-        (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first?.rootViewController = UINavigationController(rootViewController: LoginViewController())
-    }
+    @objc func setting() {}
 }

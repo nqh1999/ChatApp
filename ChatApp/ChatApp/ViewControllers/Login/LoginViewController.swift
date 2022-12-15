@@ -10,12 +10,16 @@ import UIKit
 final class LoginViewController: BaseViewController {
     
     // MARK: - Properties
-    @IBOutlet private weak var loginButton: UIButton!
-    @IBOutlet private weak var registerButton: UIButton!
+    @IBOutlet private weak var loginButton: CustomButton!
+    @IBOutlet private weak var registerButton: CustomButton!
+    
+    @IBOutlet weak var forgotPasswordButton: UIButton!
     @IBOutlet private weak var userNameTf: BaseTextField!
     @IBOutlet private weak var passwordTf: PasswordTextField!
     @IBOutlet private weak var showPasswordButton: UIButton!
+    @IBOutlet private weak var messageView: MessageView!
     lazy private var presenter = LoginPresenter(view: self)
+    
     // MARK: - Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,8 +36,6 @@ final class LoginViewController: BaseViewController {
         self.view.layer.contents = UIImage(named: "bgrLogin")?.cgImage
         self.userNameTf.text = "1@1.com"
         self.passwordTf.text = "123456"
-        self.loginButton.layer.cornerRadius = 5
-        self.registerButton.layer.cornerRadius = 5
         self.userNameTf.shouldReturn = { [weak self] in
             self?.passwordTf.becomeFirstResponder()
         }
@@ -42,12 +44,11 @@ final class LoginViewController: BaseViewController {
         }
         self.showPasswordButton.layer.cornerRadius = 2
         self.passwordTf.setPass()
+        self.messageView.isHidden = true
     }
     
     private func setupData() {
-        UIView.animate(withDuration: 0, delay: 0) {
-            self.presenter.fetchUser()
-        }
+        self.presenter.fetchUser()
     }
     
     private func login() {
@@ -63,6 +64,11 @@ final class LoginViewController: BaseViewController {
         self.navigationController?.pushViewController(RegisterViewController(), animated: true)
     }
     
+    @IBAction func goToForgotPasswordView(_ sender: Any) {
+        let vc = ForgotPasswordViewController()
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
     @IBAction private func showPassword(_ sender: Any) {
         self.passwordTf.setState(isShow: !self.passwordTf.getState())
         let img = self.passwordTf.getState() ? UIImage(systemName: "checkmark") : UIImage()
@@ -73,12 +79,16 @@ final class LoginViewController: BaseViewController {
 
 extension LoginViewController: LoginProtocol {
     func didGetLoginResult(result: Bool, senderId: Int) {
+        self.messageView.isHidden = false
         if !result {
-            self.showAlert(text: Err.loginFailed.rawValue)
+            self.messageView.showMessage(Err.loginFailed.rawValue)
         } else {
             let vc = ListViewController()
             vc.getPresenter().setData(senderId)
-            (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first?.rootViewController = UINavigationController(rootViewController: vc)
+            self.messageView.showMessage(Err.loginSuccess.rawValue)
+            self.messageView.confirm = { _ in
+                (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first?.rootViewController = UINavigationController(rootViewController: vc)
+            }
         }
     }
 }

@@ -5,6 +5,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Image references" minToolsVersion="12.0"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -15,6 +16,7 @@
                 <outlet property="avt" destination="xlf-DD-J1j" id="S1u-N8-ukR"/>
                 <outlet property="backToLoginButton" destination="YVZ-4g-KcO" id="MD1-LL-ajk"/>
                 <outlet property="chooseImgButton" destination="JQ9-Cb-04X" id="XkQ-8L-Tus"/>
+                <outlet property="messageView" destination="qN1-CK-ABK" id="qgC-Ly-g3n"/>
                 <outlet property="nameTf" destination="l75-4I-xQj" id="hQH-mB-h2v"/>
                 <outlet property="passwordTf" destination="vob-wd-TYg" id="sWs-1Z-jP7"/>
                 <outlet property="registerButton" destination="Dxk-Bw-268" id="rRf-Kz-AsD"/>
@@ -29,16 +31,16 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="nrs-FG-Ugc">
-                    <rect key="frame" x="20" y="30" width="335" height="512.5"/>
+                    <rect key="frame" x="20" y="30" width="335" height="496.5"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Register" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="65w-vp-Z5z">
-                            <rect key="frame" x="0.0" y="0.0" width="335" height="80"/>
-                            <fontDescription key="fontDescription" name="Noteworthy-Bold" family="Noteworthy" pointSize="50"/>
+                            <rect key="frame" x="0.0" y="0.0" width="335" height="64"/>
+                            <fontDescription key="fontDescription" name="Noteworthy-Bold" family="Noteworthy" pointSize="40"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="eVX-TD-V6V">
-                            <rect key="frame" x="0.0" y="120" width="335" height="392.5"/>
+                            <rect key="frame" x="0.0" y="104" width="335" height="392.5"/>
                             <subviews>
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="Qjh-Hf-fDo">
                                     <rect key="frame" x="0.0" y="0.0" width="335" height="280"/>
@@ -156,16 +158,16 @@
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="k3l-X2-zC8">
                                     <rect key="frame" x="0.0" y="305" width="335" height="87.5"/>
                                     <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dxk-Bw-268">
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dxk-Bw-268" customClass="CustomButton" customModule="ChatApp" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="0.0" width="335" height="45"/>
-                                            <color key="backgroundColor" red="0.91955732489999997" green="0.82925601879999999" blue="0.6164999203" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="backgroundColor" name="darkBlue"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="45" id="AOP-vS-vaX"/>
                                             </constraints>
                                             <state key="normal" title="Button"/>
                                             <buttonConfiguration key="configuration" style="plain" title="Register">
                                                 <fontDescription key="titleFontDescription" name="Futura-Medium" family="Futura" pointSize="20"/>
-                                                <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </buttonConfiguration>
                                             <connections>
                                                 <action selector="register:" destination="-1" eventType="touchUpInside" id="Gj6-cD-gL3"/>
@@ -192,13 +194,20 @@
                         </stackView>
                     </subviews>
                 </stackView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qN1-CK-ABK" customClass="MessageView" customModule="ChatApp" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="JDX-cY-y6s"/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="JDX-cY-y6s" firstAttribute="leading" secondItem="nrs-FG-Ugc" secondAttribute="leading" constant="-20" id="Kdb-tU-CjJ"/>
                 <constraint firstItem="nrs-FG-Ugc" firstAttribute="top" secondItem="JDX-cY-y6s" secondAttribute="top" constant="30" id="P8T-Cb-U8C"/>
+                <constraint firstAttribute="bottom" secondItem="qN1-CK-ABK" secondAttribute="bottom" id="YTE-l8-CVx"/>
+                <constraint firstItem="qN1-CK-ABK" firstAttribute="leading" secondItem="JDX-cY-y6s" secondAttribute="leading" id="aZF-AS-IFT"/>
+                <constraint firstItem="JDX-cY-y6s" firstAttribute="trailing" secondItem="qN1-CK-ABK" secondAttribute="trailing" id="cYC-f5-ELC"/>
                 <constraint firstItem="JDX-cY-y6s" firstAttribute="trailing" secondItem="nrs-FG-Ugc" secondAttribute="trailing" constant="20" id="esd-yE-Lck"/>
+                <constraint firstItem="qN1-CK-ABK" firstAttribute="top" secondItem="5kh-aK-8cb" secondAttribute="top" id="n5a-vy-SPC"/>
             </constraints>
             <point key="canvasLocation" x="-13.043478260869566" y="-11.413043478260871"/>
         </view>
@@ -207,6 +216,9 @@
         <image name="envelope" catalog="system" width="128" height="93"/>
         <image name="lock" catalog="system" width="125" height="128"/>
         <image name="person.fill" catalog="system" width="128" height="120"/>
+        <namedColor name="darkBlue">
+            <color red="0.14901960784313725" green="0.0" blue="0.42745098039215684" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="labelColor">
             <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

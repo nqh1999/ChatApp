@@ -14,9 +14,11 @@ final class RegisterViewController: BaseViewController {
     @IBOutlet private weak var avt: UIImageView!
     @IBOutlet private weak var chooseImgButton: UIButton!
     @IBOutlet private weak var backToLoginButton: UIButton!
-    @IBOutlet private weak var registerButton: UIButton!
+    @IBOutlet private weak var registerButton: CustomButton!
     @IBOutlet private weak var passwordTf: BaseTextField!
     @IBOutlet private weak var spinner: UIActivityIndicatorView!
+    @IBOutlet private weak var messageView: MessageView!
+    
     lazy private var presenter = RegisterPresenter(view: self)
     private var imgPickerView = UIImagePickerController()
     
@@ -42,7 +44,6 @@ final class RegisterViewController: BaseViewController {
         self.view.layer.contents = UIImage(named: "bgrLogin")?.cgImage
         self.navigationController?.navigationBar.isHidden = true
         self.chooseImgButton.layer.cornerRadius = 5
-        self.registerButton.layer.cornerRadius = 5
         self.avt.layer.borderWidth = 1
         self.avt.layer.borderColor = UIColor.white.cgColor
         self.nameTf.shouldReturn = { [weak self] in
@@ -55,12 +56,13 @@ final class RegisterViewController: BaseViewController {
             self?.passwordTf.resignFirstResponder()
         }
         self.spinner.isHidden = true
+        self.messageView.isHidden = true
     }
     
     private func setupPickerView() {
         self.imgPickerView.delegate = self
         self.imgPickerView.sourceType = .photoLibrary
-        present(self.imgPickerView, animated: true)
+        self.present(self.imgPickerView, animated: true)
     }
     
     @IBAction private func chooseImage(_ sender: Any) {
@@ -97,11 +99,13 @@ extension RegisterViewController: UIImagePickerControllerDelegate, UINavigationC
 
 extension RegisterViewController: RegisterProtocol {
     func didGetRegisterResult(result: String?) {
+        self.messageView.isHidden = false
         if let result = result {
-            self.showAlert(text: result)
+            self.messageView.showMessage(result)
         } else {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                self.navigationController?.popToRootViewController(animated: true)
+            self.messageView.showMessage(Err.registerSuccess.rawValue)
+            self.messageView.confirm = { [weak self] _ in
+                self?.navigationController?.popToRootViewController(animated: true)
             }
         }
     }

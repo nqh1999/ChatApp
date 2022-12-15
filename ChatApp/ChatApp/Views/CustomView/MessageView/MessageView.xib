@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_0" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MessageView" customModule="ChatApp" customModuleProvider="target">
+            <connections>
+                <outlet property="cancelButton" destination="3en-k3-Y6d" id="YCQ-vR-zjl"/>
+                <outlet property="confirmButton" destination="GhR-Ms-HyJ" id="Qtq-AR-RvV"/>
+                <outlet property="containerView" destination="K5h-s4-8uy" id="v1E-2I-8Kr"/>
+                <outlet property="contentView" destination="iN0-l3-epB" id="O8h-GJ-4sC"/>
+                <outlet property="messageLabel" destination="tFF-U1-qY9" id="H0E-5a-0PV"/>
+                <outlet property="messageTf" destination="boY-ZM-8gB" id="0fO-7p-PhB"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="K5h-s4-8uy">
+                    <rect key="frame" x="0.0" y="164" width="320" height="160"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="3D5-xv-leu">
+                            <rect key="frame" x="30" y="20" width="260" height="120"/>
+                            <subviews>
+                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Ztd-nJ-0Wr">
+                                    <rect key="frame" x="0.0" y="0.0" width="260" height="65"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tFF-U1-qY9">
+                                            <rect key="frame" x="0.0" y="0.0" width="260" height="21"/>
+                                            <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="16"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter your name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="boY-ZM-8gB" customClass="BaseTextField" customModule="ChatApp" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="31" width="260" height="34"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="260" id="fs6-er-6iH"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="15"/>
+                                            <textInputTraits key="textInputTraits"/>
+                                        </textField>
+                                    </subviews>
+                                </stackView>
+                                <stackView opaque="NO" contentMode="scaleToFill" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="Ybb-D9-CxE">
+                                    <rect key="frame" x="22.5" y="85" width="215" height="35"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GhR-Ms-HyJ" customClass="CustomButton" customModule="ChatApp" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="0.0" width="100" height="35"/>
+                                            <color key="backgroundColor" name="darkBlue"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="100" id="BiA-17-wsv"/>
+                                                <constraint firstAttribute="height" constant="35" id="fbm-kd-8Em"/>
+                                            </constraints>
+                                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <state key="normal" title="Button"/>
+                                            <buttonConfiguration key="configuration" style="plain" title="Ok">
+                                                <fontDescription key="titleFontDescription" name="Futura-Medium" family="Futura" pointSize="16"/>
+                                            </buttonConfiguration>
+                                            <connections>
+                                                <action selector="confirm:" destination="-1" eventType="touchUpInside" id="nG8-yY-rKr"/>
+                                            </connections>
+                                        </button>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3en-k3-Y6d" customClass="CustomButton" customModule="ChatApp" customModuleProvider="target">
+                                            <rect key="frame" x="115" y="0.0" width="100" height="35"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="35" id="ByS-XS-AzZ"/>
+                                                <constraint firstAttribute="width" constant="100" id="xxd-uG-wrU"/>
+                                            </constraints>
+                                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <state key="normal" title="Button"/>
+                                            <buttonConfiguration key="configuration" style="plain" title="Cancel">
+                                                <fontDescription key="titleFontDescription" name="Futura-Medium" family="Futura" pointSize="16"/>
+                                            </buttonConfiguration>
+                                            <connections>
+                                                <action selector="cancel:" destination="-1" eventType="touchUpInside" id="GPO-gw-boG"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                </stackView>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </stackView>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstItem="3D5-xv-leu" firstAttribute="top" secondItem="K5h-s4-8uy" secondAttribute="top" constant="20" id="B5W-bf-s5R"/>
+                        <constraint firstItem="3D5-xv-leu" firstAttribute="leading" secondItem="K5h-s4-8uy" secondAttribute="leading" constant="30" id="EgN-2N-X8g"/>
+                        <constraint firstAttribute="bottom" secondItem="3D5-xv-leu" secondAttribute="bottom" constant="20" id="LDE-nO-M4I"/>
+                        <constraint firstAttribute="trailing" secondItem="3D5-xv-leu" secondAttribute="trailing" constant="30" id="d5k-pT-TFo"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" name="mask"/>
+            <constraints>
+                <constraint firstItem="K5h-s4-8uy" firstAttribute="centerX" secondItem="vUN-kp-3ea" secondAttribute="centerX" id="VMr-HP-8cp"/>
+                <constraint firstItem="K5h-s4-8uy" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" constant="-40" id="wbX-PG-RJs"/>
+            </constraints>
+            <point key="canvasLocation" x="80.152671755725194" y="-3.5211267605633805"/>
+        </view>
+    </objects>
+    <resources>
+        <namedColor name="darkBlue">
+            <color red="0.14901960784313725" green="0.0" blue="0.42745098039215684" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="mask">
+            <color red="1" green="1" blue="1" alpha="0.15000000596046448" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

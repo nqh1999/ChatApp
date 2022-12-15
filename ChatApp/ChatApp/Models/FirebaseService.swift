@@ -14,7 +14,19 @@ class FirebaseService {
     private var messages = [Message]()
     private var users = [User]()
     
-    // MARK: - Handler Methods
+    // MARK: Register
+    func register(_ id: Int,_ name: String,_ username: String,_ password: String,_ imgUrl: String, completed: @escaping () -> Void) {
+        let docRef = self.db.collection("user").document("\(id)")
+        docRef.setData([
+            "id": id,
+            "username": username,
+            "password": password,
+            "name": name,
+            "imgUrl": imgUrl
+        ])
+        completed()
+    }
+    // MARK: Fetch User
     func fetchUser(completed: @escaping ([User]) -> Void) {
         self.db.collection("user").addSnapshotListener { querySnapshot, err in
             guard let querySnapshot = querySnapshot, err == nil else { return }
@@ -35,7 +47,9 @@ class FirebaseService {
             querySnapshot.documents.forEach { document in
                 let message = Message(message: document.data())
                 self.messages.append(message)
-                self.sortedMessage()
+                self.messages = self.messages.sorted {
+                    return $0.time < $1.time
+                }
             }
             completed(self.messages)
         }
@@ -53,6 +67,30 @@ class FirebaseService {
                 completed(url.absoluteString)
             }
         }
+    }
+    
+    func changeAvt(_ id: Int,_ img: UIImage, completed: @escaping () -> Void) {
+        let img = img.jpegData(compressionQuality: 0.5)!
+        let keyImg = NSUUID().uuidString
+        let imgFolder = storage.child("img_avt").child(keyImg)
+        storage.child("img_avt").child(keyImg).putData(img) { _ , err in
+            guard err == nil else { return }
+            imgFolder.downloadURL { url, err in
+                guard err == nil, let url = url else { return }
+                self.db.collection("user").document("\(id)").updateData(["imgUrl" : url.absoluteString])
+                completed()
+            }
+        }
+    }
+    
+    func changeName(_ id: Int,_ name: String, completed: @escaping () -> Void) {
+        self.db.collection("user").document("\(id)").updateData(["name": name])
+        completed()
+    }
+    
+    func changePassword(_ id: Int,_ password: String, completed: @escaping () -> Void) {
+        self.db.collection("user").document("\(id)").updateData(["password": password])
+        completed()
     }
     
     // MARK: send message to firestore
@@ -102,7 +140,7 @@ class FirebaseService {
             if error != nil { return }
             querySnapshot.documents.forEach { document in
                 let message = Message(message: document.data())
-                if (message.senderId == sender.id && message.receiverId == receiver.id) || (message.senderId == receiver.id && message.receiverId == sender.id) {
+                if message.senderId == receiver.id && message.receiverId == sender.id {
                     self.setState(id: message.messageId)
                 }
             }
@@ -123,25 +161,5 @@ class FirebaseService {
                 self.db.collection("message").document(id).updateData(["read" : true])
             }
         }
-    }
-    
-    // MARK: sort message by time
-    private func sortedMessage() {
-        var timeArr: [Double] = []
-        var messageArr = [Message]()
-        self.messages.forEach { message in
-            timeArr.append(message.time)
-        }
-        timeArr.sort {
-            $0 < $1
-        }
-        timeArr.forEach { time in
-            self.messages.forEach { message in
-                if message.time == time {
-                    messageArr.append(message)
-                }
-            }
-        }
-        self.messages = messageArr
     }
 }
