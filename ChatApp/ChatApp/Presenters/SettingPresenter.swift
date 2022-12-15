@@ -45,6 +45,10 @@ class SettingPresenter {
         }
     }
     
+    func setState() {
+        self.service.setStateIsActive(userId, false)
+    }
+    
     // MARK: Get img url from firestore and save to property
     func setImgUrl(_ img: UIImage, completed: @escaping () -> Void) {
         self.service.changeAvt(self.userId, img) {

@@ -47,6 +47,17 @@ class DetailPresenter {
         return self.sender
     }
     
+    func fetchUser(completed: @escaping (User) -> Void) {
+        self.service.fetchUser { users in
+            guard let receiver = self.receiver else { return }
+            users.forEach { user in
+                if user.id == receiver.id {
+                    completed(user)
+                }
+            }
+        }
+    }
+    
     // MARK: fetch message
     func fetchMessage(completed: @escaping () -> Void) {
         self.service.fetchMessage { messages in

@@ -45,6 +45,7 @@ final class LoginViewController: BaseViewController {
         self.showPasswordButton.layer.cornerRadius = 2
         self.passwordTf.setPass()
         self.messageView.isHidden = true
+        self.navigationController?.navigationBar.isHidden = true
     }
     
     private func setupData() {
@@ -86,6 +87,7 @@ extension LoginViewController: LoginProtocol {
             let vc = ListViewController()
             vc.getPresenter().setData(senderId)
             self.messageView.showMessage(Err.loginSuccess.rawValue)
+            self.presenter.setState(senderId)
             self.messageView.confirm = { _ in
                 (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first?.rootViewController = UINavigationController(rootViewController: vc)
             }

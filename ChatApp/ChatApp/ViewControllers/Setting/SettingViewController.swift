@@ -65,6 +65,7 @@ class SettingViewController: BaseViewController {
     }
     
     @IBAction func logout(_ sender: Any) {
+        self.presenter.setState()
         (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first?.rootViewController = UINavigationController(rootViewController: LoginViewController())
     }
     

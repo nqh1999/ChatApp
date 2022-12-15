@@ -5,6 +5,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -12,6 +13,7 @@
             <connections>
                 <outlet property="contentView" destination="iN0-l3-epB" id="BSe-ks-AeR"/>
                 <outlet property="img" destination="fHP-fr-6rz" id="LyJ-zu-YLF"/>
+                <outlet property="stateButton" destination="x6E-iU-DNo" id="K33-8S-Idu"/>
                 <outlet property="titleLbl" destination="I6G-uP-7kA" id="X1o-HH-9Bi"/>
             </connections>
         </placeholder>
@@ -20,8 +22,8 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <stackView opaque="NO" contentMode="scaleToFill" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="VMs-D3-aLK">
-                    <rect key="frame" x="0.0" y="8" width="103" height="40"/>
+                <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="VMs-D3-aLK">
+                    <rect key="frame" x="0.0" y="8" width="96" height="40"/>
                     <subviews>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fHP-fr-6rz">
                             <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
@@ -31,7 +33,7 @@
                             </constraints>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.69999999999999996" translatesAutoresizingMaskIntoConstraints="NO" id="I6G-uP-7kA">
-                            <rect key="frame" x="55" y="0.0" width="48" height="40"/>
+                            <rect key="frame" x="48" y="0.0" width="48" height="40"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <fontDescription key="fontDescription" name="AppleSDGothicNeo-Bold" family="Apple SD Gothic Neo" pointSize="20"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -39,15 +41,32 @@
                         </label>
                     </subviews>
                 </stackView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x6E-iU-DNo">
+                    <rect key="frame" x="27" y="38" width="10" height="10"/>
+                    <color key="backgroundColor" systemColor="systemGreenColor"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="10" id="0ru-pe-scc"/>
+                        <constraint firstAttribute="height" constant="10" id="lJ6-f3-a3Q"/>
+                    </constraints>
+                    <state key="normal" title="Button"/>
+                    <buttonConfiguration key="configuration" style="plain"/>
+                </button>
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="VMs-D3-aLK" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="0ZE-5F-LHZ"/>
+                <constraint firstItem="x6E-iU-DNo" firstAttribute="bottom" secondItem="fHP-fr-6rz" secondAttribute="bottom" id="Aaw-gw-6yX"/>
+                <constraint firstItem="x6E-iU-DNo" firstAttribute="trailing" secondItem="fHP-fr-6rz" secondAttribute="trailing" constant="-3" id="nxt-Zg-WKV"/>
                 <constraint firstItem="VMs-D3-aLK" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="zsK-JT-uRV"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="131.8840579710145" y="116.51785714285714"/>
         </view>
     </objects>
+    <resources>
+        <systemColor name="systemGreenColor">
+            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
 </document>

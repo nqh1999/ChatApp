@@ -36,6 +36,10 @@ class LoginPresenter {
         }
     }
     
+    func setState(_ id: Int) {
+        self.service.setStateIsActive(id, true)
+    }
+    
     // MARK: check and send (result, senderid) to view if login sucess
     func checkLogin(username: String, password: String) {
         self.validateService.checkLogin(users, username, password) { result, senderId in

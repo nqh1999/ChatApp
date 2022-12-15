@@ -141,7 +141,7 @@ class FirebaseService {
             querySnapshot.documents.forEach { document in
                 let message = Message(message: document.data())
                 if message.senderId == receiver.id && message.receiverId == sender.id {
-                    self.setState(id: message.messageId)
+                    self.setMessageState(id: message.messageId)
                 }
             }
         }
@@ -153,7 +153,7 @@ class FirebaseService {
     }
     
     // MARK: set state is read when tap to new message
-    func setState(id: String) {
+    private func setMessageState(id: String) {
         self.db.collection("message").whereField("messageId", isEqualTo: id).getDocuments { (result, error) in
             guard let result = result else { return }
             if error != nil { return }
@@ -161,5 +161,10 @@ class FirebaseService {
                 self.db.collection("message").document(id).updateData(["read" : true])
             }
         }
+    }
+    
+    // MARK: Set User State
+    func setStateIsActive(_ id: Int, _ isActive: Bool) {
+        self.db.collection("user").document("\(id)").updateData(["isActive" : isActive])
     }
 }

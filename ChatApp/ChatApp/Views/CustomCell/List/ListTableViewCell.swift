@@ -16,6 +16,7 @@ class ListTableViewCell: UITableViewCell {
     @IBOutlet private weak var containerView: UIView!
     @IBOutlet private weak var timeLabel: UILabel!
     @IBOutlet private weak var notifyButton: UIButton!
+    @IBOutlet private weak var stateButton: UIButton!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -25,6 +26,7 @@ class ListTableViewCell: UITableViewCell {
         self.avt.layer.cornerRadius = avt.layer.frame.width / 2
         self.avt.layer.borderWidth = 0.5
         self.notifyButton.layer.cornerRadius = self.notifyButton.frame.width / 2
+        self.stateButton.layer.cornerRadius = self.stateButton.frame.width / 2
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -35,6 +37,7 @@ class ListTableViewCell: UITableViewCell {
         guard let user = user else { return }
         self.timeLabel.isHidden = false
         self.avt.sd_setImage(with: URL(string: user.imgUrl))
+        self.stateButton.isHidden = !user.isActive
         self.nameLabel.text = user.name
         if let message = message {
             self.timeLabel.isHidden = false

@@ -39,7 +39,6 @@ final class DetailViewController: BaseViewController {
     }
     
     private func setupUI() {
-        self.getTitleView().setTitleView(data: self.presenter.getReceiver())
         self.messageTf.shouldReturn = { [weak self] in
             self?.sendMessage()
         }
@@ -73,7 +72,7 @@ final class DetailViewController: BaseViewController {
         self.tableView.showsVerticalScrollIndicator = false
     }
     
-    private func scrollToBottom(){
+    private func scrollToBottom() {
         DispatchQueue.main.async {
             guard self.presenter.getNumberOfMessage() > 0 else { return }
             let indexPath = IndexPath(row: self.presenter.getNumberOfMessage()-1, section: 0)
@@ -89,6 +88,9 @@ final class DetailViewController: BaseViewController {
     
     private func setupData() {
         UIView.animate(withDuration: 0, delay: 0) {
+            self.presenter.fetchUser { user in
+                self.getTitleView().setTitleView(data: user)
+            }
             self.presenter.fetchMessage {
                 self.reloadData()
             }
