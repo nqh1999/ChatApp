@@ -17,13 +17,15 @@ enum Err: String {
     case reEnterNewPasswordIsEmpty = "You can re-enter new password"
     case imgIsEmpty = "Please choose your image"
     case usernameExist = "Username already exists"
-    case loginFailed = "Username or password is incorrect"
+    case loginFailed = "Login failed"
     case passwordIncorrect = "Password is incorrect"
     case passwordNotSame = "Re-entered password is incorrect"
     case usernameIncorrect = "Username is incorrect"
     case loginSuccess = "Login success"
     case registerSuccess = "Register Success"
     case changePasswordSuccess = "Change password success"
+    case invalidUsername = "Invalid username"
+    case invalidPassword = "Invalid password"
 }
 
 // MARK: User Model

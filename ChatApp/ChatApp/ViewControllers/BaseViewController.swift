@@ -38,15 +38,6 @@ class BaseViewController: UIViewController {
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "trash.fill"), style: .plain, target: self, action: #selector(deleteMessage))
     }
     
-    func showAlert(text: String, completed: @escaping () -> Void) {
-        let alert = UIAlertController(title: text, message: "", preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK", style: .cancel) { _ in
-            completed()
-        }
-        alert.addAction(okAction)
-        present(alert, animated: true)
-    }
-    
     @objc func deleteMessage() {}
     
     @objc func backToPreVC() {

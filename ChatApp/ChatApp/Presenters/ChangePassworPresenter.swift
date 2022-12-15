@@ -16,6 +16,7 @@ class ChangePasswordPresenter {
     private weak var view: ChangePasswordProtocol?
     private var user: User?
     private var service = FirebaseService()
+    private var validateService = ValidateService()
     
     // MARK: - Init
     init(view: ChangePasswordProtocol) {
@@ -28,19 +29,13 @@ class ChangePasswordPresenter {
     
     func changePassword(_ currentPassword: String, _ newPassword: String, _ reEnterNewPassword: String) {
         guard let user = user else { return }
-        if currentPassword.isEmpty {
-            self.view?.didGetChangePasswordResult(result: Err.currentPasswordIsEmpty.rawValue)
-        } else if currentPassword != user.password {
-            self.view?.didGetChangePasswordResult(result: Err.passwordIncorrect.rawValue)
-        } else if newPassword.isEmpty {
-            self.view?.didGetChangePasswordResult(result: Err.newPasswordIsEmpty.rawValue)
-        } else if reEnterNewPassword.isEmpty {
-            self.view?.didGetChangePasswordResult(result: Err.reEnterNewPasswordIsEmpty.rawValue)
-        } else if newPassword != reEnterNewPassword {
-            self.view?.didGetChangePasswordResult(result: Err.passwordNotSame.rawValue)
-        } else {
-            self.service.changePassword(user.id, newPassword) {
-                self.view?.didGetChangePasswordResult(result: nil)
+        self.validateService.checkChangePasswordData(user, currentPassword, newPassword, reEnterNewPassword) { result in
+            if let result = result {
+                self.view?.didGetChangePasswordResult(result: result)
+            } else {
+                self.service.changePassword(user.id, newPassword) {
+                    self.view?.didGetChangePasswordResult(result: nil)
+                }
             }
         }
     }

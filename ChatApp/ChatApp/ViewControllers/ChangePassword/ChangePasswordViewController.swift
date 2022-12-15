@@ -8,16 +8,20 @@
 import UIKit
 
 class ChangePasswordViewController: BaseViewController {
-    @IBOutlet weak var currentPasswordTf: BaseTextField!
-    @IBOutlet weak var newPasswordTf: BaseTextField!
-    @IBOutlet weak var reEnterNewPasswordTf: BaseTextField!
-    
+    // MARK: - Properties
+    @IBOutlet private weak var currentPasswordTf: BaseTextField!
+    @IBOutlet private weak var newPasswordTf: BaseTextField!
+    @IBOutlet private weak var reEnterNewPasswordTf: BaseTextField!
+    @IBOutlet private weak var messageView: MessageView!
     lazy private var presenter = ChangePasswordPresenter(view: self)
+    
+    // MARK: - Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupUI()
     }
     
+    // MARK: - Methods
     private func setupUI() {
         self.navigationItem.titleView = nil
         self.title = "Change Password"
@@ -32,6 +36,7 @@ class ChangePasswordViewController: BaseViewController {
             self?.reEnterNewPasswordTf.resignFirstResponder()
             self?.changePassword()
         }
+        self.messageView.isHidden = true
     }
     
     func getPresenter() -> ChangePasswordPresenter {
@@ -53,11 +58,13 @@ class ChangePasswordViewController: BaseViewController {
 
 extension ChangePasswordViewController: ChangePasswordProtocol {
     func didGetChangePasswordResult(result: String?) {
+        self.messageView.isHidden = false
         if let result = result {
-            self.showAlert(text: result) {}
+            self.messageView.showMessage(result)
         } else {
-            self.showAlert(text: Err.changePasswordSuccess.rawValue) {
-                self.navigationController?.popViewController(animated: true)
+            self.messageView.showMessage(Err.changePasswordSuccess.rawValue)
+            self.messageView.confirm = { [weak self] _ in
+                self?.navigationController?.popViewController(animated: true)
             }
         }
     }

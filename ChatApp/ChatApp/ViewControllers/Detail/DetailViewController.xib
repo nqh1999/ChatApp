@@ -12,6 +12,7 @@
             <connections>
                 <outlet property="imgButton" destination="4rx-QE-RFS" id="w6p-0W-XOY"/>
                 <outlet property="messageTf" destination="bkZ-Cr-xdC" id="9QO-G7-tLj"/>
+                <outlet property="messageView" destination="UC4-Y9-uDI" id="fBo-e3-Zxk"/>
                 <outlet property="sendButton" destination="4rx-QE-RFS" id="qlm-n9-CWN"/>
                 <outlet property="spinner" destination="mB8-nH-2Wa" id="Y5B-Nv-f2r"/>
                 <outlet property="tableView" destination="sCK-1Z-WYS" id="CIf-3f-wqh"/>
@@ -71,6 +72,9 @@
                         </stackView>
                     </subviews>
                 </stackView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UC4-Y9-uDI" customClass="MessageView" customModule="ChatApp" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                </view>
                 <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="mB8-nH-2Wa">
                     <rect key="frame" x="197" y="425" width="20" height="20"/>
                 </activityIndicatorView>
@@ -78,12 +82,16 @@
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
+                <constraint firstItem="UC4-Y9-uDI" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="49b-7y-Q77"/>
+                <constraint firstItem="UC4-Y9-uDI" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="9Tb-5P-rMe"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="top" secondItem="PlR-a4-pqC" secondAttribute="top" constant="-35" id="Bvp-bR-QzH"/>
                 <constraint firstItem="mB8-nH-2Wa" firstAttribute="centerX" secondItem="sCK-1Z-WYS" secondAttribute="centerX" id="EhP-L0-zH9"/>
                 <constraint firstItem="PlR-a4-pqC" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="15" id="FPf-1l-mDz"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="PlR-a4-pqC" secondAttribute="trailing" constant="15" id="QE7-hh-Ad7"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="PlR-a4-pqC" secondAttribute="bottom" constant="15" id="X5Z-Yr-rAL"/>
                 <constraint firstItem="mB8-nH-2Wa" firstAttribute="centerY" secondItem="sCK-1Z-WYS" secondAttribute="centerY" id="ndn-IP-DR4"/>
+                <constraint firstAttribute="bottom" secondItem="UC4-Y9-uDI" secondAttribute="bottom" id="qdl-0N-lkh"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="UC4-Y9-uDI" secondAttribute="trailing" id="uMe-uk-TaG"/>
             </constraints>
             <point key="canvasLocation" x="116.79389312977099" y="-12.67605633802817"/>
         </view>

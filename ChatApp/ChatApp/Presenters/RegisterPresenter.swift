@@ -18,7 +18,7 @@ class RegisterPresenter {
     private var users = [User]()
     private var imgUrl: String = ""
     private var service = FirebaseService()
-    
+    private var validateService = ValidateService()
     // MARK: - Init
     init(view: RegisterProtocol) {
         self.view = view
@@ -41,17 +41,9 @@ class RegisterPresenter {
     
     // MARK: check register and send data if check success
     func register(_ name: String,_ username: String,_ password: String) {
-        self.users.forEach { user in
-            if name.isEmpty {
-                self.view?.didGetRegisterResult(result: Err.nameIsEmpty.rawValue)
-            } else if username.isEmpty {
-                self.view?.didGetRegisterResult(result: Err.usernameIsEmpty.rawValue)
-            } else if password.isEmpty {
-                self.view?.didGetRegisterResult(result: Err.passwordIsEmpty.rawValue)
-            } else if self.imgUrl.isEmpty {
-                self.view?.didGetRegisterResult(result: Err.imgIsEmpty.rawValue)
-            } else if user.username == username {
-                self.view?.didGetRegisterResult(result: Err.usernameExist.rawValue)
+        self.validateService.checkRegisterData(self.users, name, username, password, self.imgUrl) { result in
+            if let result = result {
+                self.view?.didGetRegisterResult(result: result)
             } else {
                 self.service.register(self.users.count + 1, name, username, password, self.imgUrl) {
                     self.view?.didGetRegisterResult(result: nil)

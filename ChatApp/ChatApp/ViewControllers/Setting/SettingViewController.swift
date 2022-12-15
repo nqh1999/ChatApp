@@ -16,6 +16,8 @@ class SettingViewController: BaseViewController {
     @IBOutlet private weak var logoutButton: CustomButton!
     @IBOutlet weak var editName: UIButton!
     @IBOutlet private weak var spinner: UIActivityIndicatorView!
+    @IBOutlet weak var messageView: MessageView!
+    
     lazy private var presenter = SettingPresenter(view: self)
     private var imgPickerView = UIImagePickerController()
     
@@ -39,6 +41,7 @@ class SettingViewController: BaseViewController {
         self.spinner.isHidden = true
         self.navigationItem.titleView = nil
         self.title = "Setting"
+        self.messageView.isHidden = true
     }
     
     private func setupData() {
@@ -65,36 +68,33 @@ class SettingViewController: BaseViewController {
         (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first?.rootViewController = UINavigationController(rootViewController: LoginViewController())
     }
     
-    @IBAction func chooseImg(_ sender: Any) {
+    @IBAction private func chooseImg(_ sender: Any) {
         self.setupPickerView()
     }
     
-    @IBAction func editName(_ sender: Any) {
-        let alert = UIAlertController(title: "Change name", message: "", preferredStyle: .alert)
-        
-        alert.addTextField { textField in
-            textField.placeholder = "Enter Your Name"
+    @IBAction private func editName(_ sender: Any) {
+        self.messageView.isHidden = false
+        self.messageView.showChangeNameMessage { name in
+            self.changeName(name)
         }
-        let okAction = UIAlertAction(title: "Save", style: .destructive) { _ in
-            let nameField = alert.textFields![0] as UITextField
-            guard let name = nameField.text else { return }
-            guard name != "" else { return }
-            print(name)
-            self.presenter.changeName(name) {
-                self.nameLabel.text = name
-            }
+        self.messageView.confirm = { [weak self] name in
+            self?.changeName(name)
         }
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
-        alert.addAction(okAction)
-        alert.addAction(cancelAction)
-        self.present(alert, animated: true)
     }
     
-    @IBAction func goToEditProfileView(_ sender: Any) {
+    private func changeName(_ name: String) {
+        guard name != "" else { return }
+        self.presenter.changeName(name) {
+            self.nameLabel.text = name
+            self.messageView.isHidden = true
+        }
+    }
+    
+    @IBAction private func goToEditProfileView(_ sender: Any) {
         
     }
     
-    @IBAction func goToChangePasswordView(_ sender: Any) {
+    @IBAction private func goToChangePasswordView(_ sender: Any) {
         let vc = ChangePasswordViewController()
         vc.getPresenter().setUser(self.presenter.getUser())
         self.navigationController?.pushViewController(vc, animated: true)

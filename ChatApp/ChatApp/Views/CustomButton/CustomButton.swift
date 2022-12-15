@@ -14,5 +14,6 @@ class CustomButton: UIButton {
         self.layer.cornerRadius = 5
         self.layer.borderColor = UIColor.white.cgColor
         self.layer.borderWidth = 1
+        self.titleLabel?.font = UIFont(name: "futura-medium", size: 20)
     }
 }

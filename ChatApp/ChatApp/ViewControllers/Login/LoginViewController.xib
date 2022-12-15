@@ -5,6 +5,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Image references" minToolsVersion="12.0"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -12,7 +13,9 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LoginViewController" customModule="ChatApp" customModuleProvider="target">
             <connections>
+                <outlet property="forgotPasswordButton" destination="hNJ-NO-unW" id="fWi-S2-Sb2"/>
                 <outlet property="loginButton" destination="O1p-gS-8xv" id="TN3-a4-g8g"/>
+                <outlet property="messageView" destination="fuP-8q-PMi" id="frW-zs-V1r"/>
                 <outlet property="passwordTf" destination="0oU-Uo-MqV" id="4Xx-II-Jds"/>
                 <outlet property="registerButton" destination="Xxt-1F-u2J" id="nSy-lT-D2w"/>
                 <outlet property="showPasswordButton" destination="9BX-5z-9Sh" id="5iq-t4-eB9"/>
@@ -26,16 +29,16 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="fJf-WB-xxx">
-                    <rect key="frame" x="20" y="30" width="280" height="472.5"/>
+                    <rect key="frame" x="20" y="30" width="280" height="456.5"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Login" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uyD-xv-8kf">
-                            <rect key="frame" x="0.0" y="0.0" width="280" height="80"/>
-                            <fontDescription key="fontDescription" name="Noteworthy-Bold" family="Noteworthy" pointSize="50"/>
+                            <rect key="frame" x="0.0" y="0.0" width="280" height="64"/>
+                            <fontDescription key="fontDescription" name="Noteworthy-Bold" family="Noteworthy" pointSize="40"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="70" translatesAutoresizingMaskIntoConstraints="NO" id="ETH-vW-WZv">
-                            <rect key="frame" x="0.0" y="120" width="280" height="352.5"/>
+                            <rect key="frame" x="0.0" y="104" width="280" height="352.5"/>
                             <subviews>
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="B1N-Z5-QNc">
                                     <rect key="frame" x="0.0" y="0.0" width="280" height="145"/>
@@ -46,7 +49,7 @@
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="45" id="vlw-44-jLW"/>
                                             </constraints>
-                                            <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
                                             <userDefinedRuntimeAttributes>
                                                 <userDefinedRuntimeAttribute type="image" keyPath="leftImage">
@@ -63,7 +66,7 @@
                                                 </userDefinedRuntimeAttribute>
                                             </userDefinedRuntimeAttributes>
                                         </textField>
-                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="7F9-Kf-UQf">
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="7F9-Kf-UQf">
                                             <rect key="frame" x="0.0" y="65" width="280" height="80"/>
                                             <subviews>
                                                 <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="0oU-Uo-MqV" customClass="PasswordTextField" customModule="ChatApp" customModuleProvider="target">
@@ -89,29 +92,45 @@
                                                         </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
                                                 </textField>
-                                                <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="ZEt-aR-Jgy">
-                                                    <rect key="frame" x="0.0" y="65" width="132" height="15"/>
+                                                <stackView opaque="NO" contentMode="scaleToFill" distribution="equalCentering" spacing="-1" translatesAutoresizingMaskIntoConstraints="NO" id="5vN-YJ-ZCF">
+                                                    <rect key="frame" x="0.0" y="65" width="280" height="15"/>
                                                     <subviews>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9BX-5z-9Sh">
-                                                            <rect key="frame" x="0.0" y="0.0" width="15" height="15"/>
-                                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="width" constant="15" id="ASd-C5-l3W"/>
-                                                                <constraint firstAttribute="height" constant="15" id="ITs-5F-B3x"/>
-                                                            </constraints>
-                                                            <color key="tintColor" systemColor="labelColor"/>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="ZEt-aR-Jgy">
+                                                            <rect key="frame" x="0.0" y="0.0" width="134.5" height="15"/>
+                                                            <subviews>
+                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9BX-5z-9Sh">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="15" height="15"/>
+                                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="width" constant="15" id="ASd-C5-l3W"/>
+                                                                        <constraint firstAttribute="height" constant="15" id="ITs-5F-B3x"/>
+                                                                    </constraints>
+                                                                    <color key="tintColor" systemColor="labelColor"/>
+                                                                    <state key="normal" title="Button"/>
+                                                                    <buttonConfiguration key="configuration" style="plain"/>
+                                                                    <connections>
+                                                                        <action selector="showPassword:" destination="-1" eventType="touchUpInside" id="iPw-rH-nH6"/>
+                                                                    </connections>
+                                                                </button>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Show password" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Soe-wt-YLl">
+                                                                    <rect key="frame" x="20" y="0.0" width="114.5" height="15"/>
+                                                                    <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="16"/>
+                                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                            </subviews>
+                                                        </stackView>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hNJ-NO-unW">
+                                                            <rect key="frame" x="134" y="0.0" width="146" height="15"/>
                                                             <state key="normal" title="Button"/>
-                                                            <buttonConfiguration key="configuration" style="plain"/>
+                                                            <buttonConfiguration key="configuration" style="plain" title="Forgot password">
+                                                                <fontDescription key="titleFontDescription" name="Futura-Medium" family="Futura" pointSize="16"/>
+                                                                <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            </buttonConfiguration>
                                                             <connections>
-                                                                <action selector="showPassword:" destination="-1" eventType="touchUpInside" id="iPw-rH-nH6"/>
+                                                                <action selector="goToForgotPasswordView:" destination="-1" eventType="touchUpInside" id="o31-AW-eL1"/>
                                                             </connections>
                                                         </button>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Show password" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Soe-wt-YLl">
-                                                            <rect key="frame" x="25" y="0.0" width="107" height="15"/>
-                                                            <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="15"/>
-                                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
                                                     </subviews>
                                                 </stackView>
                                             </subviews>
@@ -126,7 +145,7 @@
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O1p-gS-8xv" customClass="CustomButton" customModule="ChatApp" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="0.0" width="280" height="45"/>
-                                            <color key="backgroundColor" red="0.15067753175488946" green="0.0" blue="0.42907673323235546" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="backgroundColor" name="darkBlue"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="45" id="KT0-z0-iLW"/>
                                             </constraints>
@@ -166,13 +185,20 @@
                         </stackView>
                     </subviews>
                 </stackView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fuP-8q-PMi" customClass="MessageView" customModule="ChatApp" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
+                <constraint firstItem="fuP-8q-PMi" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="7i6-u8-0zm"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="fuP-8q-PMi" secondAttribute="trailing" id="7s2-Fa-bAP"/>
+                <constraint firstItem="fJf-WB-xxx" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="SUM-eK-zMg"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="fJf-WB-xxx" secondAttribute="trailing" constant="20" id="TKn-mf-8TY"/>
                 <constraint firstItem="fJf-WB-xxx" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="30" id="eHh-Mf-lUI"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="leading" secondItem="fJf-WB-xxx" secondAttribute="leading" constant="-20" id="npR-7k-OeP"/>
+                <constraint firstAttribute="bottom" secondItem="fuP-8q-PMi" secondAttribute="bottom" id="hlS-aT-MYg"/>
+                <constraint firstItem="fuP-8q-PMi" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="iWy-TW-osg"/>
             </constraints>
             <point key="canvasLocation" x="-13.043478260869566" y="-11.413043478260871"/>
         </view>
@@ -180,6 +206,9 @@
     <resources>
         <image name="envelope" catalog="system" width="128" height="93"/>
         <image name="lock" catalog="system" width="125" height="128"/>
+        <namedColor name="darkBlue">
+            <color red="0.14901960784313725" green="0.0" blue="0.42745098039215684" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="labelColor">
             <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

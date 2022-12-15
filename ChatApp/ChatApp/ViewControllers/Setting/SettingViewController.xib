@@ -16,6 +16,7 @@
                 <outlet property="editProfileButton" destination="avp-JJ-ydz" id="OMh-D7-bfG"/>
                 <outlet property="imgView" destination="7XB-vs-m5T" id="gTm-JB-dPR"/>
                 <outlet property="logoutButton" destination="f6U-Q2-D67" id="CSs-JQ-Uyl"/>
+                <outlet property="messageView" destination="jwR-8e-6Yx" id="GMn-k3-aQg"/>
                 <outlet property="nameLabel" destination="d7s-fu-2q1" id="51E-zZ-gRn"/>
                 <outlet property="spinner" destination="Bbo-a8-LeO" id="hl2-ws-Zww"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -40,7 +41,7 @@
                                     </constraints>
                                 </imageView>
                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="7" translatesAutoresizingMaskIntoConstraints="NO" id="gC5-o7-adK">
-                                    <rect key="frame" x="15.5" y="132" width="249" height="34"/>
+                                    <rect key="frame" x="13.5" y="132" width="253" height="34"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nguyen Quang Huy" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" translatesAutoresizingMaskIntoConstraints="NO" id="d7s-fu-2q1">
                                             <rect key="frame" x="0.0" y="0.0" width="222" height="34"/>
@@ -49,12 +50,12 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kiT-ic-S7B">
-                                            <rect key="frame" x="229" y="0.0" width="20" height="34"/>
+                                            <rect key="frame" x="229" y="0.0" width="24" height="34"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" constant="20" id="PGW-bm-aGg"/>
+                                                <constraint firstAttribute="width" constant="24" id="PGW-bm-aGg"/>
                                             </constraints>
                                             <state key="normal" title="Button"/>
-                                            <buttonConfiguration key="configuration" style="plain" image="pencil.line" catalog="system">
+                                            <buttonConfiguration key="configuration" style="plain" image="highlighter" catalog="system">
                                                 <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </buttonConfiguration>
                                             <connections>
@@ -133,6 +134,9 @@
                 <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="Bbo-a8-LeO">
                     <rect key="frame" x="150" y="80" width="20" height="20"/>
                 </activityIndicatorView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jwR-8e-6Yx" customClass="MessageView" customModule="ChatApp" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -145,8 +149,12 @@
                 <constraint firstItem="iON-UK-fOg" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="Cy6-tf-GrL"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="f6U-Q2-D67" secondAttribute="bottom" constant="20" id="Mcg-iI-G1i"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="leading" secondItem="iON-UK-fOg" secondAttribute="leading" constant="-20" id="Pyr-MP-6ma"/>
+                <constraint firstItem="jwR-8e-6Yx" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="aFV-j6-Fiq"/>
+                <constraint firstItem="jwR-8e-6Yx" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="dt9-lZ-3h2"/>
                 <constraint firstItem="cQ9-Bv-Rf3" firstAttribute="top" secondItem="7XB-vs-m5T" secondAttribute="bottom" constant="-35" id="qaB-d1-vtm"/>
                 <constraint firstItem="Bbo-a8-LeO" firstAttribute="centerX" secondItem="7XB-vs-m5T" secondAttribute="centerX" id="sa9-uy-y76"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="jwR-8e-6Yx" secondAttribute="trailing" id="tf1-VT-eFn"/>
+                <constraint firstAttribute="bottom" secondItem="jwR-8e-6Yx" secondAttribute="bottom" id="xGM-2a-EyS"/>
             </constraints>
             <point key="canvasLocation" x="31.884057971014496" y="-11.413043478260871"/>
         </view>
@@ -154,6 +162,6 @@
     <resources>
         <image name="bgr" width="788" height="1024"/>
         <image name="camera.fill" catalog="system" width="128" height="93"/>
-        <image name="pencil.line" catalog="system" width="128" height="98"/>
+        <image name="highlighter" catalog="system" width="128" height="120"/>
     </resources>
 </document>

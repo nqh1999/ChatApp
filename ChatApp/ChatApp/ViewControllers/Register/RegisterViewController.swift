@@ -17,6 +17,8 @@ final class RegisterViewController: BaseViewController {
     @IBOutlet private weak var registerButton: CustomButton!
     @IBOutlet private weak var passwordTf: BaseTextField!
     @IBOutlet private weak var spinner: UIActivityIndicatorView!
+    @IBOutlet private weak var messageView: MessageView!
+    
     lazy private var presenter = RegisterPresenter(view: self)
     private var imgPickerView = UIImagePickerController()
     
@@ -54,6 +56,7 @@ final class RegisterViewController: BaseViewController {
             self?.passwordTf.resignFirstResponder()
         }
         self.spinner.isHidden = true
+        self.messageView.isHidden = true
     }
     
     private func setupPickerView() {
@@ -96,11 +99,13 @@ extension RegisterViewController: UIImagePickerControllerDelegate, UINavigationC
 
 extension RegisterViewController: RegisterProtocol {
     func didGetRegisterResult(result: String?) {
+        self.messageView.isHidden = false
         if let result = result {
-            self.showAlert(text: result) {}
+            self.messageView.showMessage(result)
         } else {
-            self.showAlert(text: Err.registerSuccess.rawValue) {
-                self.navigationController?.popToRootViewController(animated: true)
+            self.messageView.showMessage(Err.registerSuccess.rawValue)
+            self.messageView.confirm = { [weak self] _ in
+                self?.navigationController?.popToRootViewController(animated: true)
             }
         }
     }
