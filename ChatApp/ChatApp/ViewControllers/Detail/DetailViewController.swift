@@ -14,7 +14,7 @@ final class DetailViewController: BaseViewController {
     @IBOutlet private weak var sendButton: UIButton!
     @IBOutlet private weak var messageTf: BaseTextField!
     @IBOutlet private weak var tableView: UITableView!
-    @IBOutlet weak var messageView: MessageView!
+    @IBOutlet private weak var messageView: MessageView!
     @IBOutlet private weak var spinner: UIActivityIndicatorView!
     private var imgPickerView = UIImagePickerController()
     lazy private var presenter = DetailPresenter(view: self)
@@ -32,19 +32,32 @@ final class DetailViewController: BaseViewController {
         self.setDeleteButton()
     }
     
-    // MARK: - Methods
+    convenience init(_ sender: User, _ receiver: User) {
+        self.init()
+        self.presenter.setData(sender,receiver)
+    }
+    
+    // MARK: - Data Handler Methods
+    private func setupData() {
+        UIView.animate(withDuration: 0, delay: 0) {
+            self.presenter.fetchUser { user in
+                self.getTitleView().setTitleView(with: user)
+            }
+            self.presenter.fetchMessage {
+                self.reloadData()
+            }
+        }
+    }
+    
+    private func reloadData() {
+        self.tableView.reloadData()
+        self.scrollToBottom()
+    }
+    
+    // MARK: - Override Methods
     override func backToPreVC() {
         super.backToPreVC()
         self.presenter.setState()
-    }
-    
-    private func setupUI() {
-        self.messageTf.shouldReturn = { [weak self] in
-            self?.sendMessage()
-        }
-        self.setupTableView()
-        self.spinner.isHidden = true
-        self.messageView.isHidden = true
     }
     
     override func deleteMessage() {
@@ -61,6 +74,29 @@ final class DetailViewController: BaseViewController {
                 }
             }
         }
+    }
+    
+    private func sendMessage() {
+        self.presenter.sendMessage(self.messageTf.text ?? "")
+        self.view.endEditing(true)
+        self.messageTf.text = ""
+        self.messageTf.becomeFirstResponder()
+    }
+    
+    // MARK: - UI Handler Methods
+    private func setupPickerView() {
+        self.imgPickerView.delegate = self
+        self.imgPickerView.sourceType = .photoLibrary
+        self.present(self.imgPickerView, animated: true)
+    }
+    
+    private func setupUI() {
+        self.messageTf.shouldReturn = { [weak self] in
+            self?.sendMessage()
+        }
+        self.setupTableView()
+        self.spinner.isHidden = true
+        self.messageView.isHidden = true
     }
     
     private func setupTableView() {
@@ -80,39 +116,7 @@ final class DetailViewController: BaseViewController {
         }
     }
     
-    private func setupPickerView() {
-        self.imgPickerView.delegate = self
-        self.imgPickerView.sourceType = .photoLibrary
-        self.present(self.imgPickerView, animated: true)
-    }
-    
-    private func setupData() {
-        UIView.animate(withDuration: 0, delay: 0) {
-            self.presenter.fetchUser { user in
-                self.getTitleView().setTitleView(data: user)
-            }
-            self.presenter.fetchMessage {
-                self.reloadData()
-            }
-        }
-    }
-    
-    func getPresenter() -> DetailPresenter {
-        return self.presenter
-    }
-    
-    private func sendMessage() {
-        self.presenter.sendMessage(self.messageTf.text ?? "")
-        self.view.endEditing(true)
-        self.messageTf.text = ""
-        self.messageTf.becomeFirstResponder()
-    }
-    
-    private func reloadData() {
-        self.tableView.reloadData()
-        self.scrollToBottom()
-    }
-    
+    // MARK: - Button Action
     @IBAction private func chooseImg(_ sender: Any) {
         self.setupPickerView()
     }
@@ -122,10 +126,11 @@ final class DetailViewController: BaseViewController {
     }
 }
 
+// MARK: - Extension
 extension DetailViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         let img = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
-        self.presenter.sendImg(img: img) {
+        self.presenter.sendImg(img) {
             self.spinner.stopAnimating()
         }
         self.imgPickerView.dismiss(animated: true)

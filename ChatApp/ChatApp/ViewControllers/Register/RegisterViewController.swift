@@ -8,6 +8,7 @@
 import UIKit
 
 final class RegisterViewController: BaseViewController {
+    
     // MARK: - Properties
     @IBOutlet private weak var nameTf: BaseTextField!
     @IBOutlet private weak var usernameTf: BaseTextField!
@@ -18,7 +19,6 @@ final class RegisterViewController: BaseViewController {
     @IBOutlet private weak var passwordTf: BaseTextField!
     @IBOutlet private weak var spinner: UIActivityIndicatorView!
     @IBOutlet private weak var messageView: MessageView!
-    
     lazy private var presenter = RegisterPresenter(view: self)
     private var imgPickerView = UIImagePickerController()
     
@@ -33,13 +33,18 @@ final class RegisterViewController: BaseViewController {
         self.setupData()
     }
     
-    // MARK: - Methods
+    // MARK: - Data Handler Methods
     private func setupData() {
         UIView.animate(withDuration: 0, delay: 0) {
             self.presenter.fetchUser()
         }
     }
     
+    private func sendRegisterData() {
+        self.presenter.register(self.nameTf.text ?? "", self.usernameTf.text ?? "", self.passwordTf.text ?? "")
+    }
+    
+    // MARK: - UIHandler Methods
     private func setupUI() {
         self.view.layer.contents = UIImage(named: "bgrLogin")?.cgImage
         self.navigationController?.navigationBar.isHidden = true
@@ -65,25 +70,22 @@ final class RegisterViewController: BaseViewController {
         self.present(self.imgPickerView, animated: true)
     }
     
+    // MARK: - Button Action
     @IBAction private func chooseImage(_ sender: Any) {
         self.view.endEditing(true)
         self.setupPickerView()
     }
     
-    private func sendRegisterData() {
-        self.presenter.register(self.nameTf.text ?? "", self.usernameTf.text ?? "", self.passwordTf.text ?? "")
-    }
-    
-    
     @IBAction private func register(_ sender: Any) {
         self.sendRegisterData()
     }
     
-    @IBAction func backToLogin(_ sender: Any) {
+    @IBAction private func backToLogin(_ sender: Any) {
         self.navigationController?.popToRootViewController(animated: true)
     }
 }
 
+// MARK: - Extension
 extension RegisterViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         let img = info[UIImagePickerController.InfoKey.originalImage] as! UIImage

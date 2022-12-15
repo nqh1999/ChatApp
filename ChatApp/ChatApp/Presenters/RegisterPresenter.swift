@@ -24,14 +24,13 @@ class RegisterPresenter {
         self.view = view
     }
     
-    // MARK: Fetch user
+    // MARK: - Data Handler Methods
     func fetchUser() {
         self.service.fetchUser { users in
             self.users = users
         }
     }
     
-    // MARK: Get img url from firestore and save to property
     func setImgUrl(img: UIImage, completed: @escaping () -> Void) {
         self.service.fetchAvtUrl(img: img) { url in
             self.imgUrl = url
@@ -39,7 +38,6 @@ class RegisterPresenter {
         }
     }
     
-    // MARK: check register and send data if check success
     func register(_ name: String,_ username: String,_ password: String) {
         self.validateService.checkRegisterData(self.users, name, username, password, self.imgUrl) { result in
             if let result = result {

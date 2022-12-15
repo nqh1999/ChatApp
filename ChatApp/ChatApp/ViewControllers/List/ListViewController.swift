@@ -5,7 +5,6 @@
 //  Created by BeeTech on 07/12/2022.
 //
 
-import UIKit
 import SDWebImage
 
 final class ListViewController: BaseViewController {
@@ -31,7 +30,12 @@ final class ListViewController: BaseViewController {
         self.setSettingButton()
     }
     
-    // MARK: - Methods
+    convenience init(_ id: Int) {
+        self.init()
+        self.presenter.setData(id)
+    }
+    
+    // MARK: - Data Handler Methods
     private func setupData() {
         UIView.animate(withDuration: 0, delay: 0) {
             self.presenter.fetchUser {
@@ -42,6 +46,13 @@ final class ListViewController: BaseViewController {
         }
     }
     
+    // send data and go to detail view controller when click to row of table view
+    private func goToDetailVCByIndex(index: Int) {
+        guard let sender = self.presenter.getSender(), let receiver = self.presenter.getUserByIndex(index: index) else { return }
+        self.navigationController?.pushViewController(DetailViewController(sender, receiver), animated: true)
+    }
+    
+    // MARK: - UI Handler Methods
     private func setupUI() {
         self.setupTableView()
         self.setupSearchBar()
@@ -66,24 +77,11 @@ final class ListViewController: BaseViewController {
         }
     }
     
+    // MARK: - Override Methods
     @objc override func setting() {
         super.setting()
         guard let sender = self.presenter.getSender() else { return }
-        let vc = SettingViewController()
-        vc.getPresenter().setUserId(sender.id)
-        self.navigationController?.pushViewController(vc, animated: true)
-    }
-    
-    func getPresenter() -> ListPresenter {
-        return self.presenter
-    }
-    
-    // send data and go to detail view controller when click to row of table view
-    private func goToDetailVCByIndex(index: Int) {
-        guard let sender = self.presenter.getSender(), let receiver = self.presenter.getUserByIndex(index: index) else { return }
-        let vc = DetailViewController()
-        vc.getPresenter().setData(sender: sender, receiver: receiver)
-        self.navigationController?.pushViewController(vc, animated: true)
+        self.navigationController?.pushViewController(SettingViewController(sender.id), animated: true)
     }
     
     // search by name
@@ -95,6 +93,7 @@ final class ListViewController: BaseViewController {
     
 }
 
+// MARK: - Extension
 extension ListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.presenter.getNumberOfUser()
@@ -119,4 +118,3 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
 extension ListViewController: ListProtocol {
     
 }
-

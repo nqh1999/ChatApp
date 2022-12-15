@@ -23,11 +23,13 @@ class ChangePasswordPresenter {
         self.view = view
     }
     
+    // MARK: - Getter - Setter
     func setUser(_ user: User?) {
         self.user = user
     }
     
-    func changePassword(_ currentPassword: String, _ newPassword: String, _ reEnterNewPassword: String) {
+    // MARK: - Data Handler Methods
+    func handlerData(_ currentPassword: String, _ newPassword: String, _ reEnterNewPassword: String) {
         guard let user = user else { return }
         self.validateService.checkChangePasswordData(user, currentPassword, newPassword, reEnterNewPassword) { result in
             if let result = result {

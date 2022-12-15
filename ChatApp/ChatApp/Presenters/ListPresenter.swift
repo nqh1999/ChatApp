@@ -54,7 +54,7 @@ class ListPresenter {
         return self.sender
     }
     
-    // MARK: - Fetch User
+    // MARK: - Data Handler Methods
     func fetchUser(completed: @escaping () -> Void) {
         self.service.fetchUser { users in
             self.receivers.removeAll()
@@ -71,7 +71,6 @@ class ListPresenter {
         }
     }
     
-    // MARK: Fetch Message
     func fetchMessage(completed: @escaping () -> Void) {
         self.message.removeAll()
         self.service.fetchMessage { messages in
@@ -96,7 +95,6 @@ class ListPresenter {
 //        }
     }
     
-    // MARK: search user
     func filterData(text: String) {
         self.searchData = text.isEmpty ? receivers : receivers.filter {
             $0.name.lowercased().contains(text.lowercased())

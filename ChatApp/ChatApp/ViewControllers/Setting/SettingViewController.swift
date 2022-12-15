@@ -7,17 +7,18 @@
 
 import UIKit
 
-class SettingViewController: BaseViewController {
+final class SettingViewController: BaseViewController {
+    
+    // MARK: - Properties
     @IBOutlet private weak var imgView: UIImageView!
     @IBOutlet private weak var chooseImageButton: UIButton!
     @IBOutlet private weak var nameLabel: UILabel!
     @IBOutlet private weak var editProfileButton: CustomButton!
     @IBOutlet private weak var changePasswordButton: CustomButton!
     @IBOutlet private weak var logoutButton: CustomButton!
-    @IBOutlet weak var editName: UIButton!
+    @IBOutlet private weak var editName: UIButton!
     @IBOutlet private weak var spinner: UIActivityIndicatorView!
-    @IBOutlet weak var messageView: MessageView!
-    
+    @IBOutlet private weak var messageView: MessageView!
     lazy private var presenter = SettingPresenter(view: self)
     private var imgPickerView = UIImagePickerController()
     
@@ -32,7 +33,12 @@ class SettingViewController: BaseViewController {
         self.setupData()
     }
     
-    // MARK: - Methods
+    convenience init(_ id: Int) {
+        self.init()
+        self.presenter.setUserId(id)
+    }
+    
+    // MARK: - UI Handler Methods
     private func setupUI() {
         self.setBackButton()
         self.imgView.layer.cornerRadius = self.imgView.frame.width / 2
@@ -44,6 +50,13 @@ class SettingViewController: BaseViewController {
         self.messageView.isHidden = true
     }
     
+    private func setupPickerView() {
+        self.imgPickerView.delegate = self
+        self.imgPickerView.sourceType = .photoLibrary
+        self.present(self.imgPickerView, animated: true)
+    }
+    
+    // MARK: - Data Handler Methods
     private func setupData() {
         UIView.animate(withDuration: 0, delay: 0) {
             self.presenter.fetchUser() { user in
@@ -54,16 +67,15 @@ class SettingViewController: BaseViewController {
         }
     }
     
-    private func setupPickerView() {
-        self.imgPickerView.delegate = self
-        self.imgPickerView.sourceType = .photoLibrary
-        self.present(self.imgPickerView, animated: true)
+    private func changeName(_ name: String) {
+        guard name != "" else { return }
+        self.presenter.changeName(name) {
+            self.nameLabel.text = name
+            self.messageView.isHidden = true
+        }
     }
     
-    func getPresenter() -> SettingPresenter {
-        return self.presenter
-    }
-    
+    // MARK: - Button Action
     @IBAction func logout(_ sender: Any) {
         self.presenter.setState()
         (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first?.rootViewController = UINavigationController(rootViewController: LoginViewController())
@@ -83,25 +95,16 @@ class SettingViewController: BaseViewController {
         }
     }
     
-    private func changeName(_ name: String) {
-        guard name != "" else { return }
-        self.presenter.changeName(name) {
-            self.nameLabel.text = name
-            self.messageView.isHidden = true
-        }
-    }
-    
     @IBAction private func goToEditProfileView(_ sender: Any) {
         
     }
     
     @IBAction private func goToChangePasswordView(_ sender: Any) {
-        let vc = ChangePasswordViewController()
-        vc.getPresenter().setUser(self.presenter.getUser())
-        self.navigationController?.pushViewController(vc, animated: true)
+        self.navigationController?.pushViewController(ChangePasswordViewController(self.presenter.getUser()), animated: true)
     }
 }
 
+// MARK: - Extention
 extension SettingViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         let img = info[UIImagePickerController.InfoKey.originalImage] as! UIImage

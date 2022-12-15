@@ -12,8 +12,7 @@ final class LoginViewController: BaseViewController {
     // MARK: - Properties
     @IBOutlet private weak var loginButton: CustomButton!
     @IBOutlet private weak var registerButton: CustomButton!
-    
-    @IBOutlet weak var forgotPasswordButton: UIButton!
+    @IBOutlet private weak var forgotPasswordButton: UIButton!
     @IBOutlet private weak var userNameTf: BaseTextField!
     @IBOutlet private weak var passwordTf: PasswordTextField!
     @IBOutlet private weak var showPasswordButton: UIButton!
@@ -31,7 +30,17 @@ final class LoginViewController: BaseViewController {
         self.setupData()
     }
     
-    // MARK: - Methods
+    // MARK: - Data Handler Methods
+    private func setupData() {
+        self.presenter.fetchUser()
+    }
+    
+    private func login() {
+        self.view.endEditing(true)
+        self.presenter.checkLogin(username: self.userNameTf.text ?? "", password: self.passwordTf.getPass())
+    }
+    
+    // MARK: - UI Handler Methods
     private func setupUI() {
         self.view.layer.contents = UIImage(named: "bgrLogin")?.cgImage
         self.userNameTf.text = "1@1.com"
@@ -48,15 +57,7 @@ final class LoginViewController: BaseViewController {
         self.navigationController?.navigationBar.isHidden = true
     }
     
-    private func setupData() {
-        self.presenter.fetchUser()
-    }
-    
-    private func login() {
-        self.view.endEditing(true)
-        self.presenter.checkLogin(username: self.userNameTf.text ?? "", password: self.passwordTf.getPass())
-    }
-    
+    // MARK: - Button Action
     @IBAction private func checkLogin(_ sender: Any) {
         self.login()
     }
@@ -65,9 +66,8 @@ final class LoginViewController: BaseViewController {
         self.navigationController?.pushViewController(RegisterViewController(), animated: true)
     }
     
-    @IBAction func goToForgotPasswordView(_ sender: Any) {
-        let vc = ForgotPasswordViewController()
-        self.navigationController?.pushViewController(vc, animated: true)
+    @IBAction private func goToForgotPasswordView(_ sender: Any) {
+        self.navigationController?.pushViewController(ForgotPasswordViewController(), animated: true)
     }
     
     @IBAction private func showPassword(_ sender: Any) {
@@ -78,18 +78,17 @@ final class LoginViewController: BaseViewController {
     }
 }
 
+// MARK: - Extension
 extension LoginViewController: LoginProtocol {
     func didGetLoginResult(result: Bool, senderId: Int) {
         self.messageView.isHidden = false
         if !result {
             self.messageView.showMessage(Err.loginFailed.rawValue)
         } else {
-            let vc = ListViewController()
-            vc.getPresenter().setData(senderId)
             self.messageView.showMessage(Err.loginSuccess.rawValue)
             self.presenter.setState(senderId)
             self.messageView.confirm = { _ in
-                (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first?.rootViewController = UINavigationController(rootViewController: vc)
+                (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first?.rootViewController = UINavigationController(rootViewController: ListViewController(senderId))
             }
         }
     }

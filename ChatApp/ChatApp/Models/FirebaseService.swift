@@ -69,6 +69,8 @@ class FirebaseService {
         }
     }
     
+    
+    // MARK: change avt
     func changeAvt(_ id: Int,_ img: UIImage, completed: @escaping () -> Void) {
         let img = img.jpegData(compressionQuality: 0.5)!
         let keyImg = NSUUID().uuidString
@@ -83,17 +85,19 @@ class FirebaseService {
         }
     }
     
+    // MARK: change name
     func changeName(_ id: Int,_ name: String, completed: @escaping () -> Void) {
         self.db.collection("user").document("\(id)").updateData(["name": name])
         completed()
     }
     
+    // MARK: change password
     func changePassword(_ id: Int,_ password: String, completed: @escaping () -> Void) {
         self.db.collection("user").document("\(id)").updateData(["password": password])
         completed()
     }
     
-    // MARK: send message to firestore
+    // MARK: send message
     func sendMessage(_ text: String,_ receiver: User,_ sender: User) {
         let autoKey = self.db.collection("message").document().documentID
         let docRef = self.db.collection("message").document(autoKey)
@@ -108,7 +112,7 @@ class FirebaseService {
         ])
     }
     
-    // MARK: send image to storage
+    // MARK: send image
     func sendImg(_ img: UIImage,_ receiver: User,_ sender: User, completed: @escaping () -> Void) {
         let img = img.jpegData(compressionQuality: 0.5)!
         let keyImg = NSUUID().uuidString

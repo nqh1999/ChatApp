@@ -21,7 +21,7 @@ class BaseViewController: UIViewController {
             ]
     }
     
-    // MARK: - Methods
+    // MARK: - Setting UI Methods
     func getTitleView() -> NavigationTitleView {
         return titleView
     }
@@ -38,6 +38,7 @@ class BaseViewController: UIViewController {
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "trash.fill"), style: .plain, target: self, action: #selector(deleteMessage))
     }
     
+    // MARK: - Action
     @objc func deleteMessage() {}
     
     @objc func backToPreVC() {

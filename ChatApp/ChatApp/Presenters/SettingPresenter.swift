@@ -25,6 +25,7 @@ class SettingPresenter {
         self.view = view
     }
     
+    // MARK: - Getter - Setter
     func setUserId(_ id: Int) {
         self.userId = id
     }
@@ -33,7 +34,7 @@ class SettingPresenter {
         return self.user
     }
     
-    // MARK: Fetch user
+    // MARK: - Data Handler Methods
     func fetchUser(completed: @escaping (User?) -> Void) {
         self.service.fetchUser { users in
             users.forEach { user in
@@ -49,7 +50,6 @@ class SettingPresenter {
         self.service.setStateIsActive(userId, false)
     }
     
-    // MARK: Get img url from firestore and save to property
     func setImgUrl(_ img: UIImage, completed: @escaping () -> Void) {
         self.service.changeAvt(self.userId, img) {
             completed()

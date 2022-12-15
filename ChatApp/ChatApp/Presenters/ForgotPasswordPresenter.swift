@@ -13,16 +13,19 @@ protocol ForgotPasswordProtocol: AnyObject {
 
 class ForgotPasswordPresenter {
     
+    // MARK: - Properties
     private weak var view: ForgotPasswordProtocol?
     private var service = FirebaseService()
     private var validateService = ValidateService()
     private var users = [User]()
     private var newPass: String = ""
     
+    // MARK: - Init
     init(view: ForgotPasswordProtocol) {
         self.view = view
     }
     
+    // MARK: - Data Handler Methods
     func fetchUser() {
         self.service.fetchUser { users in
             self.users = users
@@ -34,7 +37,7 @@ class ForgotPasswordPresenter {
             if let result = result {
                 self.view?.didGetValidateUsernameResult(result: result, newPass: "")
             } else {
-                let newPass = randomNameString()
+                let newPass = self.randomNameString()
                 self.service.changePassword(id, newPass) {
                     self.view?.didGetValidateUsernameResult(result: nil, newPass: newPass)
                 }

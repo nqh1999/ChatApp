@@ -7,7 +7,8 @@
 
 import UIKit
 
-class ChangePasswordViewController: BaseViewController {
+final class ChangePasswordViewController: BaseViewController {
+    
     // MARK: - Properties
     @IBOutlet private weak var currentPasswordTf: BaseTextField!
     @IBOutlet private weak var newPasswordTf: BaseTextField!
@@ -21,7 +22,12 @@ class ChangePasswordViewController: BaseViewController {
         self.setupUI()
     }
     
-    // MARK: - Methods
+    convenience init(_ user: User?) {
+        self.init()
+        self.presenter.setUser(user)
+    }
+    
+    // MARK: - UI Handler Methods
     private func setupUI() {
         self.navigationItem.titleView = nil
         self.title = "Change Password"
@@ -34,21 +40,19 @@ class ChangePasswordViewController: BaseViewController {
         }
         self.reEnterNewPasswordTf.shouldReturn = { [weak self] in
             self?.reEnterNewPasswordTf.resignFirstResponder()
-            self?.changePassword()
+            self?.sendChangePasswordData()
         }
         self.messageView.isHidden = true
     }
     
-    func getPresenter() -> ChangePasswordPresenter {
-        return self.presenter
+    // MARK: - Data Handler Methods
+    private func sendChangePasswordData() {
+        self.presenter.handlerData(self.currentPasswordTf.text ?? "", self.newPasswordTf.text ?? "", self.reEnterNewPasswordTf.text ?? "")
     }
     
-    private func changePassword() {
-        self.presenter.changePassword(self.currentPasswordTf.text ?? "", self.newPasswordTf.text ?? "", self.reEnterNewPasswordTf.text ?? "")
-    }
-    
+    // MARK: - Button Action
     @IBAction private func changePassword(_ sender: Any) {
-        self.changePassword()
+        self.sendChangePasswordData()
     }
     
     @IBAction private func cancel(_ sender: Any) {
@@ -56,6 +60,7 @@ class ChangePasswordViewController: BaseViewController {
     }
 }
 
+// MARK: - Extension
 extension ChangePasswordViewController: ChangePasswordProtocol {
     func didGetChangePasswordResult(result: String?) {
         self.messageView.isHidden = false

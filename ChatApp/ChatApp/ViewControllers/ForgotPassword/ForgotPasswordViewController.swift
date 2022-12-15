@@ -8,12 +8,14 @@
 import UIKit
 
 class ForgotPasswordViewController: BaseViewController {
+    
     // MARK: - Properties
     @IBOutlet private weak var usernameTf: BaseTextField!
     @IBOutlet private weak var cancelButton: UIButton!
     @IBOutlet private weak var resetPasswordButton: CustomButton!
     @IBOutlet weak var messageView: MessageView!
     lazy private var presenter = ForgotPasswordPresenter(view: self)
+    
     // MARK: - Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,16 +23,7 @@ class ForgotPasswordViewController: BaseViewController {
         self.setupData()
     }
     
-    // MARK: - Methods
-    private func setupUI() {
-        self.navigationController?.navigationBar.isHidden = true
-        self.usernameTf.shouldReturn = { [weak self] in
-            self?.usernameTf.resignFirstResponder()
-            self?.resetPassword()
-        }
-        self.messageView.isHidden = true
-    }
-    
+    // MARK: - Data Handler Methods
     private func setupData() {
         UIView.animate(withDuration: 0, delay: 0) {
             self.presenter.fetchUser()
@@ -40,7 +33,18 @@ class ForgotPasswordViewController: BaseViewController {
     private func resetPassword() {
         self.presenter.checkUsername(self.usernameTf.text ?? "")
     }
+    
+    // MARK: - UI Handler Methods
+    private func setupUI() {
+        self.navigationController?.navigationBar.isHidden = true
+        self.usernameTf.shouldReturn = { [weak self] in
+            self?.usernameTf.resignFirstResponder()
+            self?.resetPassword()
+        }
+        self.messageView.isHidden = true
+    }
 
+    // MARK: - Button Action
     @IBAction private func resetPassword(_ sender: Any) {
         self.resetPassword()
     }
@@ -50,6 +54,8 @@ class ForgotPasswordViewController: BaseViewController {
     }
 }
 
+
+// MARK: - Extension
 extension ForgotPasswordViewController: ForgotPasswordProtocol {
     func didGetValidateUsernameResult(result: String?, newPass: String) {
         self.messageView.isHidden = false

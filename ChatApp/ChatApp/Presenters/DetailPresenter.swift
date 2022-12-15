@@ -26,7 +26,7 @@ class DetailPresenter {
     }
     
     // MARK: - Getter - Setter
-    func setData(sender: User, receiver: User) {
+    func setData(_ sender: User,_ receiver: User) {
         self.sender = sender
         self.receiver = receiver
     }
@@ -47,6 +47,7 @@ class DetailPresenter {
         return self.sender
     }
     
+    // MARK: - Data Handler Methods
     func fetchUser(completed: @escaping (User) -> Void) {
         self.service.fetchUser { users in
             guard let receiver = self.receiver else { return }
@@ -58,7 +59,6 @@ class DetailPresenter {
         }
     }
     
-    // MARK: fetch message
     func fetchMessage(completed: @escaping () -> Void) {
         self.service.fetchMessage { messages in
             guard let sender = self.sender, let receiver = self.receiver else { return }
@@ -77,7 +77,6 @@ class DetailPresenter {
         self.service.setStateUnreadMessage(sender, receiver)
     }
     
-    // MARK: Delete message
     func deleteAllMessage(_ completed: @escaping () -> Void) {
         self.messages.forEach { message in
             self.service.delete(id: message.messageId)
@@ -85,15 +84,13 @@ class DetailPresenter {
         completed()
     }
     
-    // MARK: Send message To DB
     func sendMessage(_ text: String) {
         guard let receiver = self.receiver, let sender = self.sender else { return }
         if text.isEmpty { return }
         self.service.sendMessage(text, receiver, sender)
     }
     
-    // MARK: Send img url To DB
-    func sendImg(img: UIImage, completed: @escaping () -> Void) {
+    func sendImg(_ img: UIImage, completed: @escaping () -> Void) {
         guard let receiver = self.receiver, let sender = self.sender else { return }
         self.service.sendImg(img, receiver, sender) {
             completed()

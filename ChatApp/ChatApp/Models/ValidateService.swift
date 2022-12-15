@@ -8,9 +8,7 @@
 import Foundation
 
 class ValidateService {
-    
-    // MARK: - Properties
-    
+
     // MARK: Check login data
     func checkLogin(_ users: [User], _ username: String, _ password: String, completed: (Bool, Int) -> Void) {
         var result: Bool = false
@@ -87,12 +85,3 @@ class ValidateService {
         }
     }
 }
-
-extension String {
-    var isValidEmail: Bool {
-        let validEmail = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
-        let email = NSPredicate(format:"SELF MATCHES %@", validEmail)
-        return email.evaluate(with: self)
-    }
-}
-

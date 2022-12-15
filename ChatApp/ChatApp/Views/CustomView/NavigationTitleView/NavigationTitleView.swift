@@ -33,7 +33,7 @@ final class NavigationTitleView: UIView {
         self.stateButton.layer.cornerRadius = stateButton.layer.frame.width / 2
     }
     
-    func setTitleView(data: User?) {
+    func setTitleView(with data: User?) {
         guard let data = data else { return }
         self.img.sd_setImage(with: URL(string: data.imgUrl))
         self.titleLbl.text = data.name

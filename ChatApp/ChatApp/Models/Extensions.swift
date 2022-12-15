@@ -1,12 +1,22 @@
 //
-//  ExtensionCell.swift
+//  Extension.swift
 //  ChatApp
 //
-//  Created by BeeTech on 13/12/2022.
+//  Created by Nguyen Quang Huy on 15/12/2022.
 //
 
 import UIKit
 
+// MARK: - Extension String
+extension String {
+    var isValidEmail: Bool {
+        let validEmail = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+        let email = NSPredicate(format:"SELF MATCHES %@", validEmail)
+        return email.evaluate(with: self)
+    }
+}
+
+// MARK: - Extension Table View Cell
 extension UITableViewCell {
     func setTimestamp(epochTime: Double) -> String {
         let currentDate = Date.now
