@@ -28,6 +28,14 @@ enum Err: String {
     case invalidPassword = "Invalid password"
 }
 
+// MARK: Enum DB name
+enum DBName: String {
+    case user = "user"
+    case message = "message"
+    case imgMessage = "img_message"
+    case imgAvt = "img_avt"
+}
+
 // MARK: User Model
 struct User {
     var id: Int

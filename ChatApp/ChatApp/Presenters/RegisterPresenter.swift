@@ -32,19 +32,20 @@ class RegisterPresenter {
     }
     
     func setImgUrl(_ img: UIImage, completed: @escaping () -> Void) {
-        self.service.fetchAvtUrl(img: img) { url in
-            self.imgUrl = url
+        self.service.fetchAvtUrl(img: img) { [weak self] url in
+            self?.imgUrl = url
             completed()
         }
     }
     
     func register(_ name: String,_ username: String,_ password: String) {
-        self.validateService.checkRegisterData(self.users, name, username, password, self.imgUrl) { result in
+        self.validateService.checkRegisterData(self.users, name, username, password, self.imgUrl) { [weak self] result in
             if let result = result {
-                self.view?.didGetRegisterResult(result: result)
+                self?.view?.didGetRegisterResult(result: result)
             } else {
-                self.service.register(self.users.count + 1, name, username, password, self.imgUrl) {
-                    self.view?.didGetRegisterResult(result: nil)
+                guard let id = self?.users.count, let url = self?.imgUrl else { return }
+                self?.service.register(id + 1, name, username, password, url) { [weak self] in
+                    self?.view?.didGetRegisterResult(result: nil)
                 }
             }
         }

@@ -37,10 +37,10 @@ final class ListViewController: BaseViewController {
     
     // MARK: - Data Handler Methods
     private func setupData() {
-        UIView.animate(withDuration: 0, delay: 0) {
-            self.presenter.fetchUser {
-                self.presenter.fetchMessage {
-                    self.tableView.reloadData()
+        UIView.animate(withDuration: 0, delay: 0) { [weak self] in
+            self?.presenter.fetchUser { [weak self] in
+                self?.presenter.fetchMessage { [weak self] in
+                    self?.tableView.reloadData()
                 }
             }
         }
@@ -101,7 +101,8 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! ListTableViewCell
-        cell.fillData(self.presenter.getUserByIndex(index: indexPath.row), self.presenter.getMessageById(self.presenter.getUserByIndex(index: indexPath.row)!.id))
+        guard let user = self.presenter.getUserByIndex(index: indexPath.row) else { return cell}
+        cell.fillData(self.presenter.getUserByIndex(index: indexPath.row), self.presenter.getMessageById(user.id))
         return cell
     }
     

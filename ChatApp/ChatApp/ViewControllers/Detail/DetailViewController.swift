@@ -39,12 +39,12 @@ final class DetailViewController: BaseViewController {
     
     // MARK: - Data Handler Methods
     private func setupData() {
-        UIView.animate(withDuration: 0, delay: 0) {
-            self.presenter.fetchUser { user in
-                self.getTitleView().setTitleView(with: user)
+        UIView.animate(withDuration: 0, delay: 0) { [weak self] in
+            self?.presenter.fetchUser { [weak self] user in
+                self?.getTitleView().setTitleView(with: user)
             }
-            self.presenter.fetchMessage {
-                self.reloadData()
+            self?.presenter.fetchMessage { [weak self] in
+                self?.reloadData()
             }
         }
     }
@@ -67,7 +67,7 @@ final class DetailViewController: BaseViewController {
         self.messageView.confirm = { [weak self] _ in
             self?.spinner.isHidden = false
             self?.spinner.startAnimating()
-            self?.presenter.deleteAllMessage {
+            self?.presenter.deleteAllMessage { [weak self] in
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                     self?.tableView.reloadData()
                     self?.spinner.stopAnimating()
@@ -130,8 +130,8 @@ final class DetailViewController: BaseViewController {
 extension DetailViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         let img = info[.originalImage] as! UIImage
-        self.presenter.sendImg(img) {
-            self.spinner.stopAnimating()
+        self.presenter.sendImg(img) { [weak self] in
+            self?.spinner.stopAnimating()
         }
         self.imgPickerView.dismiss(animated: true)
         self.spinner.isHidden = false

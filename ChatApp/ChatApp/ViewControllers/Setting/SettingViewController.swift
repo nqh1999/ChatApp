@@ -59,27 +59,27 @@ final class SettingViewController: BaseViewController {
     
     // MARK: - Data Handler Methods
     private func setupData() {
-        UIView.animate(withDuration: 0, delay: 0) {
-            self.presenter.fetchUser() { user in
+        UIView.animate(withDuration: 0, delay: 0) { [weak self] in
+            self?.presenter.fetchUser() { [weak self] user in
                 guard let user = user else { return }
-                self.imgView.sd_setImage(with: URL(string: user.imgUrl))
-                self.nameLabel.text = user.name
+                self?.imgView.sd_setImage(with: URL(string: user.imgUrl))
+                self?.nameLabel.text = user.name
             }
         }
     }
     
     private func changeName(_ name: String) {
-        guard name != "" else { return }
-        self.presenter.changeName(name) {
-            self.nameLabel.text = name
-            self.messageView.isHidden = true
+        guard !name.isEmpty else { return }
+        self.presenter.changeName(name) { [weak self] in
+            self?.nameLabel.text = name
+            self?.messageView.isHidden = true
         }
     }
     
     private func setImage(_ img: UIImage) {
-        self.presenter.setImgUrl(img) {
-            self.imgView.image = img
-            self.spinner.stopAnimating()
+        self.presenter.setImgUrl(img) { [weak self] in
+            self?.imgView.image = img
+            self?.spinner.stopAnimating()
         }
     }
     

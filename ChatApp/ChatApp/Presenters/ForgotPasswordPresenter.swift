@@ -27,19 +27,19 @@ class ForgotPasswordPresenter {
     
     // MARK: - Data Handler Methods
     func fetchUser() {
-        self.service.fetchUser { users in
-            self.users = users
+        self.service.fetchUser { [weak self] users in
+            self?.users = users
         }
     }
     
     func checkUsername(_ username: String) {
-        self.validateService.checkUsername(self.users, username) { result, id in
+        self.validateService.checkUsername(self.users, username) { [weak self] result, id in
             if let result = result {
-                self.view?.didGetValidateUsernameResult(result: result, newPass: "")
+                self?.view?.didGetValidateUsernameResult(result: result, newPass: "")
             } else {
-                let newPass = self.randomNameString()
-                self.service.changePassword(id, newPass) {
-                    self.view?.didGetValidateUsernameResult(result: nil, newPass: newPass)
+                guard let newPass = self?.randomNameString() else { return }
+                self?.service.changePassword(id, newPass) {
+                    self?.view?.didGetValidateUsernameResult(result: nil, newPass: newPass)
                 }
             }
         }

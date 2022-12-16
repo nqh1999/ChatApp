@@ -35,8 +35,8 @@ final class RegisterViewController: BaseViewController {
     
     // MARK: - Data Handler Methods
     private func setupData() {
-        UIView.animate(withDuration: 0, delay: 0) {
-            self.presenter.fetchUser()
+        UIView.animate(withDuration: 0, delay: 0) { [weak self] in
+            self?.presenter.fetchUser()
         }
     }
     
@@ -45,9 +45,9 @@ final class RegisterViewController: BaseViewController {
     }
     
     private func setImage(_ img: UIImage) {
-        self.presenter.setImgUrl(img) {
-            self.avt.image = img
-            self.spinner.stopAnimating()
+        self.presenter.setImgUrl(img) { [weak self] in
+            self?.avt.image = img
+            self?.spinner.stopAnimating()
         }
     }
     

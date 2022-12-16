@@ -56,32 +56,34 @@ class ListPresenter {
     
     // MARK: - Data Handler Methods
     func fetchUser(completed: @escaping () -> Void) {
-        self.service.fetchUser { users in
-            self.receivers.removeAll()
-            self.searchData.removeAll()
+        self.service.fetchUser { [weak self] users in
+            self?.receivers.removeAll()
+            self?.searchData.removeAll()
             users.forEach { user in
-                if user.id == self.senderId {
-                    self.sender = user
+                if user.id == self!.senderId {
+                    self?.sender = user
                 } else {
-                    self.receivers.append(user)
+                    self?.receivers.append(user)
                 }
             }
-            self.searchData = self.receivers
+            guard let receivers = self?.receivers else { return }
+            self?.searchData = receivers
             completed()
         }
     }
     
     func fetchMessage(completed: @escaping () -> Void) {
         self.message.removeAll()
-        self.service.fetchMessage { messages in
-            self.receivers.forEach { receiver in
-                self.allMessage.removeAll()
+        self.service.fetchMessage { [weak self] messages in
+            self?.receivers.forEach { receiver in
+                self?.allMessage.removeAll()
+                guard let senderId = self?.senderId else { return }
                 messages.forEach { message in
-                    if (message.senderId == self.senderId && message.receiverId == receiver.id) || (message.senderId == receiver.id && message.receiverId == self.senderId) {
-                        self.allMessage.append(message)
+                    if (message.senderId == senderId && message.receiverId == receiver.id) || (message.senderId == receiver.id && message.receiverId == senderId) {
+                        self?.allMessage.append(message)
                     }
                 }
-                self.message[receiver.id] = self.allMessage.last
+                self?.message[receiver.id] = self?.allMessage.last
             }
             completed()
         }

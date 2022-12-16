@@ -26,17 +26,35 @@ class ValidateService {
     func checkRegisterData(_ users: [User], _ name: String,_ username: String,_ password: String, _ imgUrl: String, completed: (String?) -> Void) {
         if name.isEmpty {
             completed(Err.nameIsEmpty.rawValue)
-        } else if username.isEmpty {
+            return
+        }
+        
+        if username.isEmpty {
             completed(Err.usernameIsEmpty.rawValue)
-        } else if password.isEmpty {
+            return
+        }
+        
+        if password.isEmpty {
             completed(Err.passwordIsEmpty.rawValue)
-        } else if imgUrl.isEmpty {
+            return
+        }
+        
+        if imgUrl.isEmpty {
             completed(Err.imgIsEmpty.rawValue)
-        } else if !username.isValidEmail {
+            return
+        }
+        
+        if !username.isValidEmail {
             completed(Err.invalidUsername.rawValue)
-        } else if password.count < 6 {
+            return
+        }
+        
+        if password.count < 6 {
             completed(Err.invalidPassword.rawValue)
-        } else if users.contains(where: { user in
+            return
+        }
+        
+        if users.contains(where: { user in
             user.username == username
         }) {
             completed(Err.usernameExist.rawValue)
@@ -49,19 +67,36 @@ class ValidateService {
     func checkChangePasswordData(_ user: User, _ currentPassword: String, _ newPassword: String, _ reEnterNewPassword: String, completed: (String?) -> Void) {
         if currentPassword.isEmpty {
             completed(Err.currentPasswordIsEmpty.rawValue)
-        } else if currentPassword != user.password {
-            completed(Err.passwordIncorrect.rawValue)
-        } else if newPassword.isEmpty {
-            completed(Err.newPasswordIsEmpty.rawValue)
-        } else if reEnterNewPassword.isEmpty {
-            completed(Err.reEnterNewPasswordIsEmpty.rawValue)
-        } else if newPassword.count < 6 {
-            completed(Err.invalidPassword.rawValue)
-        } else if newPassword != reEnterNewPassword {
-            completed(Err.passwordNotSame.rawValue)
-        } else {
-            completed(nil)
+            return
         }
+        
+        if currentPassword != user.password {
+            completed(Err.passwordIncorrect.rawValue)
+            return
+        }
+        
+        if newPassword.isEmpty {
+            completed(Err.newPasswordIsEmpty.rawValue)
+            return
+        }
+        
+        if reEnterNewPassword.isEmpty {
+            completed(Err.reEnterNewPasswordIsEmpty.rawValue)
+            return
+        }
+        
+        if newPassword.count < 6 {
+            completed(Err.invalidPassword.rawValue)
+            return
+        }
+        
+        if newPassword != reEnterNewPassword {
+            completed(Err.passwordNotSame.rawValue)
+            return
+        }
+        
+        completed(nil)
+        
     }
     
     // MARK: Check username

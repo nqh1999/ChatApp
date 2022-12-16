@@ -36,13 +36,14 @@ class SettingPresenter {
     
     // MARK: - Data Handler Methods
     func fetchUser(completed: @escaping (User?) -> Void) {
-        self.service.fetchUser { users in
+        self.service.fetchUser { [weak self] users in
+            guard let userId = self?.userId else { return }
             users.forEach { user in
-                if user.id == self.userId {
-                    self.user = user
+                if user.id == userId {
+                    self?.user = user
                 }
             }
-            completed(self.user)
+            completed(self?.user)
         }
     }
     

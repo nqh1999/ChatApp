@@ -25,8 +25,8 @@ class ForgotPasswordViewController: BaseViewController {
     
     // MARK: - Data Handler Methods
     private func setupData() {
-        UIView.animate(withDuration: 0, delay: 0) {
-            self.presenter.fetchUser()
+        UIView.animate(withDuration: 0, delay: 0) { [weak self] in
+            self?.presenter.fetchUser()
         }
     }
     

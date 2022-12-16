@@ -31,12 +31,12 @@ class ChangePasswordPresenter {
     // MARK: - Data Handler Methods
     func handlerData(_ currentPassword: String, _ newPassword: String, _ reEnterNewPassword: String) {
         guard let user = user else { return }
-        self.validateService.checkChangePasswordData(user, currentPassword, newPassword, reEnterNewPassword) { result in
+        self.validateService.checkChangePasswordData(user, currentPassword, newPassword, reEnterNewPassword) { [weak self] result in
             if let result = result {
-                self.view?.didGetChangePasswordResult(result: result)
+                self?.view?.didGetChangePasswordResult(result: result)
             } else {
-                self.service.changePassword(user.id, newPassword) {
-                    self.view?.didGetChangePasswordResult(result: nil)
+                self?.service.changePassword(user.id, newPassword) { [weak self] in
+                    self?.view?.didGetChangePasswordResult(result: nil)
                 }
             }
         }

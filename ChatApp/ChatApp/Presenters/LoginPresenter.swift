@@ -32,8 +32,8 @@ class LoginPresenter {
     
     // MARK: - Data Handler Methods
     func fetchUser() {
-        self.service.fetchUser { users in
-            self.users = users
+        self.service.fetchUser { [weak self] users in
+            self?.users = users
         }
     }
     
@@ -42,8 +42,8 @@ class LoginPresenter {
     }
     
     func checkLogin(username: String, password: String) {
-        self.validateService.checkLogin(users, username, password) { result, senderId in
-            self.view?.didGetLoginResult(result: result, senderId: senderId)
+        self.validateService.checkLogin(users, username, password) { [weak self] result, senderId in
+            self?.view?.didGetLoginResult(result: result, senderId: senderId)
         }
     }
 }

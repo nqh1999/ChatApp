@@ -49,8 +49,8 @@ class DetailPresenter {
     
     // MARK: - Data Handler Methods
     func fetchUser(completed: @escaping (User) -> Void) {
-        self.service.fetchUser { users in
-            guard let receiver = self.receiver else { return }
+        self.service.fetchUser { [weak self] users in
+            guard let receiver = self?.receiver else { return }
             users.forEach { user in
                 if user.id == receiver.id {
                     completed(user)
@@ -60,12 +60,12 @@ class DetailPresenter {
     }
     
     func fetchMessage(completed: @escaping () -> Void) {
-        self.service.fetchMessage { messages in
-            guard let sender = self.sender, let receiver = self.receiver else { return }
-            self.messages.removeAll()
+        self.service.fetchMessage { [weak self] messages in
+            guard let sender = self?.sender, let receiver = self?.receiver else { return }
+            self?.messages.removeAll()
             messages.forEach { message in
                 if (message.receiverId == receiver.id && message.senderId == sender.id) || (message.receiverId == sender.id && message.senderId == receiver.id) {
-                    self.messages.append(message)
+                    self?.messages.append(message)
                 }
             }
             completed()
