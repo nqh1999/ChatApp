@@ -18,6 +18,7 @@ class LoginPresenter {
     private var users = [User]()
     private var service = FirebaseService()
     private var validateService = ValidateService()
+    private var newUser: User?
     
     // MARK: - Init
     init(view: LoginProtocol) {
@@ -30,9 +31,11 @@ class LoginPresenter {
     }
     
     // MARK: - Data Handler Methods
-    func fetchUser() {
+    func fetchUser(completed: @escaping (User?) -> Void) {
         self.service.fetchUser { users in
             self.users = users
+            self.newUser = users.last
+            completed(self.newUser)
         }
     }
     

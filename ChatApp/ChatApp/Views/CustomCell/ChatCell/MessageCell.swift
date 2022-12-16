@@ -19,22 +19,31 @@ class MessageCell: UITableViewCell {
         self.messageLabel.layer.masksToBounds = true
         self.messageLabel.layer.cornerRadius = 6
         self.messageLabel.layer.borderWidth = 0.2
+        self.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(longPress(_:))))
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
+    
     func setupData(_ message: Message) {
         self.messageLabel.text = message.text
         self.timeSend.text = self.setTimestamp(epochTime: message.time)
         self.timeReceive.text = self.setTimestamp(epochTime: message.time)
     }
+    
     func setupSentMessage() {
         self.messageLabel.backgroundColor = UIColor(named: "lightGreen")
         self.stackView.alignment = .trailing
     }
+    
     func setupReceivedMessage() {
         self.messageLabel.backgroundColor = .white
         self.stackView.alignment = .leading
+    }
+    
+    // reaction message
+    @objc private func longPress(_ gesture: UILongPressGestureRecognizer) {
+       
     }
 }

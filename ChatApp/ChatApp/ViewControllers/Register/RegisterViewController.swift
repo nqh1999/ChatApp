@@ -44,7 +44,14 @@ final class RegisterViewController: BaseViewController {
         self.presenter.register(self.nameTf.text ?? "", self.usernameTf.text ?? "", self.passwordTf.text ?? "")
     }
     
-    // MARK: - UIHandler Methods
+    private func setImage(_ img: UIImage) {
+        self.presenter.setImgUrl(img) {
+            self.avt.image = img
+            self.spinner.stopAnimating()
+        }
+    }
+    
+    // MARK: - UI Handler Methods
     private func setupUI() {
         self.view.layer.contents = UIImage(named: "bgrLogin")?.cgImage
         self.navigationController?.navigationBar.isHidden = true
@@ -67,6 +74,7 @@ final class RegisterViewController: BaseViewController {
     private func setupPickerView() {
         self.imgPickerView.delegate = self
         self.imgPickerView.sourceType = .photoLibrary
+        self.imgPickerView.allowsEditing = true
         self.present(self.imgPickerView, animated: true)
     }
     
@@ -88,10 +96,10 @@ final class RegisterViewController: BaseViewController {
 // MARK: - Extension
 extension RegisterViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        let img = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
-        self.presenter.setImgUrl(img: img) {
-            self.avt.image = img
-            self.spinner.stopAnimating()
+        if let img = info[.editedImage] as? UIImage {
+            self.setImage(img)
+        } else if let img = info[.originalImage] as? UIImage {
+            self.setImage(img)
         }
         self.imgPickerView.dismiss(animated: true)
         self.spinner.isHidden = false

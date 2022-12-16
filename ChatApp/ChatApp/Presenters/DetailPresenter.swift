@@ -67,8 +67,8 @@ class DetailPresenter {
                 if (message.receiverId == receiver.id && message.senderId == sender.id) || (message.receiverId == sender.id && message.senderId == receiver.id) {
                     self.messages.append(message)
                 }
-                completed()
             }
+            completed()
         }
     }
     

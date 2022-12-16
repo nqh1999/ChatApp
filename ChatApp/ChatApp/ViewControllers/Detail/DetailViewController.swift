@@ -5,7 +5,7 @@
 //  Created by BeeTech on 07/12/2022.
 //
 
-import UIKit
+import SDWebImage
 
 final class DetailViewController: BaseViewController {
     
@@ -129,7 +129,7 @@ final class DetailViewController: BaseViewController {
 // MARK: - Extension
 extension DetailViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        let img = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
+        let img = info[.originalImage] as! UIImage
         self.presenter.sendImg(img) {
             self.spinner.stopAnimating()
         }

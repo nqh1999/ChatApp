@@ -53,6 +53,7 @@ final class SettingViewController: BaseViewController {
     private func setupPickerView() {
         self.imgPickerView.delegate = self
         self.imgPickerView.sourceType = .photoLibrary
+        self.imgPickerView.allowsEditing = true
         self.present(self.imgPickerView, animated: true)
     }
     
@@ -72,6 +73,13 @@ final class SettingViewController: BaseViewController {
         self.presenter.changeName(name) {
             self.nameLabel.text = name
             self.messageView.isHidden = true
+        }
+    }
+    
+    private func setImage(_ img: UIImage) {
+        self.presenter.setImgUrl(img) {
+            self.imgView.image = img
+            self.spinner.stopAnimating()
         }
     }
     
@@ -107,10 +115,10 @@ final class SettingViewController: BaseViewController {
 // MARK: - Extention
 extension SettingViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        let img = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
-        self.presenter.setImgUrl(img) {
-            self.imgView.image = img
-            self.spinner.stopAnimating()
+        if let img = info[.editedImage] as? UIImage {
+            self.setImage(img)
+        } else if let img = info[.originalImage] as? UIImage {
+            self.setImage(img)
         }
         self.imgPickerView.dismiss(animated: true)
         self.spinner.isHidden = false

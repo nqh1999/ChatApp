@@ -31,7 +31,7 @@ class RegisterPresenter {
         }
     }
     
-    func setImgUrl(img: UIImage, completed: @escaping () -> Void) {
+    func setImgUrl(_ img: UIImage, completed: @escaping () -> Void) {
         self.service.fetchAvtUrl(img: img) { url in
             self.imgUrl = url
             completed()

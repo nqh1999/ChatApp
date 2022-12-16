@@ -32,7 +32,12 @@ final class LoginViewController: BaseViewController {
     
     // MARK: - Data Handler Methods
     private func setupData() {
-        self.presenter.fetchUser()
+        self.presenter.fetchUser { user in
+            guard let user = user else { return }
+            self.userNameTf.text = user.username
+            self.passwordTf.text = user.password
+            self.passwordTf.setPass()
+        }
     }
     
     private func login() {
@@ -43,8 +48,6 @@ final class LoginViewController: BaseViewController {
     // MARK: - UI Handler Methods
     private func setupUI() {
         self.view.layer.contents = UIImage(named: "bgrLogin")?.cgImage
-        self.userNameTf.text = "1@1.com"
-        self.passwordTf.text = "123456"
         self.userNameTf.shouldReturn = { [weak self] in
             self?.passwordTf.becomeFirstResponder()
         }

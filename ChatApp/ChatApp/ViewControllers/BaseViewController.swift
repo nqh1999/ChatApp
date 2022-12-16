@@ -17,7 +17,7 @@ class BaseViewController: UIViewController {
         self.view.layer.contents = UIImage(named: "bgr")?.cgImage
         self.navigationItem.titleView = titleView
         self.navigationController?.navigationBar.tintColor = UIColor(named: "darkBlue")
-        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor(named: "darkBlue"), NSAttributedString.Key.font: UIFont(name: "futura-medium", size: 24)!
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor(named: "darkBlue")!, NSAttributedString.Key.font: UIFont(name: "futura-medium", size: 24)!
             ]
     }
     
