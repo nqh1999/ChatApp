@@ -31,11 +31,9 @@ class LoginPresenter {
     }
     
     // MARK: - Data Handler Methods
-    func fetchUser(completed: @escaping (User?) -> Void) {
+    func fetchUser() {
         self.service.fetchUser { users in
             self.users = users
-            self.newUser = users.last
-            completed(self.newUser)
         }
     }
     
