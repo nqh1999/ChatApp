@@ -13,7 +13,7 @@ class MessageView: UIView {
     @IBOutlet private weak var messageTf: BaseTextField!
     @IBOutlet private weak var confirmButton: CustomButton!
     @IBOutlet private weak var cancelButton: CustomButton!
-    @IBOutlet weak var containerView: UIView!
+    @IBOutlet private weak var containerView: UIView!
     
     var confirm: ((String) -> Void)?
     

@@ -35,7 +35,7 @@ class DetailPresenter {
         return self.messages.count
     }
     
-    func getMessageByIndex(index: Int) -> Message {
+    func getMessageBy(index: Int) -> Message {
         return self.messages[index]
     }
     

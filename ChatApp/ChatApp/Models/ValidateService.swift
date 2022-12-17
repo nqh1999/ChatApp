@@ -107,6 +107,7 @@ class ValidateService {
                 userId = user.id
             }
         }
+        
         if username.isEmpty {
             completed(Err.usernameIsEmpty.rawValue, userId)
         } else {

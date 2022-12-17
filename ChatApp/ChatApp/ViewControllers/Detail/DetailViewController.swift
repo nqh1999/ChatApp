@@ -68,7 +68,7 @@ final class DetailViewController: BaseViewController {
             self?.spinner.isHidden = false
             self?.spinner.startAnimating()
             self?.presenter.deleteAllMessage { [weak self] in
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
                     self?.tableView.reloadData()
                     self?.spinner.stopAnimating()
                 }
@@ -145,7 +145,7 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let message = self.presenter.getMessageByIndex(index: indexPath.row)
+        let message = self.presenter.getMessageBy(index: indexPath.row)
         if message.text.isEmpty {
             let cell = tableView.dequeueReusableCell(withIdentifier: "imgCell", for: indexPath) as! ImgCell
             cell.setupImg(message)

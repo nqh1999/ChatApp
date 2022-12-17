@@ -33,12 +33,12 @@ class ListPresenter {
         return self.searchData.count
     }
     
-    func getUserByIndex(index: Int) -> User? {
+    func getUserBy(index: Int) -> User? {
         self.sortMessage()
         return self.searchData[index]
     }
     
-    func getMessageById(_ id: Int) -> Message? {
+    func getMessageBy(id: Int) -> Message? {
         return self.message[id]
     }
     

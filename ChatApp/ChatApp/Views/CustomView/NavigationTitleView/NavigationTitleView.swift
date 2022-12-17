@@ -5,13 +5,12 @@
 //  Created by BeeTech on 07/12/2022.
 //
 
-import UIKit
 import SDWebImage
 
 final class NavigationTitleView: UIView {
     @IBOutlet private var contentView: UIView!
     @IBOutlet private weak var img: UIImageView!
-    @IBOutlet weak var stateButton: UIButton!
+    @IBOutlet private weak var stateButton: UIButton!
     @IBOutlet private weak var titleLbl: UILabel!
     
     override init(frame: CGRect) {

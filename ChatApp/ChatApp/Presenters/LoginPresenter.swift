@@ -41,7 +41,7 @@ class LoginPresenter {
         self.service.setStateIsActive(id, true)
     }
     
-    func checkLogin(username: String, password: String) {
+    func checkLogin(_ username: String, _ password: String) {
         self.validateService.checkLogin(users, username, password) { [weak self] result, senderId in
             self?.view?.didGetLoginResult(result: result, senderId: senderId)
         }

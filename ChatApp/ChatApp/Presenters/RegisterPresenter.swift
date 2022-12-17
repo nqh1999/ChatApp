@@ -26,8 +26,8 @@ class RegisterPresenter {
     
     // MARK: - Data Handler Methods
     func fetchUser() {
-        self.service.fetchUser { users in
-            self.users = users
+        self.service.fetchUser { [weak self] users in
+            self?.users = users
         }
     }
     

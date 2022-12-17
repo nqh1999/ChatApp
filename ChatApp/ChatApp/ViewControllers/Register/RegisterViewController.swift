@@ -12,24 +12,20 @@ final class RegisterViewController: BaseViewController {
     // MARK: - Properties
     @IBOutlet private weak var nameTf: BaseTextField!
     @IBOutlet private weak var usernameTf: BaseTextField!
-    @IBOutlet private weak var avt: UIImageView!
+    @IBOutlet private weak var passwordTf: BaseTextField!
     @IBOutlet private weak var chooseImgButton: UIButton!
     @IBOutlet private weak var backToLoginButton: UIButton!
     @IBOutlet private weak var registerButton: CustomButton!
-    @IBOutlet private weak var passwordTf: BaseTextField!
-    @IBOutlet private weak var spinner: UIActivityIndicatorView!
+    @IBOutlet private weak var avt: UIImageView!
     @IBOutlet private weak var messageView: MessageView!
-    lazy private var presenter = RegisterPresenter(view: self)
+    @IBOutlet private weak var spinner: UIActivityIndicatorView!
     private var imgPickerView = UIImagePickerController()
+    lazy private var presenter = RegisterPresenter(view: self)
     
     // MARK: - Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupUI()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
         self.setupData()
     }
     

@@ -13,9 +13,9 @@ final class LoginViewController: BaseViewController {
     @IBOutlet private weak var loginButton: CustomButton!
     @IBOutlet private weak var registerButton: CustomButton!
     @IBOutlet private weak var forgotPasswordButton: UIButton!
+    @IBOutlet private weak var showPasswordButton: UIButton!
     @IBOutlet private weak var userNameTf: BaseTextField!
     @IBOutlet private weak var passwordTf: PasswordTextField!
-    @IBOutlet private weak var showPasswordButton: UIButton!
     @IBOutlet private weak var messageView: MessageView!
     lazy private var presenter = LoginPresenter(view: self)
     
@@ -37,7 +37,7 @@ final class LoginViewController: BaseViewController {
     
     private func login() {
         self.view.endEditing(true)
-        self.presenter.checkLogin(username: self.userNameTf.text ?? "", password: self.passwordTf.getPass())
+        self.presenter.checkLogin(self.userNameTf.text ?? "", self.passwordTf.getPass() ?? "")
     }
     
     // MARK: - UI Handler Methods
@@ -86,8 +86,8 @@ extension LoginViewController: LoginProtocol {
             self.messageView.showMessage(Err.loginFailed.rawValue)
         } else {
             self.messageView.showMessage(Err.loginSuccess.rawValue)
-            self.presenter.setState(senderId)
-            self.messageView.confirm = { _ in
+            self.messageView.confirm = { [weak self] _ in
+                self?.presenter.setState(senderId)
                 (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first?.rootViewController = UINavigationController(rootViewController: ListViewController(senderId))
             }
         }

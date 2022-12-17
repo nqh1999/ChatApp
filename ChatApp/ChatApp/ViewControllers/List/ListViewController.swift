@@ -101,15 +101,15 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! ListTableViewCell
-        guard let user = self.presenter.getUserByIndex(index: indexPath.row) else { return cell}
-        cell.fillData(self.presenter.getUserByIndex(index: indexPath.row), self.presenter.getMessageById(user.id))
+        guard let user = self.presenter.getUserBy(index: indexPath.row) else { return cell}
+        cell.fillData(self.presenter.getUserBy(index: indexPath.row), self.presenter.getMessageBy(id: user.id))
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.goToDetailVCByIndex(index: indexPath.row)
-        guard let sender = self.presenter.getSender(), let receiver = self.presenter.getUserByIndex(index: indexPath.row) else { return }
-        guard let message = self.presenter.getMessageById(receiver.id) else { return }
+        guard let sender = self.presenter.getSender(), let receiver = self.presenter.getUserBy(index: indexPath.row) else { return }
+        guard let message = self.presenter.getMessageBy(id: receiver.id) else { return }
         if message.receiverId == sender.id {
             self.presenter.setState(sender, receiver)
         }
