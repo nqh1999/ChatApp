@@ -7,33 +7,40 @@
 
 import Foundation
 
-// MARK: Enum error
-enum Err: String {
-    case nameIsEmpty = "Fullname can't be blank"
-    case usernameIsEmpty = "Username can't be blank"
-    case passwordIsEmpty = "Password can't be blank"
-    case currentPasswordIsEmpty = "Current password can't be blank"
-    case newPasswordIsEmpty = "New password can't be blank"
-    case reEnterNewPasswordIsEmpty = "You can re-enter new password"
-    case imgIsEmpty = "Please choose your image"
-    case usernameExist = "Username already exists"
-    case loginFailed = "Login failed"
-    case passwordIncorrect = "Password is incorrect"
-    case passwordNotSame = "Re-entered password is incorrect"
-    case usernameIncorrect = "Username is incorrect"
-    case loginSuccess = "Login success"
-    case registerSuccess = "Register Success"
-    case changePasswordSuccess = "Change password success"
-    case invalidUsername = "Invalid username"
-    case invalidPassword = "Invalid password"
+struct Emoji {
+    static let like = "👍"
+    static let heart = "❤️"
+    static let wow = "😮"
+    static let haha = "😆"
+    static let sad = "😢"
+    static let angry = "😠"
 }
 
-// MARK: Enum DB name
-enum DBName: String {
-    case user = "user"
-    case message = "message"
-    case imgMessage = "img_message"
-    case imgAvt = "img_avt"
+struct Error {
+    static let nameIsEmpty = "Fullname can't be blank"
+    static let usernameIsEmpty = "Username can't be blank"
+    static let passwordIsEmpty = "Password can't be blank"
+    static let currentPasswordIsEmpty = "Current password can't be blank"
+    static let newPasswordIsEmpty = "New password can't be blank"
+    static let reEnterNewPasswordIsEmpty = "You can re-enter new password"
+    static let imgIsEmpty = "Please choose your image"
+    static let invalidUsername = "Invalid username"
+    static let invalidPassword = "Invalid password"
+    static let passwordIncorrect = "Password is incorrect"
+    static let usernameIncorrect = "Username is incorrect"
+    static let passwordNotSame = "Re-entered password is incorrect"
+    static let usernameExist = "Username already exists"
+    static let loginSuccess = "Login success"
+    static let registerSuccess = "Register Success"
+    static let changePasswordSuccess = "Change password success"
+    static let loginFailed = "Login failed"
+}
+
+struct DBName {
+    static let user = "user"
+    static let message = "message"
+    static let imgMessage = "img_message"
+    static let imgAvt = "img_avt"
 }
 
 // MARK: User Model
@@ -63,6 +70,8 @@ struct Message {
     var img: String
     var time: Double
     var read: Bool
+    var senderReaction: String
+    var receiverReaction: String
     init(message: [String: Any]) {
         self.messageId = message["messageId"] as? String ?? ""
         self.receiverId = message["receiverId"] as? Int ?? 0
@@ -71,5 +80,7 @@ struct Message {
         self.img = message["img"] as? String ?? ""
         self.time = message["time"] as? Double ?? 0.0
         self.read = message["read"] as? Bool ?? false
+        self.senderReaction = message["senderReaction"] as? String ?? ""
+        self.receiverReaction = message["receiverReaction"] as? String ?? ""
     }
 }

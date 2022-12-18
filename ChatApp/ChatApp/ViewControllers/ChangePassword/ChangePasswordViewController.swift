@@ -67,7 +67,7 @@ extension ChangePasswordViewController: ChangePasswordProtocol {
         if let result = result {
             self.messageView.showMessage(result)
         } else {
-            self.messageView.showMessage(Err.changePasswordSuccess.rawValue)
+            self.messageView.showMessage(Error.changePasswordSuccess)
             self.messageView.confirm = { [weak self] _ in
                 self?.navigationController?.popViewController(animated: true)
             }

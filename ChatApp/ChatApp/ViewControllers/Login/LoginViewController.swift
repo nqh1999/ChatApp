@@ -83,9 +83,9 @@ extension LoginViewController: LoginProtocol {
     func didGetLoginResult(result: Bool, senderId: Int) {
         self.messageView.isHidden = false
         if !result {
-            self.messageView.showMessage(Err.loginFailed.rawValue)
+            self.messageView.showMessage(Error.loginFailed)
         } else {
-            self.messageView.showMessage(Err.loginSuccess.rawValue)
+            self.messageView.showMessage(Error.loginSuccess)
             self.messageView.confirm = { [weak self] _ in
                 self?.presenter.setState(senderId)
                 (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first?.rootViewController = UINavigationController(rootViewController: ListViewController(senderId))

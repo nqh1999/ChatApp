@@ -12,10 +12,13 @@ final class DetailViewController: BaseViewController {
     // MARK: - Properties
     @IBOutlet private weak var imgButton: UIButton!
     @IBOutlet private weak var sendButton: UIButton!
+    @IBOutlet private weak var likeButton: UIButton!
     @IBOutlet private weak var messageTf: BaseTextField!
     @IBOutlet private weak var tableView: UITableView!
     @IBOutlet private weak var messageView: MessageView!
     @IBOutlet private weak var spinner: UIActivityIndicatorView!
+    @IBOutlet private weak var reactionView: ReactionView!
+    @IBOutlet private weak var stackView: UIStackView!
     private var imgPickerView = UIImagePickerController()
     lazy private var presenter = DetailPresenter(view: self)
     
@@ -54,6 +57,23 @@ final class DetailViewController: BaseViewController {
         self.scrollToBottom()
     }
     
+    private func setupReactionView(_ cell: MessageCell, _ id: String, isSender: Bool) {
+        cell.longPress = { [weak self] senderReaction, receiverReaction in
+            self?.showReactionView(true)
+            self?.reactionView.tapToButton = { [weak self] text in
+                if text == senderReaction || text == receiverReaction {
+                    self?.presenter.sendReaction(id, "", isSender)
+                } else {
+                    self?.presenter.sendReaction(id, text, isSender)
+                }
+                self?.showReactionView(false)
+            }
+        }
+        cell.doubleTapToMessage = { [weak self] in
+            self?.presenter.sendReaction(id, "❤️", isSender)
+        }
+    }
+    
     // MARK: - Override Methods
     override func backToPreVC() {
         super.backToPreVC()
@@ -81,6 +101,17 @@ final class DetailViewController: BaseViewController {
         self.view.endEditing(true)
         self.messageTf.text = ""
         self.messageTf.becomeFirstResponder()
+        self.showLikeButton(true)
+    }
+    
+    private func showLikeButton(_ isShow: Bool) {
+        self.likeButton.isHidden = !isShow
+        self.sendButton.isHidden = isShow
+    }
+    
+    @objc private func tapToView() {
+        self.view.endEditing(true)
+        self.showReactionView(false)
     }
     
     // MARK: - UI Handler Methods
@@ -91,12 +122,20 @@ final class DetailViewController: BaseViewController {
     }
     
     private func setupUI() {
+        self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapToView)))
         self.messageTf.shouldReturn = { [weak self] in
             self?.sendMessage()
         }
         self.setupTableView()
         self.spinner.isHidden = true
         self.messageView.isHidden = true
+        self.showLikeButton(true)
+        self.showReactionView(false)
+    }
+    
+    func showReactionView(_ isShow: Bool) {
+        self.reactionView.isHidden = !isShow
+        self.stackView.isHidden = isShow
     }
     
     private func setupTableView() {
@@ -116,6 +155,11 @@ final class DetailViewController: BaseViewController {
         }
     }
     
+    @IBAction func enterMessage(_ sender: UITextField) {
+        guard let text = sender.text else { return }
+        self.showLikeButton(text.isEmpty)
+    }
+    
     // MARK: - Button Action
     @IBAction private func chooseImg(_ sender: Any) {
         self.setupPickerView()
@@ -123,6 +167,10 @@ final class DetailViewController: BaseViewController {
     
     @IBAction private func sendMessage(_ sender: Any) {
         self.sendMessage()
+    }
+    
+    @IBAction func likeButtonTapped(_ sender: Any) {
+        self.presenter.sendMessage(Emoji.like)
     }
 }
 
@@ -160,12 +208,15 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
             cell.setupData(message)
             if message.senderId == self.presenter.getSender()?.id {
                 cell.setupSentMessage()
+                self.setupReactionView(cell, message.messageId, isSender: true)
             } else {
                 cell.setupReceivedMessage()
+                self.setupReactionView(cell, message.messageId, isSender: false)
             }
             return cell
         }
     }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }

@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		137DAFA0294B5BEA003A0C26 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137DAF9F294B5BEA003A0C26 /* Extensions.swift */; };
 		1399B19129458761001B872B /* PasswordTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1399B19029458761001B872B /* PasswordTextField.swift */; };
+		13D26A52294E21A000FD58D2 /* ReactionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D26A51294E21A000FD58D2 /* ReactionView.swift */; };
+		13D26A54294E21A700FD58D2 /* ReactionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13D26A53294E21A700FD58D2 /* ReactionView.xib */; };
 		4FA0D6904C8AD6830CD8AFA8 /* Pods_ChatApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7266BF7FD7B514CEEA8FC86B /* Pods_ChatApp.framework */; };
 		9D116C1E294AD1A200D31250 /* ForgotPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D116C1C294AD1A200D31250 /* ForgotPasswordViewController.swift */; };
 		9D116C1F294AD1A200D31250 /* ForgotPasswordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9D116C1D294AD1A200D31250 /* ForgotPasswordViewController.xib */; };
@@ -58,6 +60,8 @@
 /* Begin PBXFileReference section */
 		137DAF9F294B5BEA003A0C26 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		1399B19029458761001B872B /* PasswordTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordTextField.swift; sourceTree = "<group>"; };
+		13D26A51294E21A000FD58D2 /* ReactionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionView.swift; sourceTree = "<group>"; };
+		13D26A53294E21A700FD58D2 /* ReactionView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReactionView.xib; sourceTree = "<group>"; };
 		29849066BE9438EB2E20FBBA /* Pods-ChatApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatApp.debug.xcconfig"; path = "Target Support Files/Pods-ChatApp/Pods-ChatApp.debug.xcconfig"; sourceTree = "<group>"; };
 		7266BF7FD7B514CEEA8FC86B /* Pods_ChatApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ChatApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D116C1C294AD1A200D31250 /* ForgotPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewController.swift; sourceTree = "<group>"; };
@@ -126,6 +130,15 @@
 				7266BF7FD7B514CEEA8FC86B /* Pods_ChatApp.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		13D26A50294E218200FD58D2 /* ReactionView */ = {
+			isa = PBXGroup;
+			children = (
+				13D26A51294E21A000FD58D2 /* ReactionView.swift */,
+				13D26A53294E21A700FD58D2 /* ReactionView.xib */,
+			);
+			path = ReactionView;
 			sourceTree = "<group>";
 		};
 		9D116C1B294AD17900D31250 /* ForgotPassword */ = {
@@ -352,6 +365,7 @@
 		9DE2BB4F29419859002731D3 /* CustomView */ = {
 			isa = PBXGroup;
 			children = (
+				13D26A50294E218200FD58D2 /* ReactionView */,
 				9D703C7F294AA90400CCF2D7 /* MessageView */,
 				9DE2BB5229419887002731D3 /* NavigationTitleView */,
 			);
@@ -437,6 +451,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9D2DE0722946F82500F4FD9C /* RegisterViewController.xib in Resources */,
+				13D26A54294E21A700FD58D2 /* ReactionView.xib in Resources */,
 				9DC40F5F2949C98000A763B9 /* ChangePasswordViewController.xib in Resources */,
 				9D3532DE29406CBB00F12230 /* LoginViewController.xib in Resources */,
 				9DB9BC1B2943328B00D6B049 /* MessageCell.xib in Resources */,
@@ -521,6 +536,7 @@
 				9DC40F622949CA9A00A763B9 /* ChangePassworPresenter.swift in Sources */,
 				9D116C23294AE1F700D31250 /* ForgotPasswordPresenter.swift in Sources */,
 				9D3532E62940739300F12230 /* DetailViewController.swift in Sources */,
+				13D26A52294E21A000FD58D2 /* ReactionView.swift in Sources */,
 				9D2DE0742947089500F4FD9C /* RegisterPresenter.swift in Sources */,
 				9D383CF62940884600769F0C /* ListTableViewCell.swift in Sources */,
 				9DB9BC1C2943328B00D6B049 /* ImgCell.swift in Sources */,

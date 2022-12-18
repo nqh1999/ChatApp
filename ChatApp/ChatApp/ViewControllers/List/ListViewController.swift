@@ -48,7 +48,7 @@ final class ListViewController: BaseViewController {
     
     // send data and go to detail view controller when click to row of table view
     private func goToDetailVCByIndex(index: Int) {
-        guard let sender = self.presenter.getSender(), let receiver = self.presenter.getUserByIndex(index: index) else { return }
+        guard let sender = self.presenter.getSender(), let receiver = self.presenter.getUserBy(index: index) else { return }
         self.navigationController?.pushViewController(DetailViewController(sender, receiver), animated: true)
     }
     

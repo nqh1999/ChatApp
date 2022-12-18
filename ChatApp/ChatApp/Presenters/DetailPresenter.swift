@@ -96,4 +96,8 @@ class DetailPresenter {
             completed()
         }
     }
+    
+    func sendReaction(_ id: String, _ reaction: String, _ isSender: Bool) {
+        self.service.sendReaction(id, reaction, isSender)
+    }
 }
