@@ -57,20 +57,20 @@ final class DetailViewController: BaseViewController {
         self.scrollToBottom()
     }
     
-    private func setupReactionView(_ cell: MessageCell, _ id: String, isSender: Bool) {
-        cell.longPress = { [weak self] senderReaction, receiverReaction in
+    private func setupReactionView(_ cell: MessageCell, _ id: String) {
+        cell.longPress = { [weak self] reaction in
             self?.showReactionView(true)
             self?.reactionView.tapToButton = { [weak self] text in
-                if text == senderReaction || text == receiverReaction {
-                    self?.presenter.sendReaction(id, "", isSender)
+                if text == reaction {
+                    self?.presenter.sendReaction(id, "")
                 } else {
-                    self?.presenter.sendReaction(id, text, isSender)
+                    self?.presenter.sendReaction(id, text)
                 }
                 self?.showReactionView(false)
             }
         }
         cell.doubleTapToMessage = { [weak self] in
-            self?.presenter.sendReaction(id, "❤️", isSender)
+            self?.presenter.sendReaction(id, "❤️")
         }
     }
     
@@ -205,13 +205,12 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "messageCell", for: indexPath) as! MessageCell
-            cell.setupData(message)
             if message.senderId == self.presenter.getSender()?.id {
-                cell.setupSentMessage()
-                self.setupReactionView(cell, message.messageId, isSender: true)
+                cell.setupSentMessage(message)
+                self.setupReactionView(cell, message.messageId)
             } else {
-                cell.setupReceivedMessage()
-                self.setupReactionView(cell, message.messageId, isSender: false)
+                cell.setupReceivedMessage(message)
+                self.setupReactionView(cell, message.messageId)
             }
             return cell
         }

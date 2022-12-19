@@ -132,7 +132,7 @@
                                                         <action selector="chooseImage:" destination="-1" eventType="touchUpInside" id="YRu-Ub-yQz"/>
                                                     </connections>
                                                 </button>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="xlf-DD-J1j">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="defaultAvt" translatesAutoresizingMaskIntoConstraints="NO" id="xlf-DD-J1j">
                                                     <rect key="frame" x="235" y="0.0" width="100" height="100"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="100" id="1fZ-cD-xO8"/>
@@ -213,6 +213,7 @@
         </view>
     </objects>
     <resources>
+        <image name="defaultAvt" width="900" height="520"/>
         <image name="envelope" catalog="system" width="128" height="93"/>
         <image name="lock" catalog="system" width="125" height="128"/>
         <image name="person.fill" catalog="system" width="128" height="120"/>

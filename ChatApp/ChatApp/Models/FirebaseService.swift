@@ -46,6 +46,9 @@ class FirebaseService {
             self?.messages.removeAll()
             querySnapshot.documents.forEach { document in
                 let message = Message(message: document.data())
+                if message.senderDeleted && message.receiverDeleted {
+                    self?.db.collection(DBName.message).document(message.messageId).delete()
+                }
                 self?.messages.append(message)
                 self?.messages = self?.messages.sorted {
                     return $0.time < $1.time
@@ -109,8 +112,9 @@ class FirebaseService {
             "img": "",
             "time": Date.now.timeIntervalSince1970,
             "read": false,
-            "senderReaction": "",
-            "receiverReaction": ""
+            "reaction": "",
+            "senderDeleted": false,
+            "receiverDeleted": false
         ])
     }
     
@@ -133,20 +137,18 @@ class FirebaseService {
                     "img": url.absoluteString,
                     "time": Date.now.timeIntervalSince1970,
                     "read": false,
-                    "senderReaction": "",
-                    "receiverReaction": ""
+                    "reaction": "",
+                    "senderDeleted": false,
+                    "receiverDeleted": false
                 ])
             }
             completed()
         }
     }
     
-    func sendReaction(_ id: String, _ reaction: String, _ isSender: Bool) {
-        if isSender {
-            self.db.collection(DBName.message).document(id).updateData(["senderReaction" : reaction])
-        } else {
-            self.db.collection(DBName.message).document(id).updateData(["receiverReaction" : reaction])
-        }
+    // MARK: Send Reaction
+    func sendReaction(_ id: String, _ reaction: String) {
+        self.db.collection(DBName.message).document(id).updateData(["reaction" : reaction])
     }
     
     // MARK: set state from unread to read
@@ -163,9 +165,21 @@ class FirebaseService {
         }
     }
     
-    // MARK: delete message
-    func delete(id: String) {
-        self.db.collection(DBName.message).document(id).delete()
+    // MARK: Set Delete Message
+    func setMessageDelete(_ senderId: Int, _ message: Message) {
+        if senderId == message.senderId {
+            self.db.collection(DBName.message).document(message.messageId).updateData([
+                "senderDeleted": true
+            ])
+            return
+        }
+        
+        if senderId == message.receiverId {
+            self.db.collection(DBName.message).document(message.messageId).updateData([
+                "receiverDeleted": true
+            ])
+            return
+        }
     }
     
     // MARK: set state is read when tap to new message

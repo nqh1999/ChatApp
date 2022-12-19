@@ -80,7 +80,13 @@ class ListPresenter {
                 guard let senderId = self?.senderId else { return }
                 messages.forEach { message in
                     if (message.senderId == senderId && message.receiverId == receiver.id) || (message.senderId == receiver.id && message.receiverId == senderId) {
-                        self?.allMessage.append(message)
+                        if self?.sender?.id == message.senderId && !message.senderDeleted {
+                            self?.allMessage.append(message)
+                        }
+                        
+                        if self?.sender?.id == message.receiverId && !message.receiverDeleted {
+                            self?.allMessage.append(message)
+                        }
                     }
                 }
                 self?.message[receiver.id] = self?.allMessage.last

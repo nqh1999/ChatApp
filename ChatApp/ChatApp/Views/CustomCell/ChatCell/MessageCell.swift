@@ -16,10 +16,10 @@ class MessageCell: UITableViewCell {
     @IBOutlet private weak var spaceView: UIView!
     @IBOutlet private weak var reactionLabel: CustomLabel!
 
-    private var senderReaction: String = ""
-    private var receiverReaction: String = ""
+    private var reaction: String = ""
+    private var isSender: Bool = false
     
-    var longPress: ((String, String) -> Void)?
+    var longPress: ((String) -> Void)?
     var doubleTapToMessage: (() -> Void)?
     
     override func awakeFromNib() {
@@ -41,36 +41,40 @@ class MessageCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
-    func setupData(_ message: Message) {
-        self.senderReaction = message.senderReaction
-        self.receiverReaction = message.receiverReaction
+    private func setupData(_ message: Message) {
+        self.reaction = message.reaction
         self.messageLabel.text = message.text
         self.timeSend.text = self.setTimestamp(epochTime: message.time)
         self.timeReceive.text = self.setTimestamp(epochTime: message.time)
-        self.reactionLabel.isHidden = message.senderReaction.isEmpty && message.receiverReaction.isEmpty
+        self.reactionLabel.text = message.reaction
+        self.reactionLabel.isHidden = message.reaction.isEmpty
         self.spaceView.isHidden = self.reactionLabel.isHidden
-        let text =  (!message.senderReaction.isEmpty && !message.receiverReaction.isEmpty) ? "2" : ""
-        self.reactionLabel.text = (message.senderReaction == message.receiverReaction) ? message.senderReaction + text : message.senderReaction + message.receiverReaction + text
     }
     
-    func setupSentMessage() {
+    func setupSentMessage(_ message: Message) {
+        self.isSender = true
+        self.setupData(message)
         self.messageLabel.backgroundColor = UIColor(named: "lightGreen")
         self.stackView.alignment = .trailing
         self.contentView.addConstraint(NSLayoutConstraint(item: self.reactionLabel!, attribute: .trailing, relatedBy: .equal, toItem: self.messageLabel, attribute: .trailing, multiplier: 1, constant: 0))
     }
     
-    func setupReceivedMessage() {
+    func setupReceivedMessage(_ message: Message) {
+        self.isSender = false
+        self.setupData(message)
         self.messageLabel.backgroundColor = .white
         self.stackView.alignment = .leading
-        self.contentView.addConstraint(NSLayoutConstraint(item: self.reactionLabel!, attribute: .leading, relatedBy: .equal, toItem: self.messageLabel, attribute: .leading, multiplier: 1, constant: 0))
+        self.contentView.addConstraint(NSLayoutConstraint(item: self.reactionLabel!, attribute: .leading, relatedBy: .equal, toItem: self.messageLabel, attribute: .trailing, multiplier: 1, constant: -self.reactionLabel.frame.width))
     }
     
     // reaction message
     @objc private func longPress(_ gesture: UILongPressGestureRecognizer) {
-        self.longPress?(self.senderReaction, self.receiverReaction)
+        if isSender { return }
+        self.longPress?(self.reaction)
     }
                                   
     @objc private func doubleTap() {
+        if isSender { return }
         self.doubleTapToMessage?()
     }
 }

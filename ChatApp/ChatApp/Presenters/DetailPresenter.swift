@@ -65,7 +65,13 @@ class DetailPresenter {
             self?.messages.removeAll()
             messages.forEach { message in
                 if (message.receiverId == receiver.id && message.senderId == sender.id) || (message.receiverId == sender.id && message.senderId == receiver.id) {
-                    self?.messages.append(message)
+                    if self?.sender?.id == message.senderId && !message.senderDeleted {
+                        self?.messages.append(message)
+                    }
+                    
+                    if self?.sender?.id == message.receiverId && !message.receiverDeleted {
+                        self?.messages.append(message)
+                    }
                 }
             }
             completed()
@@ -78,8 +84,9 @@ class DetailPresenter {
     }
     
     func deleteAllMessage(_ completed: @escaping () -> Void) {
+        guard let id = self.sender?.id else { return }
         self.messages.forEach { message in
-            self.service.delete(id: message.messageId)
+            self.service.setMessageDelete(id, message)
         }
         completed()
     }
@@ -97,7 +104,7 @@ class DetailPresenter {
         }
     }
     
-    func sendReaction(_ id: String, _ reaction: String, _ isSender: Bool) {
-        self.service.sendReaction(id, reaction, isSender)
+    func sendReaction(_ id: String, _ reaction: String) {
+        self.service.sendReaction(id, reaction)
     }
 }

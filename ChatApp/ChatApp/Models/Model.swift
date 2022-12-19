@@ -70,8 +70,9 @@ struct Message {
     var img: String
     var time: Double
     var read: Bool
-    var senderReaction: String
-    var receiverReaction: String
+    var reaction: String
+    var senderDeleted: Bool
+    var receiverDeleted: Bool
     init(message: [String: Any]) {
         self.messageId = message["messageId"] as? String ?? ""
         self.receiverId = message["receiverId"] as? Int ?? 0
@@ -80,7 +81,8 @@ struct Message {
         self.img = message["img"] as? String ?? ""
         self.time = message["time"] as? Double ?? 0.0
         self.read = message["read"] as? Bool ?? false
-        self.senderReaction = message["senderReaction"] as? String ?? ""
-        self.receiverReaction = message["receiverReaction"] as? String ?? ""
+        self.reaction = message["reaction"] as? String ?? ""
+        self.senderDeleted = message["senderDeleted"] as? Bool ?? false
+        self.receiverDeleted = message["receiverDeleted"] as? Bool ?? false
     }
 }
