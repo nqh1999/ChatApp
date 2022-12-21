@@ -12,6 +12,7 @@ class ImgCell: UITableViewCell {
     @IBOutlet private weak var stackView: UIStackView!
     @IBOutlet private weak var imgView: UIImageView!
     @IBOutlet private weak var spinner: UIActivityIndicatorView!
+    
     private var currentFrame: CGRect?
     private var zoomView: UIView?
     

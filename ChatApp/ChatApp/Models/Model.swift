@@ -45,14 +45,14 @@ struct DBName {
 
 // MARK: User Model
 struct User {
-    var id: Int
+    var id: String
     var name: String
     var imgUrl: String
     var username: String
     var password: String
     var isActive: Bool
     init(user: [String: Any]) {
-        self.id = user["id"] as? Int ?? 0
+        self.id = user["id"] as? String ?? ""
         self.username = user["username"] as? String ?? ""
         self.password = user["password"] as? String ?? ""
         self.name = user["name"] as? String ?? ""
@@ -64,10 +64,11 @@ struct User {
 // MARK: Message Model
 struct Message {
     var messageId: String
-    var receiverId: Int
-    var senderId: Int
+    var receiverId: String
+    var senderId: String
     var text: String
     var img: String
+    var ratio: Double
     var time: Double
     var read: Bool
     var reaction: String
@@ -75,10 +76,11 @@ struct Message {
     var receiverDeleted: Bool
     init(message: [String: Any]) {
         self.messageId = message["messageId"] as? String ?? ""
-        self.receiverId = message["receiverId"] as? Int ?? 0
-        self.senderId = message["senderId"] as? Int ?? 0
+        self.receiverId = message["receiverId"] as? String ?? ""
+        self.senderId = message["senderId"] as? String ?? ""
         self.text = message["text"] as? String ?? ""
         self.img = message["img"] as? String ?? ""
+        self.ratio = message["ratio"] as? Double ?? 1
         self.time = message["time"] as? Double ?? 0.0
         self.read = message["read"] as? Bool ?? false
         self.reaction = message["reaction"] as? String ?? ""

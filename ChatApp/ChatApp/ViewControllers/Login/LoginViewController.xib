@@ -15,6 +15,7 @@
             <connections>
                 <outlet property="forgotPasswordButton" destination="hNJ-NO-unW" id="fWi-S2-Sb2"/>
                 <outlet property="loginButton" destination="O1p-gS-8xv" id="TN3-a4-g8g"/>
+                <outlet property="loginFBButton" destination="lGL-T9-76X" id="OKq-wJ-Px4"/>
                 <outlet property="messageView" destination="fuP-8q-PMi" id="frW-zs-V1r"/>
                 <outlet property="passwordTf" destination="0oU-Uo-MqV" id="4Xx-II-Jds"/>
                 <outlet property="registerButton" destination="Xxt-1F-u2J" id="nSy-lT-D2w"/>
@@ -29,7 +30,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="fJf-WB-xxx">
-                    <rect key="frame" x="20" y="30" width="280" height="456.5"/>
+                    <rect key="frame" x="20" y="30" width="280" height="495"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Login" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uyD-xv-8kf">
                             <rect key="frame" x="0.0" y="0.0" width="280" height="64"/>
@@ -38,7 +39,7 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="70" translatesAutoresizingMaskIntoConstraints="NO" id="ETH-vW-WZv">
-                            <rect key="frame" x="0.0" y="104" width="280" height="352.5"/>
+                            <rect key="frame" x="0.0" y="104" width="280" height="391"/>
                             <subviews>
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="B1N-Z5-QNc">
                                     <rect key="frame" x="0.0" y="0.0" width="280" height="145"/>
@@ -140,8 +141,8 @@
                                         </stackView>
                                     </subviews>
                                 </stackView>
-                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="72R-1j-5Z7">
-                                    <rect key="frame" x="0.0" y="215" width="280" height="137.5"/>
+                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="72R-1j-5Z7">
+                                    <rect key="frame" x="0.0" y="215" width="280" height="176"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O1p-gS-8xv" customClass="CustomButton" customModule="ChatApp" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="0.0" width="280" height="45"/>
@@ -158,14 +159,8 @@
                                                 <action selector="checkLogin:" destination="-1" eventType="touchUpInside" id="fhY-Fs-eRT"/>
                                             </connections>
                                         </button>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="or" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VDD-YK-OkZ">
-                                            <rect key="frame" x="0.0" y="57" width="280" height="23.5"/>
-                                            <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="18"/>
-                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xxt-1F-u2J" customClass="CustomButton" customModule="ChatApp" customModuleProvider="target">
-                                            <rect key="frame" x="0.0" y="92.5" width="280" height="45"/>
+                                            <rect key="frame" x="0.0" y="57" width="280" height="45"/>
                                             <color key="backgroundColor" red="0.25619818239795916" green="0.34953422286883501" blue="0.42578000438456631" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="45" id="qBn-Z8-v6F"/>
@@ -179,7 +174,49 @@
                                                 <action selector="register:" destination="-1" eventType="touchUpInside" id="tEj-LU-aUa"/>
                                             </connections>
                                         </button>
+                                        <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ca7-Gp-xIf">
+                                            <rect key="frame" x="32" y="114" width="216" height="62"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lGL-T9-76X">
+                                                    <rect key="frame" x="0.0" y="0.0" width="72" height="62"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <state key="normal" title="Button"/>
+                                                    <buttonConfiguration key="configuration" style="plain" image="facebook">
+                                                        <color key="baseForegroundColor" red="0.15089842089179423" green="0.33725490196078434" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    </buttonConfiguration>
+                                                    <connections>
+                                                        <action selector="loginWithFacebook:" destination="-1" eventType="touchUpInside" id="ihC-7d-YR3"/>
+                                                    </connections>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wc8-oF-ty8">
+                                                    <rect key="frame" x="72" y="0.0" width="72" height="62"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <state key="normal" title="Button"/>
+                                                    <buttonConfiguration key="configuration" style="plain" image="instagram"/>
+                                                    <connections>
+                                                        <action selector="loginWithInstagram:" destination="-1" eventType="touchUpInside" id="gxF-XD-YHT"/>
+                                                    </connections>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AVy-rd-TpX">
+                                                    <rect key="frame" x="144" y="0.0" width="72" height="62"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="10" maxY="0.0"/>
+                                                    <state key="normal" title="Login With Zalo" image="zalo"/>
+                                                    <buttonConfiguration key="configuration" style="plain" image="zalo"/>
+                                                    <connections>
+                                                        <action selector="loginWithZalo:" destination="-1" eventType="touchUpInside" id="3Ah-sz-YtK"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                        </stackView>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstItem="Xxt-1F-u2J" firstAttribute="width" secondItem="72R-1j-5Z7" secondAttribute="width" id="IUE-f2-UQe"/>
+                                        <constraint firstItem="O1p-gS-8xv" firstAttribute="width" secondItem="72R-1j-5Z7" secondAttribute="width" id="Uje-Gt-aXL"/>
+                                    </constraints>
                                 </stackView>
                             </subviews>
                         </stackView>
@@ -205,7 +242,10 @@
     </objects>
     <resources>
         <image name="envelope" catalog="system" width="128" height="93"/>
+        <image name="facebook" width="48" height="48"/>
+        <image name="instagram" width="48" height="48"/>
         <image name="lock" catalog="system" width="125" height="128"/>
+        <image name="zalo" width="48" height="48"/>
         <namedColor name="darkBlue">
             <color red="0.14901960784313725" green="0.0" blue="0.42745098039215684" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

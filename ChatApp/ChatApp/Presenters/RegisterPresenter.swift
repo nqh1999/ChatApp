@@ -43,8 +43,8 @@ class RegisterPresenter {
             if let result = result {
                 self?.view?.didGetRegisterResult(result: result)
             } else {
-                guard let id = self?.users.count, let url = self?.imgUrl else { return }
-                self?.service.register(id + 1, name, username, password, url) { [weak self] in
+                guard let url = self?.imgUrl else { return }
+                self?.service.register(name, username, password, url) { [weak self] in
                     self?.view?.didGetRegisterResult(result: nil)
                 }
             }

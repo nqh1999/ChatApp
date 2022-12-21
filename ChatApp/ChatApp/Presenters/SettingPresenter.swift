@@ -18,7 +18,7 @@ class SettingPresenter {
     private var user: User?
     private var imgUrl: String = ""
     private var service = FirebaseService()
-    private var userId: Int = 0
+    private var userId: String = ""
     
     // MARK: - Init
     init(view: SettingProtocol) {
@@ -26,7 +26,7 @@ class SettingPresenter {
     }
     
     // MARK: - Getter - Setter
-    func setUserId(_ id: Int) {
+    func setUserId(_ id: String) {
         self.userId = id
     }
     

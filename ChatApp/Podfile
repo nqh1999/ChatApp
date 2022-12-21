@@ -12,4 +12,7 @@ pod 'FirebaseCore'
 pod 'FirebaseFirestore'
 pod 'SDWebImage'
 pod 'IQKeyboardManager'
+pod 'Firebase/Auth'
+pod 'FBSDKLoginKit'
+pod 'FacebookLogin'
 end

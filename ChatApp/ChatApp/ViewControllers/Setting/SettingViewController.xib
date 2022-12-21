@@ -28,7 +28,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="iON-UK-fOg">
-                    <rect key="frame" x="20" y="30" width="280" height="290"/>
+                    <rect key="frame" x="20" y="30" width="280" height="235"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="KAG-pV-tJG">
                             <rect key="frame" x="0.0" y="0.0" width="280" height="166"/>
@@ -67,7 +67,7 @@
                             </subviews>
                         </stackView>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="bfo-00-i8o">
-                            <rect key="frame" x="0.0" y="190" width="280" height="100"/>
+                            <rect key="frame" x="0.0" y="190" width="280" height="45"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="avp-JJ-ydz" customClass="CustomButton" customModule="ChatApp" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="0.0" width="280" height="45"/>
@@ -85,7 +85,7 @@
                                     </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xmU-P4-sdN" customClass="CustomButton" customModule="ChatApp" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="55" width="280" height="45"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="280" height="45"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="45" id="hg0-zM-Rbq"/>
@@ -100,6 +100,11 @@
                                     </connections>
                                 </button>
                             </subviews>
+                            <variation key="default">
+                                <mask key="subviews">
+                                    <exclude reference="avp-JJ-ydz"/>
+                                </mask>
+                            </variation>
                         </stackView>
                     </subviews>
                 </stackView>

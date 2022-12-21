@@ -18,16 +18,15 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="KnN-LU-ZnS">
-                        <rect key="frame" x="110" y="115" width="20" height="20"/>
+                        <rect key="frame" x="130" y="77.5" width="20" height="20"/>
                     </activityIndicatorView>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="ZSp-re-O6l">
-                        <rect key="frame" x="0.0" y="5" width="240" height="240"/>
+                        <rect key="frame" x="0.0" y="5" width="280" height="165"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="muk-Zq-W4F">
-                                <rect key="frame" x="0.0" y="0.0" width="240" height="240"/>
+                            <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="muk-Zq-W4F">
+                                <rect key="frame" x="0.0" y="0.0" width="280" height="165"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="240" id="WqU-LE-yQW"/>
-                                    <constraint firstAttribute="width" constant="240" id="yN6-6w-P4E"/>
+                                    <constraint firstAttribute="width" constant="280" id="Q8k-3Q-wyo"/>
                                 </constraints>
                             </imageView>
                         </subviews>
@@ -50,7 +49,7 @@
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <connections>
                 <outlet property="imgView" destination="muk-Zq-W4F" id="C7f-FR-G3k"/>
-                <outlet property="spinner" destination="KnN-LU-ZnS" id="EvG-IO-2mv"/>
+                <outlet property="spinner" destination="KnN-LU-ZnS" id="ynu-1w-6eD"/>
                 <outlet property="stackView" destination="ZSp-re-O6l" id="kbi-T9-fzh"/>
             </connections>
             <point key="canvasLocation" x="59.420289855072468" y="39.84375"/>

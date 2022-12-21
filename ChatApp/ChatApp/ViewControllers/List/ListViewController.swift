@@ -30,7 +30,7 @@ final class ListViewController: BaseViewController {
         self.setSettingButton()
     }
     
-    convenience init(_ id: Int) {
+    convenience init(_ id: String) {
         self.init()
         self.presenter.setData(id)
     }

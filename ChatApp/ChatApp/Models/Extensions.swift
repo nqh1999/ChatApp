@@ -16,13 +16,6 @@ extension String {
     }
 }
 
-// MARK: - Extention UIImage
-extension UIImage {
-    func getCropRatio() -> CGFloat {
-        return CGFloat(self.size.width / self.size.height)
-    }
-}
-
 // MARK: - Extension Table View Cell
 extension UITableViewCell {
     func setTimestamp(epochTime: Double) -> String {

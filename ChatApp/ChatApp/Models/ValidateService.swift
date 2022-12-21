@@ -10,9 +10,9 @@ import Foundation
 class ValidateService {
 
     // MARK: Check login data
-    func checkLogin(_ users: [User], _ username: String, _ password: String, completed: (Bool, Int) -> Void) {
+    func checkLogin(_ users: [User], _ username: String, _ password: String, completed: (Bool, String) -> Void) {
         var result: Bool = false
-        var senderId: Int = 0
+        var senderId: String = ""
         users.forEach { user in
             if user.username == username && user.password == password {
                 result = true
@@ -100,8 +100,8 @@ class ValidateService {
     }
     
     // MARK: Check username
-    func checkUsername(_ users: [User], _ username: String, completed: (String?, Int) -> Void) {
-        var userId: Int = 0
+    func checkUsername(_ users: [User], _ username: String, completed: (String?, String) -> Void) {
+        var userId: String = ""
         users.forEach { user in
             if user.username == username {
                 userId = user.id

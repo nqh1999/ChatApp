@@ -33,7 +33,7 @@ final class SettingViewController: BaseViewController {
         self.setupData()
     }
     
-    convenience init(_ id: Int) {
+    convenience init(_ id: String) {
         self.init()
         self.presenter.setUserId(id)
     }

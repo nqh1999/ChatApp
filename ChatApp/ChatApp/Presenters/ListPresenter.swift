@@ -19,9 +19,9 @@ class ListPresenter {
     private var sender: User?
     private var searchData = [User]()
     private var allMessage = [Message]()
-    private var message: [Int: Message] = [:]
+    private var message: [String: Message] = [:]
     private var service = FirebaseService()
-    private var senderId: Int = 0
+    private var senderId: String = ""
     
     // MARK: - Init
     init(view: ListProtocol) {
@@ -38,11 +38,11 @@ class ListPresenter {
         return self.searchData[index]
     }
     
-    func getMessageBy(id: Int) -> Message? {
+    func getMessageBy(id: String) -> Message? {
         return self.message[id]
     }
     
-    func setData(_ id: Int) {
+    func setData(_ id: String) {
         self.senderId = id
     }
     

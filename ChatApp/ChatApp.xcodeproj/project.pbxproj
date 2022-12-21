@@ -34,7 +34,6 @@
 		9D703C81294AA92300CCF2D7 /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D703C80294AA92300CCF2D7 /* MessageView.swift */; };
 		9D703C83294AA92E00CCF2D7 /* MessageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9D703C82294AA92E00CCF2D7 /* MessageView.xib */; };
 		9DA5E87829405228001CABB8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA5E87729405228001CABB8 /* AppDelegate.swift */; };
-		9DA5E87A29405228001CABB8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA5E87929405228001CABB8 /* SceneDelegate.swift */; };
 		9DA5E8812940522A001CABB8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9DA5E8802940522A001CABB8 /* Assets.xcassets */; };
 		9DA5E8842940522A001CABB8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9DA5E8822940522A001CABB8 /* LaunchScreen.storyboard */; };
 		9DB8280729472F0500069E3A /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB8280629472F0500069E3A /* FirebaseService.swift */; };
@@ -51,6 +50,7 @@
 		9DC40F622949CA9A00A763B9 /* ChangePassworPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC40F612949CA9A00A763B9 /* ChangePassworPresenter.swift */; };
 		9DC6B637294968A000D3EF44 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC6B635294968A000D3EF44 /* SettingViewController.swift */; };
 		9DC6B638294968A000D3EF44 /* SettingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9DC6B636294968A000D3EF44 /* SettingViewController.xib */; };
+		9DCB99D42952FCD4006C8014 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DCB99D32952FCD4006C8014 /* SceneDelegate.swift */; };
 		9DE2BB4C29417C6E002731D3 /* ListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DE2BB4B29417C6E002731D3 /* ListPresenter.swift */; };
 		9DE2BB4E294191AA002731D3 /* DetailPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DE2BB4D294191AA002731D3 /* DetailPresenter.swift */; };
 		9DE2BB5529419887002731D3 /* NavigationTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DE2BB5329419887002731D3 /* NavigationTitleView.swift */; };
@@ -87,7 +87,6 @@
 		9D703C82294AA92E00CCF2D7 /* MessageView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageView.xib; sourceTree = "<group>"; };
 		9DA5E87429405228001CABB8 /* ChatApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChatApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9DA5E87729405228001CABB8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		9DA5E87929405228001CABB8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		9DA5E8802940522A001CABB8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9DA5E8832940522A001CABB8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9DA5E8852940522A001CABB8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -105,6 +104,8 @@
 		9DC40F612949CA9A00A763B9 /* ChangePassworPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePassworPresenter.swift; sourceTree = "<group>"; };
 		9DC6B635294968A000D3EF44 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		9DC6B636294968A000D3EF44 /* SettingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingViewController.xib; sourceTree = "<group>"; };
+		9DCB99D32952FCD4006C8014 /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		9DCE18972952D5F500F1B99D /* ChatApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ChatApp.entitlements; sourceTree = "<group>"; };
 		9DE2BB4B29417C6E002731D3 /* ListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListPresenter.swift; sourceTree = "<group>"; };
 		9DE2BB4D294191AA002731D3 /* DetailPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPresenter.swift; sourceTree = "<group>"; };
 		9DE2BB5329419887002731D3 /* NavigationTitleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationTitleView.swift; sourceTree = "<group>"; };
@@ -232,7 +233,7 @@
 			isa = PBXGroup;
 			children = (
 				9DA5E87729405228001CABB8 /* AppDelegate.swift */,
-				9DA5E87929405228001CABB8 /* SceneDelegate.swift */,
+				9DCB99D32952FCD4006C8014 /* SceneDelegate.swift */,
 			);
 			path = AppDelegates;
 			sourceTree = "<group>";
@@ -304,6 +305,7 @@
 		9DA5E87629405228001CABB8 /* ChatApp */ = {
 			isa = PBXGroup;
 			children = (
+				9DCE18972952D5F500F1B99D /* ChatApp.entitlements */,
 				9D71B9272940675D006FD8C1 /* AppDelegates */,
 				9D71B92829406768006FD8C1 /* Models */,
 				9D71B9292940676E006FD8C1 /* Presenters */,
@@ -520,6 +522,7 @@
 			files = (
 				9DE2BB4C29417C6E002731D3 /* ListPresenter.swift in Sources */,
 				9DC6B637294968A000D3EF44 /* SettingViewController.swift in Sources */,
+				9DCB99D42952FCD4006C8014 /* SceneDelegate.swift in Sources */,
 				9D3532EE294082BD00F12230 /* LoginPresenter.swift in Sources */,
 				9D3532DD29406CBB00F12230 /* LoginViewController.swift in Sources */,
 				9DA5E87829405228001CABB8 /* AppDelegate.swift in Sources */,
@@ -547,7 +550,6 @@
 				9D116C21294AD47300D31250 /* ValidateService.swift in Sources */,
 				9DE2BB5529419887002731D3 /* NavigationTitleView.swift in Sources */,
 				9D383CF1294086D900769F0C /* ListViewController.swift in Sources */,
-				9DA5E87A29405228001CABB8 /* SceneDelegate.swift in Sources */,
 				9DB9BC1D2943328B00D6B049 /* MessageCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -687,13 +689,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
+				CODE_SIGN_ENTITLEMENTS = ChatApp/ChatApp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 795P89TRF6;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ChatApp/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UIRequiresFullScreen = NO;
 				INFOPLIST_KEY_UIStatusBarHidden = NO;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -720,13 +723,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
+				CODE_SIGN_ENTITLEMENTS = ChatApp/ChatApp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 795P89TRF6;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ChatApp/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UIRequiresFullScreen = NO;
 				INFOPLIST_KEY_UIStatusBarHidden = NO;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";

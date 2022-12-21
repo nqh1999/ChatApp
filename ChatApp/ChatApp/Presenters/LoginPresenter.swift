@@ -8,7 +8,7 @@
 import Foundation
 
 protocol LoginProtocol: AnyObject {
-    func didGetLoginResult(result: Bool, senderId: Int)
+    func didGetLoginResult(result: Bool, senderId: String)
 }
 
 class LoginPresenter {
@@ -37,7 +37,7 @@ class LoginPresenter {
         }
     }
     
-    func setState(_ id: Int) {
+    func setState(_ id: String) {
         self.service.setStateIsActive(id, true)
     }
     

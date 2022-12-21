@@ -6,6 +6,7 @@
 //
 
 import Firebase
+import FirebaseAuth
 
 class FirebaseService {
     // MARK: - Properties
@@ -15,10 +16,10 @@ class FirebaseService {
     private var users = [User]()
     
     // MARK: Register
-    func register(_ id: Int,_ name: String,_ username: String,_ password: String,_ imgUrl: String, completed: @escaping () -> Void) {
-        let docRef = self.db.collection(DBName.user).document("\(id)")
+    func register(_ name: String,_ username: String,_ password: String,_ imgUrl: String, completed: @escaping () -> Void) {
+        let docRef = self.db.collection(DBName.user).document(username)
         docRef.setData([
-            "id": id,
+            "id": username,
             "username": username,
             "password": password,
             "name": name,
@@ -74,7 +75,7 @@ class FirebaseService {
     
     
     // MARK: change avt
-    func changeAvt(_ id: Int,_ img: UIImage, completed: @escaping () -> Void) {
+    func changeAvt(_ id: String,_ img: UIImage, completed: @escaping () -> Void) {
         let img = img.jpegData(compressionQuality: 0.5)!
         let keyImg = NSUUID().uuidString
         let imgFolder = storage.child(DBName.imgAvt).child(keyImg)
@@ -82,21 +83,21 @@ class FirebaseService {
             guard err == nil else { return }
             imgFolder.downloadURL { [weak self] url, err in
                 guard err == nil, let url = url else { return }
-                self?.db.collection(DBName.user).document("\(id)").updateData(["imgUrl" : url.absoluteString])
+                self?.db.collection(DBName.user).document(id).updateData(["imgUrl" : url.absoluteString])
                 completed()
             }
         }
     }
     
     // MARK: change name
-    func changeName(_ id: Int,_ name: String, completed: @escaping () -> Void) {
-        self.db.collection(DBName.user).document("\(id)").updateData(["name": name])
+    func changeName(_ id: String,_ name: String, completed: @escaping () -> Void) {
+        self.db.collection(DBName.user).document(id).updateData(["name": name])
         completed()
     }
     
     // MARK: change password
-    func changePassword(_ id: Int,_ password: String, completed: @escaping () -> Void) {
-        self.db.collection(DBName.user).document("\(id)").updateData(["password": password])
+    func changePassword(_ id: String,_ password: String, completed: @escaping () -> Void) {
+        self.db.collection(DBName.user).document(id).updateData(["password": password])
         completed()
     }
     
@@ -110,6 +111,7 @@ class FirebaseService {
             "senderId": sender.id,
             "text": text,
             "img": "",
+            "ratio": 0,
             "time": Date.now.timeIntervalSince1970,
             "read": false,
             "reaction": "",
@@ -120,6 +122,7 @@ class FirebaseService {
     
     // MARK: send image
     func sendImg(_ img: UIImage,_ receiver: User,_ sender: User, completed: @escaping () -> Void) {
+        let ratio = img.size.width / img.size.height
         let img = img.jpegData(compressionQuality: 0.5)!
         let keyImg = NSUUID().uuidString
         let imgFolder = storage.child(DBName.imgMessage).child(keyImg)
@@ -135,6 +138,7 @@ class FirebaseService {
                     "senderId": sender.id,
                     "text": "",
                     "img": url.absoluteString,
+                    "ratio": ratio,
                     "time": Date.now.timeIntervalSince1970,
                     "read": false,
                     "reaction": "",
@@ -166,7 +170,7 @@ class FirebaseService {
     }
     
     // MARK: Set Delete Message
-    func setMessageDelete(_ senderId: Int, _ message: Message) {
+    func setMessageDelete(_ senderId: String, _ message: Message) {
         if senderId == message.senderId {
             self.db.collection(DBName.message).document(message.messageId).updateData([
                 "senderDeleted": true
@@ -194,7 +198,7 @@ class FirebaseService {
     }
     
     // MARK: Set User State
-    func setStateIsActive(_ id: Int, _ isActive: Bool) {
-        self.db.collection(DBName.user).document("\(id)").updateData(["isActive" : isActive])
+    func setStateIsActive(_ id: String, _ isActive: Bool) {
+        self.db.collection(DBName.user).document(id).updateData(["isActive" : isActive])
     }
 }

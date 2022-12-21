@@ -217,7 +217,12 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableView.automaticDimension
+        let message = self.presenter.getMessageBy(index: indexPath.row)
+        if message.text.isEmpty {
+            return 280/(message.ratio)
+        } else {
+            return UITableView.automaticDimension
+        }
     }
 }
 
