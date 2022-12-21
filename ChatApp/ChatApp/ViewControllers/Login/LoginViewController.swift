@@ -7,10 +7,9 @@
 
 import UIKit
 import FacebookLogin
+import FirebaseAuth
 
 class LoginViewController: BaseViewController {
-
-    
     
     // MARK: - Properties
     @IBOutlet private weak var loginButton: CustomButton!
@@ -27,12 +26,6 @@ class LoginViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupUI()
-//        self.loginFBButton.delegate = self
-        if let token = AccessToken.current, !token.isExpired {
-            // User is logged in, do work such as go to next view controller.
-        } else {
-//            self.loginFBButton.permissions = ["public_profile", "email"]
-        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -97,10 +90,21 @@ class LoginViewController: BaseViewController {
     }
     
     @IBAction private func loginWithFacebook(_ sender: Any) {
-        let mm = LoginManager()
-        mm.logIn(permissions: ["public_profile", "email"], viewController: self, completion: { result in
-            print("FBSDK: == \(result)")
-        })
+        let loginManager = LoginManager()
+        loginManager.logIn(permissions: [.email	], viewController: self) { result in
+            switch result {
+            case .success(granted: _, declined: _, token: let token):
+                let credential = FacebookAuthProvider.credential(withAccessToken: token.tokenString)
+                Auth.auth().signIn(with: credential) { result, _ in
+                    print("email")
+                }
+            case .cancelled:
+                break
+            case .failed(_):
+                break
+            }
+            
+        }
     }
     
     @IBAction private func loginWithInstagram(_ sender: Any) {
@@ -114,35 +118,6 @@ class LoginViewController: BaseViewController {
 }
 
 // MARK: - Extension
-
-extension LoginViewController {
-//    func loginButton(_ loginButton: FBLoginButton!, didCompleteWith result: LoginManagerLoginResult!, error: Error!) {
-//        print("User Logged In")
-//        if ((error) != nil)
-//        {
-//            // Process error
-//        }
-//        else if result.isCancelled {
-//            // Handle cancellations
-//        }
-//        else {
-//            // If you ask for multiple permissions at once, you
-//            // should check if specific permissions missing
-//            if result.grantedPermissions.contains("public_profile")
-//            {
-//                // Do work
-//            }
-//        }
-//    }
-
-    func loginButtonDidLogOut(_ loginButton: FBLoginButton!) {
-        print("User Logged Out")
-    }
-    
-    func loginButtonWillLogin(_ loginButton: FBLoginButton) -> Bool{
-        return true
-    }
-}
 extension LoginViewController: LoginProtocol {
     func didGetLoginResult(result: Bool, senderId: String) {
         self.messageView.isHidden = false
