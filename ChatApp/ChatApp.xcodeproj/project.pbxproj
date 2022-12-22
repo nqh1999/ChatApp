@@ -22,6 +22,7 @@
 		9D343AF629543BBB009FEC7F /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D343AF529543BBB009FEC7F /* Utils.swift */; };
 		9D343AF82954405B009FEC7F /* ZaloService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D343AF72954405B009FEC7F /* ZaloService.swift */; };
 		9D343AFA29545407009FEC7F /* FacebookService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D343AF929545407009FEC7F /* FacebookService.swift */; };
+		9D343AFC29545E27009FEC7F /* InstagramService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D343AFB29545E27009FEC7F /* InstagramService.swift */; };
 		9D3532DD29406CBB00F12230 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3532DB29406CBB00F12230 /* LoginViewController.swift */; };
 		9D3532DE29406CBB00F12230 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9D3532DC29406CBB00F12230 /* LoginViewController.xib */; };
 		9D3532E62940739300F12230 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3532E42940739300F12230 /* DetailViewController.swift */; };
@@ -77,6 +78,7 @@
 		9D343AF529543BBB009FEC7F /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		9D343AF72954405B009FEC7F /* ZaloService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZaloService.swift; sourceTree = "<group>"; };
 		9D343AF929545407009FEC7F /* FacebookService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacebookService.swift; sourceTree = "<group>"; };
+		9D343AFB29545E27009FEC7F /* InstagramService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstagramService.swift; sourceTree = "<group>"; };
 		9D3532DB29406CBB00F12230 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		9D3532DC29406CBB00F12230 /* LoginViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
 		9D3532E42940739300F12230 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
@@ -253,6 +255,7 @@
 				9D116C20294AD47300D31250 /* ValidateService.swift */,
 				9D343AF72954405B009FEC7F /* ZaloService.swift */,
 				9D343AF929545407009FEC7F /* FacebookService.swift */,
+				9D343AFB29545E27009FEC7F /* InstagramService.swift */,
 				137DAF9F294B5BEA003A0C26 /* Extensions.swift */,
 			);
 			path = Models;
@@ -555,6 +558,7 @@
 				9D383CF62940884600769F0C /* ListTableViewCell.swift in Sources */,
 				9DB9BC1C2943328B00D6B049 /* ImgCell.swift in Sources */,
 				9DC40F5E2949C98000A763B9 /* ChangePasswordViewController.swift in Sources */,
+				9D343AFC29545E27009FEC7F /* InstagramService.swift in Sources */,
 				9DC40F582949A19100A763B9 /* CustomButton.swift in Sources */,
 				9D703C81294AA92300CCF2D7 /* MessageView.swift in Sources */,
 				9D3532E92940788900F12230 /* Model.swift in Sources */,

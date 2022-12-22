@@ -170,7 +170,7 @@ final class DetailViewController: BaseViewController {
     }
     
     @IBAction func likeButtonTapped(_ sender: Any) {
-        self.presenter.sendMessage(Emoji.like)
+        self.presenter.sendMessage("👍")
     }
 }
 

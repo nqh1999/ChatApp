@@ -27,39 +27,39 @@ class ValidateService {
     // MARK: Check register data
     func checkRegisterData(_ users: [User], _ name: String,_ username: String,_ password: String, _ imgUrl: String, completed: (String?) -> Void) {
         if name.isEmpty {
-            completed(Error.nameIsEmpty)
+            completed("Name " + Constant.MESSAGE_IS_EMPTY)
             return
         }
         
         if username.isEmpty {
-            completed(Error.usernameIsEmpty)
+            completed("Username " + Constant.MESSAGE_IS_EMPTY)
             return
         }
         
         if password.isEmpty {
-            completed(Error.passwordIsEmpty)
+            completed("Password " + Constant.MESSAGE_IS_EMPTY)
             return
         }
         
         if imgUrl.isEmpty {
-            completed(Error.imgIsEmpty)
+            completed(Constant.MESSAGE_IMAGE_IS_EMPTY)
             return
         }
         
         if !username.isValidEmail {
-            completed(Error.invalidUsername)
+            completed(Constant.MESSAGE_INVALID + " Email")
             return
         }
         
         if password.count < 6 {
-            completed(Error.invalidPassword)
+            completed(Constant.MESSAGE_INVALID + " Password")
             return
         }
         
         if users.contains(where: { user in
             user.username == username
         }) {
-            completed(Error.usernameExist)
+            completed(Constant.MESSAGE_USERNAME_EXIST)
         } else {
             completed(nil)
         }
@@ -68,32 +68,32 @@ class ValidateService {
     // MARK: Check change password data
     func checkChangePasswordData(_ user: User, _ currentPassword: String, _ newPassword: String, _ reEnterNewPassword: String, completed: (String?) -> Void) {
         if currentPassword.isEmpty {
-            completed(Error.currentPasswordIsEmpty)
+            completed("Current Password " + Constant.MESSAGE_IS_EMPTY)
             return
         }
         
         if currentPassword != user.password {
-            completed(Error.passwordIncorrect)
+            completed(Constant.MESSAGE_INCORRECT)
             return
         }
         
         if newPassword.isEmpty {
-            completed(Error.newPasswordIsEmpty)
+            completed("New Password " + Constant.MESSAGE_IS_EMPTY)
             return
         }
         
         if reEnterNewPassword.isEmpty {
-            completed(Error.reEnterNewPasswordIsEmpty)
+            completed("Re-Enter Password " + Constant.MESSAGE_IS_EMPTY)
             return
         }
         
         if newPassword.count < 6 {
-            completed(Error.invalidPassword)
+            completed(Constant.MESSAGE_INVALID + " New Password")
             return
         }
         
         if newPassword != reEnterNewPassword {
-            completed(Error.passwordNotSame)
+            completed(Constant.MESSAGE_COMPARE_FAILED)
             return
         }
         
@@ -111,14 +111,14 @@ class ValidateService {
         }
         
         if username.isEmpty {
-            completed(Error.usernameIsEmpty, userId)
+            completed("Username " + Constant.MESSAGE_IS_EMPTY, userId)
         } else {
             if users.contains(where: { user in
                 user.username == username
             }) {
                 completed(nil, userId)
             } else {
-                completed(Error.invalidUsername, userId)
+                completed("Username " + Constant.MESSAGE_INVALID, userId)
             }
         }
     }

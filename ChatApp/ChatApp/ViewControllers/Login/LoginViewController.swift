@@ -6,11 +6,7 @@
 //
 
 import UIKit
-import FacebookLogin
-import FirebaseAuth
-import FacebookCore
-import FBSDKLoginKit
-import ZaloSDK
+import WebKit
 
 class LoginViewController: BaseViewController {
     
@@ -65,7 +61,7 @@ class LoginViewController: BaseViewController {
     }
     
     private func showListView(_ id: String) {
-        self.messageView.showMessage(Error.loginSuccess)
+        self.messageView.showMessage("Login " + Constant.MESSAGE_SUCCESS)
         self.messageView.confirm = { [weak self] _ in
             self?.presenter.setState(id)
             (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first?.rootViewController = UINavigationController(rootViewController: ListViewController(id))
@@ -97,20 +93,21 @@ class LoginViewController: BaseViewController {
     }
     
     @IBAction private func loginWithInstagram(_ sender: Any) {
-        print("loginWithInstagram")
+        
     }
     
     @IBAction private func loginWithZalo(_ sender: Any) {
         self.presenter.zaloLogin(self)
-    }    
+    }
 }
 
 // MARK: - Extension
+
 extension LoginViewController: LoginProtocol {
     func didGetLoginResult(result: Bool, senderId: String) {
         self.messageView.isHidden = false
         if !result {
-            self.messageView.showMessage(Error.loginFailed)
+            self.messageView.showMessage("Login " + Constant.MESSAGE_FAILED)
         } else {
             self.showListView(senderId)
         }

@@ -7,58 +7,24 @@
 
 import Foundation
 
-struct Emoji {
-    static let like = "👍"
-    static let heart = "❤️"
-    static let wow = "😮"
-    static let haha = "😆"
-    static let sad = "😢"
-    static let angry = "😠"
-}
-
-struct Error {
-    static let nameIsEmpty = "Fullname can't be blank"
-    static let usernameIsEmpty = "Username can't be blank"
-    static let passwordIsEmpty = "Password can't be blank"
-    static let currentPasswordIsEmpty = "Current password can't be blank"
-    static let newPasswordIsEmpty = "New password can't be blank"
-    static let reEnterNewPasswordIsEmpty = "You can re-enter new password"
-    static let imgIsEmpty = "Please choose your image"
-    static let invalidUsername = "Invalid username"
-    static let invalidPassword = "Invalid password"
-    static let passwordIncorrect = "Password is incorrect"
-    static let usernameIncorrect = "Username is incorrect"
-    static let passwordNotSame = "Re-entered password is incorrect"
-    static let usernameExist = "Username already exists"
-    static let loginSuccess = "Login success"
-    static let registerSuccess = "Register Success"
-    static let changePasswordSuccess = "Change password success"
-    static let loginFailed = "Login failed"
-}
-
-struct DBName {
-    static let user = "user"
-    static let message = "message"
-    static let imgMessage = "img_message"
-    static let imgAvt = "img_avt"
-}
-
 class Constant {
-
-    public static let EXT_INFO = [
-        "appVersion": "1.0.0",
-    ]
-    public static let ZALO_APP_ID = "997497054471494660"
-
+    static let EXT_INFO = ["appVersion": "1.0.0"]
+    static let ZALO_APP_ID = "997497054471494660"
+    
+    static let DB_USER = "user"
+    static let DB_MESSAGE = "message"
+    static let DB_IMAGE_MESSAGE = "img_message"
+    static let DB_IMAGE_AVATAR = "img_avt"
+    
+    static let MESSAGE_IS_EMPTY = "can't be blank"
+    static let MESSAGE_IMAGE_IS_EMPTY = "Please choose your image"
+    static let MESSAGE_INVALID = "Invalid"
+    static let MESSAGE_INCORRECT = "Incorrect"
+    static let MESSAGE_COMPARE_FAILED = "Re-entered password is incorrect"
+    static let MESSAGE_USERNAME_EXIST = "Username already exists"
+    static let MESSAGE_SUCCESS = "Success"
+    static let MESSAGE_FAILED = "Failed"
 }
-
-enum UserDefaultsKeys: String, CaseIterable {
-    case refreshToken = "refreshToken"
-    case accessToken = "accessToken"
-    case expriedTime = "expriedTime"
-}
-
-
 
 // MARK: User Model
 struct User {
