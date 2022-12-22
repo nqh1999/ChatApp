@@ -46,4 +46,10 @@ class LoginPresenter {
             self?.view?.didGetLoginResult(result: result, senderId: senderId)
         }
     }
+    
+    func facebookLogin(_ name: String,_ username: String, _ imgUrl: String) {
+        self.service.register(name, username,"", imgUrl) { [weak self] in
+            self?.view?.didGetLoginResult(result: true, senderId: username)
+        }
+    }
 }

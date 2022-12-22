@@ -8,6 +8,8 @@
 import UIKit
 import FacebookLogin
 import FirebaseAuth
+import FacebookCore
+import FBSDKLoginKit
 
 class LoginViewController: BaseViewController {
     
@@ -91,19 +93,19 @@ class LoginViewController: BaseViewController {
     
     @IBAction private func loginWithFacebook(_ sender: Any) {
         let loginManager = LoginManager()
-        loginManager.logIn(permissions: [.email	], viewController: self) { result in
+        loginManager.logIn(permissions: [], viewController: self) { [weak self] result in
             switch result {
             case .success(granted: _, declined: _, token: let token):
-                let credential = FacebookAuthProvider.credential(withAccessToken: token.tokenString)
-                Auth.auth().signIn(with: credential) { result, _ in
-                    print("email")
-                }
-            case .cancelled:
-                break
-            case .failed(_):
+                let request = FBSDKLoginKit.GraphRequest(graphPath: "me", parameters: ["fields" : "email, name, picture"], tokenString: token.tokenString, version: nil, httpMethod: .get)
+                request.start(completionHandler: { [weak self] connection, result, err in
+                    guard let result = result as? NSDictionary else { return }
+                    guard let img = result["picture"] as? NSDictionary else { return }
+                    guard let data = img["data"] as? NSDictionary else { return }
+                    self?.presenter.facebookLogin(result["name"] as! String, result["id"] as! String, data["url"] as! String)
+                })
+            default:
                 break
             }
-            
         }
     }
     
