@@ -5,10 +5,11 @@
 //  Created by BeeTech on 07/12/2022.
 //
 
-import FirebaseCore
 import UIKit
 import FacebookCore
 import ZaloSDK
+import GoogleSignIn
+import FirebaseCore
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -30,6 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application( _ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
         ApplicationDelegate.shared.application(app, open: url, sourceApplication: options[UIApplication.OpenURLOptionsKey.sourceApplication] as? String, annotation: options[UIApplication.OpenURLOptionsKey.annotation])
+        GIDSignIn.sharedInstance.handle(url)
         return ZDKApplicationDelegate.sharedInstance().application(app, open: url, options: options)
     }
 }

@@ -92,8 +92,8 @@ class LoginViewController: BaseViewController {
         self.presenter.facebookLogin(self)
     }
     
-    @IBAction private func loginWithInstagram(_ sender: Any) {
-        
+    @IBAction private func loginWithGoogle(_ sender: Any) {
+        	
     }
     
     @IBAction private func loginWithZalo(_ sender: Any) {

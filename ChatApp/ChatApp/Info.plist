@@ -24,6 +24,14 @@
 				<string>zalo-997497054471494660</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.311903971068-t49gc6tmp0tg7umlhjmpj4mne9nrf1cp</string>
+			</array>
+		</dict>
 	</array>
 	<key>FacebookAppID</key>
 	<string>1577176559468537</string>

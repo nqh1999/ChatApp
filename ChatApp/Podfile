@@ -16,4 +16,5 @@ pod 'Firebase/Auth'
 pod 'FBSDKLoginKit'
 pod 'FacebookLogin'
 pod 'ZaloSDK'
+pod 'GoogleSignIn'
 end
