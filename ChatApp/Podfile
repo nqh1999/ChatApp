@@ -15,4 +15,5 @@ pod 'IQKeyboardManager'
 pod 'Firebase/Auth'
 pod 'FBSDKLoginKit'
 pod 'FacebookLogin'
+pod 'ZaloSDK'
 end

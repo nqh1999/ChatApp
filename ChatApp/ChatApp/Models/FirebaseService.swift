@@ -9,7 +9,9 @@ import Firebase
 import FirebaseAuth
 
 class FirebaseService {
+
     // MARK: - Properties
+    static let shared = FirebaseService()
     private var db = Firestore.firestore()
     private var storage = Storage.storage().reference()
     private var messages = [Message]()

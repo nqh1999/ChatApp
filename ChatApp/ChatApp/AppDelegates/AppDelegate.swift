@@ -8,12 +8,14 @@
 import FirebaseCore
 import UIKit
 import FacebookCore
+import ZaloSDK
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         FirebaseApp.configure()
+        ZaloSDK.sharedInstance().initialize(withAppId: Constant.ZALO_APP_ID)
         ApplicationDelegate.shared.application(
             application,
             didFinishLaunchingWithOptions: launchOptions
@@ -28,6 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application( _ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
         ApplicationDelegate.shared.application(app, open: url, sourceApplication: options[UIApplication.OpenURLOptionsKey.sourceApplication] as? String, annotation: options[UIApplication.OpenURLOptionsKey.annotation])
+        return ZDKApplicationDelegate.sharedInstance().application(app, open: url, options: options)
     }
 }
 

@@ -43,6 +43,23 @@ struct DBName {
     static let imgAvt = "img_avt"
 }
 
+class Constant {
+
+    public static let EXT_INFO = [
+        "appVersion": "1.0.0",
+    ]
+    public static let ZALO_APP_ID = "997497054471494660"
+
+}
+
+enum UserDefaultsKeys: String, CaseIterable {
+    case refreshToken = "refreshToken"
+    case accessToken = "accessToken"
+    case expriedTime = "expriedTime"
+}
+
+
+
 // MARK: User Model
 struct User {
     var id: String

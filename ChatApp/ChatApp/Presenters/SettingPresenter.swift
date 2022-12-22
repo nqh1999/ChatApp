@@ -17,7 +17,6 @@ class SettingPresenter {
     private weak var view: SettingProtocol?
     private var user: User?
     private var imgUrl: String = ""
-    private var service = FirebaseService()
     private var userId: String = ""
     
     // MARK: - Init
@@ -36,7 +35,7 @@ class SettingPresenter {
     
     // MARK: - Data Handler Methods
     func fetchUser(completed: @escaping (User?) -> Void) {
-        self.service.fetchUser { [weak self] users in
+        FirebaseService.shared.fetchUser { [weak self] users in
             guard let userId = self?.userId else { return }
             users.forEach { user in
                 if user.id == userId {
@@ -48,17 +47,17 @@ class SettingPresenter {
     }
     
     func setState() {
-        self.service.setStateIsActive(userId, false)
+        FirebaseService.shared.setStateIsActive(userId, false)
     }
     
     func setImgUrl(_ img: UIImage, completed: @escaping () -> Void) {
-        self.service.changeAvt(self.userId, img) {
+        FirebaseService.shared.changeAvt(self.userId, img) {
             completed()
         }
     }
     
     func changeName(_ name: String, completed: @escaping () -> Void) {
-        self.service.changeName(self.userId, name) {
+        FirebaseService.shared.changeName(self.userId, name) {
             completed()
         }
     }

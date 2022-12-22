@@ -9,6 +9,8 @@ import Foundation
 
 class ValidateService {
 
+    static let shared = ValidateService()
+    
     // MARK: Check login data
     func checkLogin(_ users: [User], _ username: String, _ password: String, completed: (Bool, String) -> Void) {
         var result: Bool = false

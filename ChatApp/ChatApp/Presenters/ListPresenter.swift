@@ -20,7 +20,6 @@ class ListPresenter {
     private var searchData = [User]()
     private var allMessage = [Message]()
     private var message: [String: Message] = [:]
-    private var service = FirebaseService()
     private var senderId: String = ""
     
     // MARK: - Init
@@ -47,7 +46,7 @@ class ListPresenter {
     }
     
     func setState(_ sender: User, _ receiver: User) {
-        self.service.setStateUnreadMessage(sender, receiver)
+        FirebaseService.shared.setStateUnreadMessage(sender, receiver)
     }
     
     func getSender() -> User? {
@@ -56,11 +55,12 @@ class ListPresenter {
     
     // MARK: - Data Handler Methods
     func fetchUser(completed: @escaping () -> Void) {
-        self.service.fetchUser { [weak self] users in
+        FirebaseService.shared.fetchUser { [weak self] users in
             self?.receivers.removeAll()
             self?.searchData.removeAll()
             users.forEach { user in
-                if user.id == self!.senderId {
+                guard let senderId = self?.senderId else { return }
+                if user.id == senderId {
                     self?.sender = user
                 } else {
                     self?.receivers.append(user)
@@ -74,7 +74,7 @@ class ListPresenter {
     
     func fetchMessage(completed: @escaping () -> Void) {
         self.message.removeAll()
-        self.service.fetchMessage { [weak self] messages in
+        FirebaseService.shared.fetchMessage { [weak self] messages in
             self?.receivers.forEach { receiver in
                 self?.allMessage.removeAll()
                 guard let senderId = self?.senderId else { return }

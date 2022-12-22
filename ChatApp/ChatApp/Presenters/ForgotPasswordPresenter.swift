@@ -15,8 +15,6 @@ class ForgotPasswordPresenter {
     
     // MARK: - Properties
     private weak var view: ForgotPasswordProtocol?
-    private var service = FirebaseService()
-    private var validateService = ValidateService()
     private var users = [User]()
     private var newPass: String = ""
     
@@ -27,18 +25,18 @@ class ForgotPasswordPresenter {
     
     // MARK: - Data Handler Methods
     func fetchUser() {
-        self.service.fetchUser { [weak self] users in
+        FirebaseService.shared.fetchUser { [weak self] users in
             self?.users = users
         }
     }
     
     func checkUsername(_ username: String) {
-        self.validateService.checkUsername(self.users, username) { [weak self] result, id in
+        ValidateService.shared.checkUsername(self.users, username) { [weak self] result, id in
             if let result = result {
                 self?.view?.didGetValidateUsernameResult(result: result, newPass: "")
             } else {
                 guard let newPass = self?.randomNameString() else { return }
-                self?.service.changePassword(id, newPass) {
+                FirebaseService.shared.changePassword(id, newPass) {
                     self?.view?.didGetValidateUsernameResult(result: nil, newPass: newPass)
                 }
             }
