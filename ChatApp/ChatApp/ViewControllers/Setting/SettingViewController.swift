@@ -70,10 +70,9 @@ final class SettingViewController: BaseViewController {
     
     private func changeName(_ name: String) {
         guard !name.isEmpty else { return }
-        self.presenter.changeName(name) { [weak self] in
-            self?.nameLabel.text = name
-            self?.messageView.isHidden = true
-        }
+        self.presenter.changeName(name)
+        self.nameLabel.text = name
+        self.messageView.isHidden = true
     }
     
     private func setImage(_ img: UIImage) {

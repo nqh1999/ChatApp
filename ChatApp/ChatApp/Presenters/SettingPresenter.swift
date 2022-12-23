@@ -48,6 +48,9 @@ class SettingPresenter {
     
     func setState() {
         FirebaseService.shared.setStateIsActive(userId, false)
+        FacebookService.shared.logout()
+        GoogleService.shared.logout()
+        ZaloService.shared.logout()
     }
     
     func setImgUrl(_ img: UIImage, completed: @escaping () -> Void) {
@@ -56,10 +59,8 @@ class SettingPresenter {
         }
     }
     
-    func changeName(_ name: String, completed: @escaping () -> Void) {
-        FirebaseService.shared.changeName(self.userId, name) {
-            completed()
-        }
+    func changeName(_ name: String) {
+        FirebaseService.shared.changeName(self.userId, name)
     }
 }
 

@@ -47,14 +47,28 @@ class LoginPresenter {
     
     func facebookLogin(_ vc: LoginViewController) {
         FacebookService.shared.login(vc) { [weak self] name, id, url in
-            FirebaseService.shared.register(name, id,"", url) { [weak self] in
-                self?.view?.didGetLoginResult(result: true, senderId: id)
-            }
+            self?.register(name, id, url)
         }
     }
     
     func zaloLogin(_ vc: LoginViewController) {
         ZaloService.shared.login(vc) { [weak self] name, id, url in
+            self?.register(name, id, url)
+        }
+    }
+    
+    func googleLogin(_ vc: LoginViewController) {
+        GoogleService.shared.login(vc) { [weak self] name, id, url in
+            self?.register(name, id, url)
+        }
+    }
+    
+    private func register(_ name: String, _ id: String, _ url: String) {
+        if users.contains(where: { user in
+            user.id == id
+        }) {
+            self.view?.didGetLoginResult(result: true, senderId: id)
+        } else {
             FirebaseService.shared.register(name, id, "", url) { [weak self] in
                 self?.view?.didGetLoginResult(result: true, senderId: id)
             }

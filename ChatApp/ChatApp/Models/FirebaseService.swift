@@ -29,6 +29,7 @@ class FirebaseService {
         ])
         completed()
     }
+    
     // MARK: Fetch User
     func fetchUser(completed: @escaping ([User]) -> Void) {
         self.db.collection(Constant.DB_USER).addSnapshotListener { [weak self] querySnapshot, err in
@@ -92,9 +93,8 @@ class FirebaseService {
     }
     
     // MARK: change name
-    func changeName(_ id: String,_ name: String, completed: @escaping () -> Void) {
+    func changeName(_ id: String,_ name: String) {
         self.db.collection(Constant.DB_USER).document(id).updateData(["name": name])
-        completed()
     }
     
     // MARK: change password

@@ -12,10 +12,11 @@ import FBSDKLoginKit
 import FirebaseAuth
 
 class FacebookService {
+    
     static let shared = FacebookService()
+    private let loginManager = LoginManager()
     
     func login(_ vc: LoginViewController, completed: @escaping (String, String, String) -> Void) {
-        let loginManager = LoginManager()
         loginManager.logIn(permissions: [], viewController: vc) { result in
             switch result {
             case .success(granted: _, declined: _, token: let token):
@@ -24,11 +25,22 @@ class FacebookService {
                     guard let result = result as? NSDictionary else { return }
                     guard let img = result["picture"] as? NSDictionary else { return }
                     guard let data = img["data"] as? NSDictionary else { return }
+                    print(result)
                     completed(result["name"] as! String, result["id"] as! String, data["url"] as! String)
                 })
             default:
                 break
             }
+        }
+    }
+    
+    func logout() {
+        loginManager.logOut()
+        let firebaseAuth = Auth.auth()
+        do {
+            try firebaseAuth.signOut()
+        } catch _ as NSError {
+            return
         }
     }
 }

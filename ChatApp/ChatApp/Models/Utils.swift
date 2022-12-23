@@ -63,3 +63,14 @@ public func generateCodeChallenge(codeVerifier: String?) -> String? {
 
     return challenge
 }
+
+public func randomNameString() -> String {
+    let c = Array("abcdefghjklmnpqrstuvwxyz12345789")
+    let k = UInt32(c.count)
+    var result = [Character](repeating: "-", count: 6)
+    for i in 0..<6 {
+        let r = Int(arc4random_uniform(k))
+        result[i] = c[r]
+    }
+    return String(result)
+}

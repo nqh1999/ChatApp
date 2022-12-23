@@ -12,7 +12,7 @@ class LoginViewController: BaseViewController {
     
     // MARK: - Properties
     @IBOutlet private weak var loginButton: CustomButton!
-    @IBOutlet private weak var registerButton: CustomButton!
+    @IBOutlet private weak var registerButton: UIButton!
     @IBOutlet private weak var forgotPasswordButton: UIButton!
     @IBOutlet private weak var showPasswordButton: UIButton!
     @IBOutlet private weak var userNameTf: BaseTextField!
@@ -93,7 +93,7 @@ class LoginViewController: BaseViewController {
     }
     
     @IBAction private func loginWithGoogle(_ sender: Any) {
-        	
+        self.presenter.googleLogin(self)
     }
     
     @IBAction private func loginWithZalo(_ sender: Any) {

@@ -12,17 +12,22 @@ class ZaloService {
     
     // MARK: - Properties
     static let shared = ZaloService()
-    var codeChallenage = ""
-    var codeVerifier = ""
+    private var codeChallenage = ""
+    private var codeVerifier = ""
     
     func login(_ vc: LoginViewController, completed: @escaping (String, String, String) -> Void) {
         self.codeVerifier = generateCodeVerifier() ?? ""
         self.codeChallenage = generateCodeChallenge(codeVerifier: self.codeVerifier) ?? ""
-        ZaloSDK.sharedInstance().authenticateZalo(with: ZAZAloSDKAuthenTypeViaZaloAppAndWebView, parentController: vc, codeChallenge: self.codeChallenage, extInfo: Constant.EXT_INFO) { (response) in
-            self.onAuthenticateComplete(with: response) { name, id, url in
+        ZaloSDK.sharedInstance().authenticateZalo(with: ZAZaloSDKAuthenTypeViaWebViewOnly, parentController: vc, codeChallenge: self.codeChallenage, extInfo: Constant.EXT_INFO) { [weak self] response in
+            
+            self?.onAuthenticateComplete(with: response) { name, id, url in
                 completed(name, id, url)
             }
         }
+    }
+    
+    func logout() {
+        ZaloSDK.sharedInstance().unauthenticate()
     }
     
     private func onAuthenticateComplete(with response: ZOOauthResponseObject?, completed: @escaping (String, String, String) -> Void) {
@@ -31,6 +36,8 @@ class ZaloService {
             self.getProfile(response.oauthCode) { name, id, url in
                 completed(name, id, url)
             }
+        } else {
+            return
         }
     }
 

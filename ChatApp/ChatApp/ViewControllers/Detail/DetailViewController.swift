@@ -98,9 +98,7 @@ final class DetailViewController: BaseViewController {
     
     private func sendMessage() {
         self.presenter.sendMessage(self.messageTf.text ?? "")
-        self.view.endEditing(true)
         self.messageTf.text = ""
-        self.messageTf.becomeFirstResponder()
         self.showLikeButton(true)
     }
     
@@ -155,7 +153,7 @@ final class DetailViewController: BaseViewController {
         }
     }
     
-    @IBAction func enterMessage(_ sender: UITextField) {
+    @IBAction private func enterMessage(_ sender: UITextField) {
         guard let text = sender.text else { return }
         self.showLikeButton(text.isEmpty)
     }
@@ -169,7 +167,7 @@ final class DetailViewController: BaseViewController {
         self.sendMessage()
     }
     
-    @IBAction func likeButtonTapped(_ sender: Any) {
+    @IBAction private func likeButtonTapped(_ sender: Any) {
         self.presenter.sendMessage("👍")
     }
 }

@@ -7,7 +7,8 @@
 
 import Foundation
 
-class Constant {
+// MARK: Constant
+struct Constant {
     static let EXT_INFO = ["appVersion": "1.0.0"]
     static let ZALO_APP_ID = "997497054471494660"
     

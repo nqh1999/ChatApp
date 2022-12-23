@@ -18,6 +18,7 @@ extension String {
 
 // MARK: - Extension Table View Cell
 extension UITableViewCell {
+    
     func setTimestamp(epochTime: Double) -> String {
         let currentDate = Date.now
         let epochDate = Date(timeIntervalSince1970: epochTime)
@@ -49,7 +50,7 @@ extension UITableViewCell {
         }
     }
 
-    func getMonthNameFromInt(month: Int) -> String {
+    private func getMonthNameFromInt(month: Int) -> String {
         switch month {
         case 1:
             return "Jan"
@@ -80,7 +81,7 @@ extension UITableViewCell {
         }
     }
     
-    func getDayOfWeekFromInt(weekDay: Int) -> String {
+    private func getDayOfWeekFromInt(weekDay: Int) -> String {
         switch weekDay {
         case 2:
             return "Mon"

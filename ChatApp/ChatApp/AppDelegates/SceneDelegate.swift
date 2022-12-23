@@ -5,7 +5,6 @@
 //  Created by BeeTech on 07/12/2022.
 //
 
-import FacebookCore
 import IQKeyboardManager
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
@@ -19,16 +18,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         self.window = window
         window.makeKeyAndVisible()
         IQKeyboardManager.shared().isEnabled = true
-    }
-    
-    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
-        guard let url = URLContexts.first?.url else { return }
-        ApplicationDelegate.shared.application(
-            UIApplication.shared,
-            open: url,
-            sourceApplication: nil,
-            annotation: [UIApplication.OpenURLOptionsKey.annotation]
-        )
     }
 }
 
