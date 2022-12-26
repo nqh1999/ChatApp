@@ -52,11 +52,12 @@ class FirebaseService {
                 let message = Message(message: document.data())
                 if message.senderDeleted && message.receiverDeleted {
                     self?.db.collection(Constant.DB_MESSAGE).document(message.messageId).delete()
+                } else {
+                    self?.messages.append(message)
+                    self?.messages = self?.messages.sorted {
+                        return $0.time < $1.time
+                    } ?? []
                 }
-                self?.messages.append(message)
-                self?.messages = self?.messages.sorted {
-                    return $0.time < $1.time
-                } ?? []
             }
             completed(self?.messages ?? [])
         }
@@ -157,20 +158,6 @@ class FirebaseService {
         self.db.collection(Constant.DB_MESSAGE).document(id).updateData(["reaction" : reaction])
     }
     
-    // MARK: set state from unread to read
-    func setStateUnreadMessage(_ sender: User, _ receiver: User) {
-        self.db.collection(Constant.DB_MESSAGE).whereField("read", isEqualTo: false).getDocuments { [weak self] querySnapshot, error in
-            guard let querySnapshot = querySnapshot else { return }
-            if error != nil { return }
-            querySnapshot.documents.forEach { document in
-                let message = Message(message: document.data())
-                if message.senderId == receiver.id && message.receiverId == sender.id {
-                    self?.setMessageState(id: message.messageId)
-                }
-            }
-        }
-    }
-    
     // MARK: Set Delete Message
     func setMessageDelete(_ senderId: String, _ message: Message) {
         if senderId == message.senderId {
@@ -188,13 +175,16 @@ class FirebaseService {
         }
     }
     
-    // MARK: set state is read when tap to new message
-    private func setMessageState(id: String) {
-        self.db.collection(Constant.DB_MESSAGE).whereField("messageId", isEqualTo: id).getDocuments { [weak self] (result, error) in
-            guard let result = result else { return }
+    // MARK: set state message
+    func setStateUnreadMessage(_ sender: User, _ receiver: User) {
+        self.db.collection(Constant.DB_MESSAGE).whereField("read", isEqualTo: false).getDocuments { [weak self] querySnapshot, error in
+            guard let querySnapshot = querySnapshot else { return }
             if error != nil { return }
-            result.documents.forEach { _ in
-                self?.db.collection(Constant.DB_MESSAGE).document(id).updateData(["read" : true])
+            querySnapshot.documents.forEach { document in
+                let message = Message(message: document.data())
+                if message.senderId == receiver.id && message.receiverId == sender.id {
+                    self?.db.collection(Constant.DB_MESSAGE).document(message.messageId).updateData(["read" : true])
+                }
             }
         }
     }

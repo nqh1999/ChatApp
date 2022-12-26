@@ -6,9 +6,8 @@
 //
 
 import UIKit
-import WebKit
 
-class LoginViewController: BaseViewController {
+final class LoginViewController: BaseViewController {
     
     // MARK: - Properties
     @IBOutlet private weak var loginButton: CustomButton!
@@ -60,14 +59,6 @@ class LoginViewController: BaseViewController {
         self.navigationController?.navigationBar.isHidden = true
     }
     
-    private func showListView(_ id: String) {
-        self.messageView.showMessage("Login " + Constant.MESSAGE_SUCCESS)
-        self.messageView.confirm = { [weak self] _ in
-            self?.presenter.setState(id)
-            (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first?.rootViewController = UINavigationController(rootViewController: ListViewController(id))
-        }
-    }
-    
     // MARK: - Button Action
     @IBAction private func checkLogin(_ sender: Any) {
         self.login()
@@ -109,7 +100,11 @@ extension LoginViewController: LoginProtocol {
         if !result {
             self.messageView.showMessage("Login " + Constant.MESSAGE_FAILED)
         } else {
-            self.showListView(senderId)
+            self.messageView.showMessage("Login " + Constant.MESSAGE_SUCCESS)
+            self.messageView.confirm = { [weak self] _ in
+                self?.presenter.setState(senderId)
+                (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first?.rootViewController = UINavigationController(rootViewController: ListViewController(senderId))
+            }
         }
     }
 }

@@ -22,10 +22,10 @@ class FacebookService {
             case .success(granted: _, declined: _, token: let token):
                 let request = FBSDKLoginKit.GraphRequest(graphPath: "me", parameters: ["fields" : "email, name, picture"], tokenString: token.tokenString, version: nil, httpMethod: .get)
                 request.start(completionHandler: { connection, result, err in
-                    guard let result = result as? NSDictionary else { return }
-                    guard let img = result["picture"] as? NSDictionary else { return }
-                    guard let data = img["data"] as? NSDictionary else { return }
-                    print(result)
+                    guard let result = result as? NSDictionary,
+                          let img = result["picture"] as? NSDictionary,
+                          let data = img["data"] as? NSDictionary
+                          else { return }
                     completed(result["name"] as! String, result["id"] as! String, data["url"] as! String)
                 })
             default:

@@ -20,12 +20,11 @@ class BaseViewController: UIViewController {
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor(named: "darkBlue") ?? UIColor.black, NSAttributedString.Key.font: UIFont(name: "futura-medium", size: 24) ?? UIFont.systemFont(ofSize: 24)
             ]
         self.navigationController?.navigationBar.backgroundColor = .white
-//        self.navigationController?.navigationBar.isTranslucent = false
     }
     
     // MARK: - Setting UI Methods
-    func getTitleView() -> NavigationTitleView {
-        return titleView
+    func setTitleView(_ user: User) {
+        self.titleView.setTitleView(with: user)
     }
     
     func setBackButton() {

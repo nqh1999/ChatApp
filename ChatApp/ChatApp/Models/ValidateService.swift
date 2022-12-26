@@ -60,9 +60,10 @@ class ValidateService {
             user.username == username
         }) {
             completed(Constant.MESSAGE_USERNAME_EXIST)
-        } else {
-            completed(nil)
+            return
         }
+        
+        completed(nil)
     }
     
     // MARK: Check change password data
@@ -98,28 +99,27 @@ class ValidateService {
         }
         
         completed(nil)
-        
     }
     
     // MARK: Check username
     func checkUsername(_ users: [User], _ username: String, completed: (String?, String) -> Void) {
         var userId: String = ""
-        users.forEach { user in
-            if user.username == username {
-                userId = user.id
-            }
-        }
+        userId = users.filter { user in
+            user.username == username
+        }.first?.id ?? ""
         
         if username.isEmpty {
             completed("Username " + Constant.MESSAGE_IS_EMPTY, userId)
-        } else {
-            if users.contains(where: { user in
-                user.username == username
-            }) {
-                completed(nil, userId)
-            } else {
-                completed("Username " + Constant.MESSAGE_INVALID, userId)
-            }
+            return
         }
+        
+        if users.contains(where: { user in
+            user.username == username
+        }) {
+            completed(nil, userId)
+            return
+        }
+        
+        completed("Username " + Constant.MESSAGE_INVALID, userId)
     }
 }

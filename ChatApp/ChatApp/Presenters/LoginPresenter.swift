@@ -68,10 +68,12 @@ class LoginPresenter {
             user.id == id
         }) {
             self.view?.didGetLoginResult(result: true, senderId: id)
-        } else {
-            FirebaseService.shared.register(name, id, "", url) { [weak self] in
-                self?.view?.didGetLoginResult(result: true, senderId: id)
-            }
+            return
         }
+        
+        FirebaseService.shared.register(name, id, "", url) { [weak self] in
+            self?.view?.didGetLoginResult(result: true, senderId: id)
+        }
+        
     }
 }

@@ -5,6 +5,7 @@
 //  Created by BeeTech on 07/12/2022.
 //
 
+import UIKit
 import SDWebImage
 
 final class ListViewController: BaseViewController {
@@ -46,7 +47,6 @@ final class ListViewController: BaseViewController {
         }
     }
     
-    // send data and go to detail view controller when click to row of table view
     private func goToDetailVCByIndex(index: Int) {
         guard let sender = self.presenter.getSender(), let receiver = self.presenter.getUserBy(index: index) else { return }
         self.navigationController?.pushViewController(DetailViewController(sender, receiver), animated: true)
@@ -90,7 +90,6 @@ final class ListViewController: BaseViewController {
         self.presenter.filterData(text: text)
         self.tableView.reloadData()
     }
-    
 }
 
 // MARK: - Extension

@@ -44,7 +44,7 @@ final class DetailViewController: BaseViewController {
     private func setupData() {
         UIView.animate(withDuration: 0, delay: 0) { [weak self] in
             self?.presenter.fetchUser { [weak self] user in
-                self?.getTitleView().setTitleView(with: user)
+                self?.setTitleView(user)
             }
             self?.presenter.fetchMessage { [weak self] in
                 self?.reloadData()
