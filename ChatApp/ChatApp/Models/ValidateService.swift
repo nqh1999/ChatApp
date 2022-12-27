@@ -27,17 +27,17 @@ class ValidateService {
     // MARK: Check register data
     func checkRegisterData(_ users: [User], _ name: String,_ username: String,_ password: String, _ imgUrl: String, completed: (String?) -> Void) {
         if name.isEmpty {
-            completed("Name " + Constant.MESSAGE_IS_EMPTY)
+            completed(Constant.MESSAGE_NAME_IS_EMPTY)
             return
         }
         
         if username.isEmpty {
-            completed("Username " + Constant.MESSAGE_IS_EMPTY)
+            completed(Constant.MESSAGE_USERNAME_IS_EMPTY)
             return
         }
         
         if password.isEmpty {
-            completed("Password " + Constant.MESSAGE_IS_EMPTY)
+            completed(Constant.MESSAGE_PASSWORD_IS_EMPTY)
             return
         }
         
@@ -47,12 +47,12 @@ class ValidateService {
         }
         
         if !username.isValidEmail {
-            completed(Constant.MESSAGE_INVALID + " Email")
+            completed(Constant.MESSAGE_INVALID_USERNAME)
             return
         }
         
         if password.count < 6 {
-            completed(Constant.MESSAGE_INVALID + " Password")
+            completed(Constant.MESSAGE_INVALID_PASSWORD)
             return
         }
         
@@ -69,7 +69,7 @@ class ValidateService {
     // MARK: Check change password data
     func checkChangePasswordData(_ user: User, _ currentPassword: String, _ newPassword: String, _ reEnterNewPassword: String, completed: (String?) -> Void) {
         if currentPassword.isEmpty {
-            completed("Current Password " + Constant.MESSAGE_IS_EMPTY)
+            completed(Constant.MESSAGE_CURRENT_PASSWORD_IS_EMPTY)
             return
         }
         
@@ -79,17 +79,17 @@ class ValidateService {
         }
         
         if newPassword.isEmpty {
-            completed("New Password " + Constant.MESSAGE_IS_EMPTY)
+            completed(Constant.MESSAGE_NEW_PASSWORD_IS_EMPTY)
             return
         }
         
         if reEnterNewPassword.isEmpty {
-            completed("Re-Enter Password " + Constant.MESSAGE_IS_EMPTY)
+            completed(Constant.MESSAGE_RE_ENTER_PASSWORD_IS_EMPTY)
             return
         }
         
         if newPassword.count < 6 {
-            completed(Constant.MESSAGE_INVALID + " New Password")
+            completed(Constant.MESSAGE_INVALID_NEW_PASSWORD)
             return
         }
         
@@ -109,7 +109,7 @@ class ValidateService {
         }.first?.id ?? ""
         
         if username.isEmpty {
-            completed("Username " + Constant.MESSAGE_IS_EMPTY, userId)
+            completed(Constant.MESSAGE_USERNAME_IS_EMPTY, userId)
             return
         }
         
@@ -120,6 +120,6 @@ class ValidateService {
             return
         }
         
-        completed("Username " + Constant.MESSAGE_INVALID, userId)
+        completed(Constant.MESSAGE_INVALID_USERNAME, userId)
     }
 }

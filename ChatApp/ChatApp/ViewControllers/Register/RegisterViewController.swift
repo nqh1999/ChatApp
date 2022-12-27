@@ -109,7 +109,7 @@ extension RegisterViewController: RegisterProtocol {
         if let result = result {
             self.messageView.showMessage(result)
         } else {
-            self.messageView.showMessage("Register " + Constant.MESSAGE_SUCCESS)
+            self.messageView.showMessage(Constant.MESSAGE_REGISTER_SUCCESS)
             self.messageView.confirm = { [weak self] _ in
                 self?.navigationController?.popToRootViewController(animated: true)
             }

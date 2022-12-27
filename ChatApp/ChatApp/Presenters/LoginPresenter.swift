@@ -74,6 +74,5 @@ class LoginPresenter {
         FirebaseService.shared.register(name, id, "", url) { [weak self] in
             self?.view?.didGetLoginResult(result: true, senderId: id)
         }
-        
     }
 }

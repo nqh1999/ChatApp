@@ -14,8 +14,8 @@ class ZaloService {
     static let shared = ZaloService()
     
     func login(_ vc: LoginViewController, completed: @escaping (String, String, String) -> Void) {
-        var codeVerifier = generateCodeVerifier() ?? ""
-        var codeChallenage = generateCodeChallenge(codeVerifier: codeVerifier) ?? ""
+        let codeVerifier = generateCodeVerifier() ?? ""
+        let codeChallenage = generateCodeChallenge(codeVerifier: codeVerifier) ?? ""
         ZaloSDK.sharedInstance().authenticateZalo(with: ZAZaloSDKAuthenTypeViaWebViewOnly, parentController: vc, codeChallenge: codeChallenage, extInfo: Constant.EXT_INFO) { response in
             guard let response = response, response.errorCode != -1001 else { return }
             if response.isSucess {
