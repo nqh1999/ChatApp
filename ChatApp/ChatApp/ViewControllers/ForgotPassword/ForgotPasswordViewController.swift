@@ -7,13 +7,13 @@
 
 import UIKit
 
-class ForgotPasswordViewController: BaseViewController {
+final class ForgotPasswordViewController: BaseViewController {
     
     // MARK: - Properties
     @IBOutlet private weak var usernameTf: BaseTextField!
     @IBOutlet private weak var cancelButton: UIButton!
     @IBOutlet private weak var resetPasswordButton: CustomButton!
-    @IBOutlet weak var messageView: MessageView!
+    @IBOutlet private weak var messageView: MessageView!
     lazy private var presenter = ForgotPasswordPresenter(view: self)
     
     // MARK: - Lifecycle Methods
@@ -36,7 +36,6 @@ class ForgotPasswordViewController: BaseViewController {
     
     // MARK: - UI Handler Methods
     private func setupUI() {
-        self.view.layer.contents = UIImage(named: "bgrLogin")?.cgImage
         self.navigationController?.navigationBar.isHidden = true
         self.usernameTf.shouldReturn = { [weak self] in
             self?.usernameTf.resignFirstResponder()

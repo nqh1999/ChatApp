@@ -33,7 +33,6 @@ class ListPresenter {
     }
     
     func getUserBy(index: Int) -> User? {
-        self.sortMessage()
         return self.searchData[index]
     }
     
@@ -93,14 +92,6 @@ class ListPresenter {
             }
             completed()
         }
-    }
-    
-    // sort by time
-    func sortMessage() {
-//        self.searchData = self.searchData.sorted {
-//            guard let preUser = self.message[$0.id], let nextUser = self.message[$1.id] else { return false }
-//            return preUser.time > nextUser.time
-//        }
     }
     
     func filterData(text: String) {

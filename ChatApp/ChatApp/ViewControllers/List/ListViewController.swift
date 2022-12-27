@@ -5,6 +5,7 @@
 //  Created by BeeTech on 07/12/2022.
 //
 
+import UIKit
 import SDWebImage
 
 final class ListViewController: BaseViewController {
@@ -23,11 +24,11 @@ final class ListViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.setupData()
+        self.tabBarController?.tabBar.isHidden = false
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.setSettingButton()
     }
     
     convenience init(_ id: String) {
@@ -46,7 +47,6 @@ final class ListViewController: BaseViewController {
         }
     }
     
-    // send data and go to detail view controller when click to row of table view
     private func goToDetailVCByIndex(index: Int) {
         guard let sender = self.presenter.getSender(), let receiver = self.presenter.getUserBy(index: index) else { return }
         self.navigationController?.pushViewController(DetailViewController(sender, receiver), animated: true)
@@ -77,20 +77,12 @@ final class ListViewController: BaseViewController {
         }
     }
     
-    // MARK: - Override Methods
-    @objc override func setting() {
-        super.setting()
-        guard let sender = self.presenter.getSender() else { return }
-        self.navigationController?.pushViewController(SettingViewController(sender.id), animated: true)
-    }
-    
     // search by name
     @IBAction private func search(_ sender: UITextField) {
         guard let text = sender.text else { return }
         self.presenter.filterData(text: text)
         self.tableView.reloadData()
     }
-    
 }
 
 // MARK: - Extension

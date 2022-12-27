@@ -17,14 +17,23 @@ struct Constant {
     static let DB_IMAGE_MESSAGE = "img_message"
     static let DB_IMAGE_AVATAR = "img_avt"
     
-    static let MESSAGE_IS_EMPTY = "can't be blank"
+    static let MESSAGE_USERNAME_IS_EMPTY = "Username can't be blank"
+    static let MESSAGE_PASSWORD_IS_EMPTY = "Password can't be blank"
+    static let MESSAGE_CURRENT_PASSWORD_IS_EMPTY = "Current password can't be blank"
+    static let MESSAGE_NEW_PASSWORD_IS_EMPTY = "New password can't be blank"
+    static let MESSAGE_RE_ENTER_PASSWORD_IS_EMPTY = "Password re-enter can't be blank"
+    static let MESSAGE_NAME_IS_EMPTY = "Name can't be blank"
     static let MESSAGE_IMAGE_IS_EMPTY = "Please choose your image"
-    static let MESSAGE_INVALID = "Invalid"
-    static let MESSAGE_INCORRECT = "Incorrect"
+    static let MESSAGE_INVALID_USERNAME = "Invalid username"
+    static let MESSAGE_INVALID_PASSWORD = "Invalid password"
+    static let MESSAGE_INVALID_NEW_PASSWORD = "Invalid new password"
+    static let MESSAGE_INCORRECT = "Current password incorrect"
     static let MESSAGE_COMPARE_FAILED = "Re-entered password is incorrect"
     static let MESSAGE_USERNAME_EXIST = "Username already exists"
-    static let MESSAGE_SUCCESS = "Success"
-    static let MESSAGE_FAILED = "Failed"
+    static let MESSAGE_LOGIN_SUCCESS = "Login success"
+    static let MESSAGE_LOGIN_FAILED = "Login failed"
+    static let MESSAGE_REGISTER_SUCCESS = "Register success"
+    static let MESSAGE_CHANGE_PASSWORD_SUCCESS = "Chang password success"
 }
 
 // MARK: User Model

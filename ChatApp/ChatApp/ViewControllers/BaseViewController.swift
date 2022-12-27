@@ -14,26 +14,21 @@ class BaseViewController: UIViewController {
     // MARK: - Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.layer.contents = UIImage(named: "bgr")?.cgImage
         self.navigationItem.titleView = titleView
         self.navigationController?.navigationBar.tintColor = UIColor(named: "darkBlue")
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor(named: "darkBlue") ?? UIColor.black, NSAttributedString.Key.font: UIFont(name: "futura-medium", size: 24) ?? UIFont.systemFont(ofSize: 24)
             ]
-        self.navigationController?.navigationBar.backgroundColor = .white
-//        self.navigationController?.navigationBar.isTranslucent = false
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification , object:nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification , object:nil)
     }
     
     // MARK: - Setting UI Methods
-    func getTitleView() -> NavigationTitleView {
-        return titleView
+    func setTitleView(_ user: User) {
+        self.titleView.setTitleView(with: user)
     }
     
     func setBackButton() {
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "arrow.left"), style: .plain, target: self, action: #selector(backToPreVC))
-    }
-    
-    func setSettingButton() {
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "gearshape.fill"), style: .plain, target: self, action: #selector(setting))
     }
     
     func setDeleteButton() {
@@ -41,11 +36,13 @@ class BaseViewController: UIViewController {
     }
     
     // MARK: - Action
-    @objc func deleteMessage() {}
-    
     @objc func backToPreVC() {
         self.navigationController?.popViewController(animated: true)
     }
     
-    @objc func setting() {}
+    @objc func deleteMessage() {}
+    
+    @objc func keyboardWillShow(_ notification: NSNotification) {}
+
+    @objc func keyboardWillHide(_ notification: NSNotification) {}
 }

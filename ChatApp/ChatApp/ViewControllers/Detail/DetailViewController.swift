@@ -20,6 +20,7 @@ final class DetailViewController: BaseViewController {
     @IBOutlet private weak var reactionView: ReactionView!
     @IBOutlet private weak var stackView: UIStackView!
     private var imgPickerView = UIImagePickerController()
+    @IBOutlet private weak var bottomConstraint: NSLayoutConstraint!
     lazy private var presenter = DetailPresenter(view: self)
     
     // MARK: - Lifecycle Methods
@@ -33,6 +34,7 @@ final class DetailViewController: BaseViewController {
         super.viewWillAppear(animated)
         self.setBackButton()
         self.setDeleteButton()
+        self.tabBarController?.tabBar.isHidden = true
     }
     
     convenience init(_ sender: User, _ receiver: User) {
@@ -44,7 +46,7 @@ final class DetailViewController: BaseViewController {
     private func setupData() {
         UIView.animate(withDuration: 0, delay: 0) { [weak self] in
             self?.presenter.fetchUser { [weak self] user in
-                self?.getTitleView().setTitleView(with: user)
+                self?.setTitleView(user)
             }
             self?.presenter.fetchMessage { [weak self] in
                 self?.reloadData()
@@ -107,9 +109,25 @@ final class DetailViewController: BaseViewController {
         self.sendButton.isHidden = isShow
     }
     
-    @objc private func tapToView() {
-        self.view.endEditing(true)
-        self.showReactionView(false)
+    private func scrollToBottom() {
+        DispatchQueue.main.async {
+            guard self.presenter.getNumberOfMessage() > 0 else { return }
+            let indexPath = IndexPath(row: self.presenter.getNumberOfMessage()-1, section: 0)
+            self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
+        }
+    }
+    
+    override func keyboardWillShow(_ notification: NSNotification) {
+        let keyboardHeight = (notification.userInfo![UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue.height
+        self.bottomConstraint.constant = keyboardHeight + 6
+        self.view.layoutIfNeeded()
+        self.scrollToBottom()
+    }
+    
+    override func keyboardWillHide(_ notification: NSNotification) {
+        self.bottomConstraint.constant = 10
+        self.view.layoutIfNeeded()
+        self.scrollToBottom()
     }
     
     // MARK: - UI Handler Methods
@@ -131,7 +149,7 @@ final class DetailViewController: BaseViewController {
         self.showReactionView(false)
     }
     
-    func showReactionView(_ isShow: Bool) {
+    private func showReactionView(_ isShow: Bool) {
         self.reactionView.isHidden = !isShow
         self.stackView.isHidden = isShow
     }
@@ -145,20 +163,17 @@ final class DetailViewController: BaseViewController {
         self.tableView.showsVerticalScrollIndicator = false
     }
     
-    private func scrollToBottom() {
-        DispatchQueue.main.async {
-            guard self.presenter.getNumberOfMessage() > 0 else { return }
-            let indexPath = IndexPath(row: self.presenter.getNumberOfMessage()-1, section: 0)
-            self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
-        }
+    @objc private func tapToView() {
+        self.view.endEditing(true)
+        self.showReactionView(false)
     }
     
+    // MARK: - Action Methods
     @IBAction private func enterMessage(_ sender: UITextField) {
         guard let text = sender.text else { return }
         self.showLikeButton(text.isEmpty)
     }
     
-    // MARK: - Button Action
     @IBAction private func chooseImg(_ sender: Any) {
         self.setupPickerView()
     }

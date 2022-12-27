@@ -34,7 +34,6 @@ class MessageView: UIView {
         self.messageTf.isHidden = true
         self.cancelButton.isHidden = true
         self.contentView.layer.borderWidth = 1
-        
     }
     
     @IBAction private func confirm(_ sender: Any) {

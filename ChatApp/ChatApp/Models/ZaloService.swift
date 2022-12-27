@@ -12,16 +12,14 @@ class ZaloService {
     
     // MARK: - Properties
     static let shared = ZaloService()
-    private var codeChallenage = ""
-    private var codeVerifier = ""
     
     func login(_ vc: LoginViewController, completed: @escaping (String, String, String) -> Void) {
-        self.codeVerifier = generateCodeVerifier() ?? ""
-        self.codeChallenage = generateCodeChallenge(codeVerifier: self.codeVerifier) ?? ""
-        ZaloSDK.sharedInstance().authenticateZalo(with: ZAZaloSDKAuthenTypeViaWebViewOnly, parentController: vc, codeChallenge: self.codeChallenage, extInfo: Constant.EXT_INFO) { [weak self] response in
+        let codeVerifier = generateCodeVerifier() ?? ""
+        let codeChallenage = generateCodeChallenge(codeVerifier: codeVerifier) ?? ""
+        ZaloSDK.sharedInstance().authenticateZalo(with: ZAZaloSDKAuthenTypeViaWebViewOnly, parentController: vc, codeChallenge: codeChallenage, extInfo: Constant.EXT_INFO) { response in
             guard let response = response, response.errorCode != -1001 else { return }
             if response.isSucess {
-                ZaloSDK.sharedInstance().getAccessToken(withOAuthCode: response.oauthCode, codeVerifier: self?.codeVerifier) { tokenResponse in
+                ZaloSDK.sharedInstance().getAccessToken(withOAuthCode: response.oauthCode, codeVerifier: codeVerifier) { tokenResponse in
                     guard let accessToken = tokenResponse?.accessToken else { return }
                     ZaloSDK.sharedInstance().getZaloUserProfile(withAccessToken: accessToken) { profile in
                         guard let profile = profile,
@@ -37,8 +35,6 @@ class ZaloService {
                         completed(name, id, url)
                     }
                 }
-            } else {
-                return
             }
         }
     }

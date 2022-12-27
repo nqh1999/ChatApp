@@ -37,11 +37,9 @@ class SettingPresenter {
     func fetchUser(completed: @escaping (User?) -> Void) {
         FirebaseService.shared.fetchUser { [weak self] users in
             guard let userId = self?.userId else { return }
-            users.forEach { user in
-                if user.id == userId {
-                    self?.user = user
-                }
-            }
+            self?.user = users.filter{ user in
+                user.id == userId
+            }.first
             completed(self?.user)
         }
     }

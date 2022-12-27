@@ -13,7 +13,6 @@ class ListTableViewCell: UITableViewCell {
     @IBOutlet private weak var avt: UIImageView!
     @IBOutlet private weak var messageLabel: UILabel!
     @IBOutlet private weak var nameLabel: UILabel!
-    @IBOutlet private weak var containerView: UIView!
     @IBOutlet private weak var timeLabel: UILabel!
     @IBOutlet private weak var notifyButton: UIButton!
     @IBOutlet private weak var stateButton: UIButton!
@@ -21,10 +20,7 @@ class ListTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         self.selectionStyle = .none
-        self.containerView.layer.cornerRadius = 10
-        self.containerView.layer.borderWidth = 1
         self.avt.layer.cornerRadius = avt.layer.frame.width / 2
-        self.avt.layer.borderWidth = 0.5
         self.notifyButton.layer.cornerRadius = self.notifyButton.frame.width / 2
         self.stateButton.layer.cornerRadius = self.stateButton.frame.width / 2
     }

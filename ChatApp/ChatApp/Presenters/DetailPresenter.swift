@@ -64,11 +64,7 @@ class DetailPresenter {
             self?.messages.removeAll()
             messages.forEach { message in
                 if (message.receiverId == receiver.id && message.senderId == sender.id) || (message.receiverId == sender.id && message.senderId == receiver.id) {
-                    if self?.sender?.id == message.senderId && !message.senderDeleted {
-                        self?.messages.append(message)
-                    }
-                    
-                    if self?.sender?.id == message.receiverId && !message.receiverDeleted {
+                    if (self?.sender?.id == message.senderId && !message.senderDeleted) || (self?.sender?.id == message.receiverId && !message.receiverDeleted) {
                         self?.messages.append(message)
                     }
                 }
