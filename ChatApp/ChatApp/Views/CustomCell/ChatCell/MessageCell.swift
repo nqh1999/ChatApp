@@ -28,7 +28,6 @@ class MessageCell: UITableViewCell {
         doubleTap.numberOfTapsRequired = 2
         self.messageLabel.layer.masksToBounds = true
         self.messageLabel.layer.cornerRadius = 10
-        self.messageLabel.layer.borderWidth = 0.2
         self.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(longPress(_:))))
         self.addGestureRecognizer(doubleTap)
         self.reactionLabel.layer.cornerRadius = 7
@@ -41,7 +40,7 @@ class MessageCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
-    private func setupData(_ message: Message) {
+    private func setupData(_ message: Message, _ isSender: Bool) {
         self.reaction = message.reaction
         self.messageLabel.text = message.text
         self.timeSend.text = self.setTimestamp(epochTime: message.time)
@@ -49,21 +48,26 @@ class MessageCell: UITableViewCell {
         self.reactionLabel.text = message.reaction
         self.reactionLabel.isHidden = message.reaction.isEmpty
         self.spaceView.isHidden = self.reactionLabel.isHidden
+        if message.text == "👍" {
+            self.messageLabel.backgroundColor = .clear
+            self.messageLabel.layer.borderWidth = 0
+        } else {
+            self.messageLabel.backgroundColor = isSender ? UIColor(named: "sendMessage") : UIColor(named: "receiveMessage")
+            self.messageLabel.layer.borderWidth = 0.2
+        }
+        self.stackView.alignment = isSender ? .trailing : .leading
+        self.messageLabel.textColor = isSender ? UIColor.white : UIColor.black
     }
     
     func setupSentMessage(_ message: Message) {
         self.isSender = true
-        self.setupData(message)
-        self.messageLabel.backgroundColor = UIColor(named: "lightGreen")
-        self.stackView.alignment = .trailing
+        self.setupData(message, self.isSender)
         self.contentView.addConstraint(NSLayoutConstraint(item: self.reactionLabel!, attribute: .trailing, relatedBy: .equal, toItem: self.messageLabel, attribute: .trailing, multiplier: 1, constant: 0))
     }
     
     func setupReceivedMessage(_ message: Message) {
         self.isSender = false
-        self.setupData(message)
-        self.messageLabel.backgroundColor = .white
-        self.stackView.alignment = .leading
+        self.setupData(message, self.isSender)
         self.contentView.addConstraint(NSLayoutConstraint(item: self.reactionLabel!, attribute: .leading, relatedBy: .equal, toItem: self.messageLabel, attribute: .trailing, multiplier: 1, constant: -self.reactionLabel.frame.width))
     }
     

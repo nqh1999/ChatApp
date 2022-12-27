@@ -40,10 +40,9 @@ final class SettingViewController: BaseViewController {
     
     // MARK: - UI Handler Methods
     private func setupUI() {
-        self.setBackButton()
         self.imgView.layer.cornerRadius = self.imgView.frame.width / 2
         self.imgView.layer.borderWidth = 2
-        self.imgView.layer.borderColor = UIColor.white.cgColor
+        self.imgView.layer.borderColor = UIColor.black.cgColor
         self.spinner.isHidden = true
         self.navigationItem.titleView = nil
         self.title = "Setting"

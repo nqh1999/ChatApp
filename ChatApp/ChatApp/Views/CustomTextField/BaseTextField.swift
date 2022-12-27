@@ -47,6 +47,20 @@ class BaseTextField: UITextField {
         self.layer.borderWidth = 0.25
         self.delegate = self
         self.font = UIFont(name: "futura-medium", size: 17)
+        self.addDoneButtonOnKeyboard()
+    }
+    
+    private func addDoneButtonOnKeyboard() {
+        let doneToolbar: UIToolbar = UIToolbar(frame: CGRectMake(0, 0, 320, 50))
+        let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let done: UIBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneButtonAction))
+        doneToolbar.items = [flexSpace, done]
+        doneToolbar.sizeToFit()
+        self.inputAccessoryView = doneToolbar
+    }
+
+    @objc private func doneButtonAction() {
+        self.resignFirstResponder()
     }
 }
 

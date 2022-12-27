@@ -5,11 +5,13 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="DetailViewController" customModule="ChatApp" customModuleProvider="target">
             <connections>
+                <outlet property="bottomConstraint" destination="X5Z-Yr-rAL" id="z6C-25-ngG"/>
                 <outlet property="imgButton" destination="4rx-QE-RFS" id="w6p-0W-XOY"/>
                 <outlet property="likeButton" destination="R6f-Xr-Ws9" id="cQI-sE-e0Y"/>
                 <outlet property="messageTf" destination="bkZ-Cr-xdC" id="9QO-G7-tLj"/>
@@ -28,38 +30,39 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="PlR-a4-pqC">
-                    <rect key="frame" x="15" y="10" width="384" height="871"/>
+                    <rect key="frame" x="15" y="58" width="384" height="789"/>
                     <subviews>
                         <tableView autoresizesSubviews="NO" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="sCK-1Z-WYS">
-                            <rect key="frame" x="0.0" y="0.0" width="384" height="751"/>
+                            <rect key="frame" x="0.0" y="0.0" width="384" height="669"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </tableView>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d0D-AI-Ohd" customClass="ReactionView" customModule="ChatApp" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="771" width="384" height="40"/>
+                            <rect key="frame" x="0.0" y="689" width="384" height="40"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="40" id="gQk-CX-R7U"/>
                             </constraints>
                         </view>
                         <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="GO0-2i-B6K">
-                            <rect key="frame" x="0.0" y="831" width="384" height="40"/>
+                            <rect key="frame" x="0.0" y="749" width="384" height="40"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rFF-GS-3v7">
-                                    <rect key="frame" x="0.0" y="0.0" width="30" height="40"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
                                     <constraints>
-                                        <constraint firstAttribute="width" constant="30" id="ocr-yV-QSc"/>
+                                        <constraint firstAttribute="width" constant="40" id="ocr-yV-QSc"/>
                                     </constraints>
-                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <color key="tintColor" systemColor="tintColor"/>
                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                    <state key="normal" title="" image="photo" catalog="system">
+                                    <state key="normal" title="" image="img">
                                         <attributedString key="attributedTitle"/>
                                     </state>
                                     <connections>
                                         <action selector="chooseImg:" destination="-1" eventType="touchUpInside" id="8EL-gY-CnU"/>
                                     </connections>
                                 </button>
-                                <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bkZ-Cr-xdC" customClass="BaseTextField" customModule="ChatApp" customModuleProvider="target">
-                                    <rect key="frame" x="38" y="0.0" width="270" height="40"/>
+                                <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Aa" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bkZ-Cr-xdC" customClass="BaseTextField" customModule="ChatApp" customModuleProvider="target">
+                                    <rect key="frame" x="48" y="0.0" width="260" height="40"/>
+                                    <color key="backgroundColor" white="0.92869183806335032" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="40" id="J9a-eP-HR8"/>
                                     </constraints>
@@ -74,9 +77,9 @@
                                     <constraints>
                                         <constraint firstAttribute="width" constant="30" id="tuI-iU-Vzw"/>
                                     </constraints>
-                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <color key="tintColor" systemColor="tintColor"/>
                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                    <state key="normal" image="paperplane.fill" catalog="system"/>
+                                    <state key="normal" image="send"/>
                                     <connections>
                                         <action selector="sendMessage:" destination="-1" eventType="touchUpInside" id="XUT-hh-IcC"/>
                                     </connections>
@@ -86,9 +89,9 @@
                                     <constraints>
                                         <constraint firstAttribute="width" constant="30" id="XCf-lW-gvL"/>
                                     </constraints>
-                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <color key="tintColor" systemColor="tintColor"/>
                                     <state key="normal" title="Button"/>
-                                    <buttonConfiguration key="configuration" style="plain" image="hand.thumbsup.fill" catalog="system"/>
+                                    <buttonConfiguration key="configuration" style="plain" image="like"/>
                                     <connections>
                                         <action selector="likeButtonTapped:" destination="-1" eventType="touchUpInside" id="XOK-IG-3DU"/>
                                     </connections>
@@ -100,12 +103,12 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UC4-Y9-uDI" customClass="MessageView" customModule="ChatApp" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                 </view>
-                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="mB8-nH-2Wa">
-                    <rect key="frame" x="197" y="375.66666666666669" width="20" height="20"/>
+                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="mB8-nH-2Wa">
+                    <rect key="frame" x="197" y="382.5" width="20" height="20"/>
                 </activityIndicatorView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
-            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="UC4-Y9-uDI" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="49b-7y-Q77"/>
                 <constraint firstItem="UC4-Y9-uDI" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="9Tb-5P-rMe"/>
@@ -122,8 +125,11 @@
         </view>
     </objects>
     <resources>
-        <image name="hand.thumbsup.fill" catalog="system" width="128" height="121"/>
-        <image name="paperplane.fill" catalog="system" width="128" height="119"/>
-        <image name="photo" catalog="system" width="128" height="93"/>
+        <image name="img" width="30" height="30"/>
+        <image name="like" width="30" height="30"/>
+        <image name="send" width="30" height="30"/>
+        <systemColor name="tintColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
     </resources>
 </document>

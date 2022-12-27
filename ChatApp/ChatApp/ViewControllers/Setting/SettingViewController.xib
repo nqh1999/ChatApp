@@ -14,7 +14,7 @@
                 <outlet property="chooseImageButton" destination="cQ9-Bv-Rf3" id="7pn-7L-lTi"/>
                 <outlet property="editName" destination="kiT-ic-S7B" id="1zy-Ne-luZ"/>
                 <outlet property="editProfileButton" destination="avp-JJ-ydz" id="OMh-D7-bfG"/>
-                <outlet property="imgView" destination="7XB-vs-m5T" id="gTm-JB-dPR"/>
+                <outlet property="imgView" destination="7XB-vs-m5T" id="Wo9-wD-bqu"/>
                 <outlet property="logoutButton" destination="f6U-Q2-D67" id="CSs-JQ-Uyl"/>
                 <outlet property="messageView" destination="jwR-8e-6Yx" id="GMn-k3-aQg"/>
                 <outlet property="nameLabel" destination="d7s-fu-2q1" id="51E-zZ-gRn"/>
@@ -33,7 +33,7 @@
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="KAG-pV-tJG">
                             <rect key="frame" x="0.0" y="0.0" width="280" height="166"/>
                             <subviews>
-                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bgr" translatesAutoresizingMaskIntoConstraints="NO" id="7XB-vs-m5T">
+                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7XB-vs-m5T">
                                     <rect key="frame" x="80" y="0.0" width="120" height="120"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="120" id="2VZ-v8-lcT"/>
@@ -46,7 +46,7 @@
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nguyen Quang Huy" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" translatesAutoresizingMaskIntoConstraints="NO" id="d7s-fu-2q1">
                                             <rect key="frame" x="0.0" y="0.0" width="222" height="34"/>
                                             <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="24"/>
-                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kiT-ic-S7B">
@@ -56,7 +56,7 @@
                                             </constraints>
                                             <state key="normal" title="Button"/>
                                             <buttonConfiguration key="configuration" style="plain" image="highlighter" catalog="system">
-                                                <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </buttonConfiguration>
                                             <connections>
                                                 <action selector="editName:" destination="-1" eventType="touchUpInside" id="4vU-Fv-X7I"/>
@@ -86,7 +86,7 @@
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xmU-P4-sdN" customClass="CustomButton" customModule="ChatApp" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="0.0" width="280" height="45"/>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <color key="backgroundColor" white="0.8439360119" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="45" id="hg0-zM-Rbq"/>
                                     </constraints>
@@ -123,7 +123,7 @@
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f6U-Q2-D67" customClass="CustomButton" customModule="ChatApp" customModuleProvider="target">
                     <rect key="frame" x="20" y="503" width="280" height="45"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="backgroundColor" white="0.8439360119" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="45" id="mOK-Cp-BBR"/>
                     </constraints>
@@ -136,7 +136,7 @@
                         <action selector="logout:" destination="-1" eventType="touchUpInside" id="VxS-8l-xnl"/>
                     </connections>
                 </button>
-                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="Bbo-a8-LeO">
+                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Bbo-a8-LeO">
                     <rect key="frame" x="150" y="80" width="20" height="20"/>
                 </activityIndicatorView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jwR-8e-6Yx" customClass="MessageView" customModule="ChatApp" customModuleProvider="target">
@@ -144,7 +144,7 @@
                 </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
-            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="Bbo-a8-LeO" firstAttribute="centerY" secondItem="7XB-vs-m5T" secondAttribute="centerY" id="3DT-iY-VVu"/>
                 <constraint firstItem="cQ9-Bv-Rf3" firstAttribute="leading" secondItem="7XB-vs-m5T" secondAttribute="trailing" constant="-35" id="6GI-wr-049"/>
@@ -165,7 +165,6 @@
         </view>
     </objects>
     <resources>
-        <image name="bgr" width="788" height="1024"/>
         <image name="camera.fill" catalog="system" width="128" height="93"/>
         <image name="highlighter" catalog="system" width="128" height="120"/>
     </resources>

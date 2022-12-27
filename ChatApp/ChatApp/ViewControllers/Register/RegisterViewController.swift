@@ -49,7 +49,6 @@ final class RegisterViewController: BaseViewController {
     
     // MARK: - UI Handler Methods
     private func setupUI() {
-        self.view.layer.contents = UIImage(named: "bgrLogin")?.cgImage
         self.navigationController?.navigationBar.isHidden = true
         self.chooseImgButton.layer.cornerRadius = 5
         self.avt.layer.borderWidth = 1
@@ -65,6 +64,7 @@ final class RegisterViewController: BaseViewController {
         }
         self.spinner.isHidden = true
         self.messageView.isHidden = true
+        self.avt.layer.borderWidth = 1
     }
     
     private func setupPickerView() {

@@ -44,7 +44,6 @@ final class LoginViewController: BaseViewController {
     
     // MARK: - UI Handler Methods
     private func setupUI() {
-        self.view.layer.contents = UIImage(named: "bgrLogin")?.cgImage
         self.userNameTf.text = "1@1.com"
         self.passwordTf.text = "123456"
         self.userNameTf.shouldReturn = { [weak self] in
@@ -53,7 +52,8 @@ final class LoginViewController: BaseViewController {
         self.passwordTf.shouldReturn = { [weak self] in
             self?.login()
         }
-        self.showPasswordButton.layer.cornerRadius = 2
+        self.showPasswordButton.layer.cornerRadius = 1
+        self.showPasswordButton.layer.borderWidth = 1
         self.passwordTf.setPass()
         self.messageView.isHidden = true
         self.navigationController?.navigationBar.isHidden = true
@@ -103,7 +103,16 @@ extension LoginViewController: LoginProtocol {
             self.messageView.showMessage(Constant.MESSAGE_LOGIN_SUCCESS)
             self.messageView.confirm = { [weak self] _ in
                 self?.presenter.setState(senderId)
-                (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first?.rootViewController = UINavigationController(rootViewController: ListViewController(senderId))
+                let tabBar = UITabBarController()
+                let listNav = UINavigationController(rootViewController: ListViewController(senderId))
+                let settingNav = UINavigationController(rootViewController: SettingViewController(senderId))
+                listNav.tabBarItem = UITabBarItem(title: "Chats", image: UIImage(systemName: "message.fill"), tag: 0)
+                settingNav.tabBarItem = UITabBarItem(title: "Setting", image: UIImage(systemName: "person.circle.fill"), tag: 1)
+                tabBar.setViewControllers([listNav, settingNav], animated: false)
+                tabBar.tabBar.tintColor = .blue
+                tabBar.tabBar.unselectedItemTintColor = .gray
+                (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first?.rootViewController =
+                tabBar
             }
         }
     }

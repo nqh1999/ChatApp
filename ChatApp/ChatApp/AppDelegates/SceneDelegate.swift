@@ -5,7 +5,7 @@
 //  Created by BeeTech on 07/12/2022.
 //
 
-import IQKeyboardManager
+import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -17,7 +17,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window.rootViewController = UINavigationController(rootViewController: LoginViewController())
         self.window = window
         window.makeKeyAndVisible()
-        IQKeyboardManager.shared().isEnabled = true
     }
 }
 

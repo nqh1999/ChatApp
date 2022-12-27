@@ -36,7 +36,6 @@ final class ForgotPasswordViewController: BaseViewController {
     
     // MARK: - UI Handler Methods
     private func setupUI() {
-        self.view.layer.contents = UIImage(named: "bgrLogin")?.cgImage
         self.navigationController?.navigationBar.isHidden = true
         self.usernameTf.shouldReturn = { [weak self] in
             self?.usernameTf.resignFirstResponder()

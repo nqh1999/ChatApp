@@ -24,11 +24,11 @@ final class ListViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.setupData()
+        self.tabBarController?.tabBar.isHidden = false
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.setSettingButton()
     }
     
     convenience init(_ id: String) {
@@ -75,13 +75,6 @@ final class ListViewController: BaseViewController {
         self.searchBar.shouldReturn = { [weak self] in
             self?.view.endEditing(true)
         }
-    }
-    
-    // MARK: - Override Methods
-    @objc override func setting() {
-        super.setting()
-        guard let sender = self.presenter.getSender() else { return }
-        self.navigationController?.pushViewController(SettingViewController(sender.id), animated: true)
     }
     
     // search by name
