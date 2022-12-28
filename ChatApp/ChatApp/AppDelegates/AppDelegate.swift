@@ -32,7 +32,4 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         GIDSignIn.sharedInstance.handle(url)
         return true
     }
-    
-    
 }
-

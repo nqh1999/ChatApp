@@ -14,6 +14,7 @@ final class DetailViewController: BaseViewController {
     @IBOutlet private weak var sendButton: UIButton!
     @IBOutlet private weak var likeButton: UIButton!
     @IBOutlet private weak var messageTf: BaseTextField!
+    @IBOutlet private weak var messageTextView: CustomTextView!
     @IBOutlet private weak var tableView: UITableView!
     @IBOutlet private weak var messageView: MessageView!
     @IBOutlet private weak var spinner: UIActivityIndicatorView!
@@ -35,6 +36,7 @@ final class DetailViewController: BaseViewController {
         self.setBackButton()
         self.setDeleteButton()
         self.tabBarController?.tabBar.isHidden = true
+        self.messageTextView.text = ""
     }
     
     convenience init(_ sender: User, _ receiver: User) {

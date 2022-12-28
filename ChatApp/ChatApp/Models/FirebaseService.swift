@@ -7,7 +7,6 @@
 
 import Firebase
 import FirebaseAuth
-
 class FirebaseService {
 
     // MARK: - Properties

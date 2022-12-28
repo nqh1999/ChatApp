@@ -37,6 +37,7 @@
 		9D383CFA29409A0900769F0C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9D383CF929409A0900769F0C /* GoogleService-Info.plist */; };
 		9D703C81294AA92300CCF2D7 /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D703C80294AA92300CCF2D7 /* MessageView.swift */; };
 		9D703C83294AA92E00CCF2D7 /* MessageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9D703C82294AA92E00CCF2D7 /* MessageView.xib */; };
+		9D8B6F7F295AF17D00B73971 /* CustomTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D8B6F7E295AF17D00B73971 /* CustomTextView.swift */; };
 		9DA5E87829405228001CABB8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA5E87729405228001CABB8 /* AppDelegate.swift */; };
 		9DA5E8812940522A001CABB8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9DA5E8802940522A001CABB8 /* Assets.xcassets */; };
 		9DA5E8842940522A001CABB8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9DA5E8822940522A001CABB8 /* LaunchScreen.storyboard */; };
@@ -93,6 +94,7 @@
 		9D383CF929409A0900769F0C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9D703C80294AA92300CCF2D7 /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
 		9D703C82294AA92E00CCF2D7 /* MessageView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageView.xib; sourceTree = "<group>"; };
+		9D8B6F7E295AF17D00B73971 /* CustomTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextView.swift; sourceTree = "<group>"; };
 		9DA5E87429405228001CABB8 /* ChatApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChatApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9DA5E87729405228001CABB8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9DA5E8802940522A001CABB8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -283,6 +285,7 @@
 				9DE2BB4F29419859002731D3 /* CustomView */,
 				9D383CF32940882500769F0C /* CustomCell */,
 				9D3532EA29407ACF00F12230 /* CustomTextField */,
+				9D8B6F7D295AF16600B73971 /* CustomTextView */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -294,6 +297,14 @@
 				9D383CF0294086D900769F0C /* ListViewController.xib */,
 			);
 			path = List;
+			sourceTree = "<group>";
+		};
+		9D8B6F7D295AF16600B73971 /* CustomTextView */ = {
+			isa = PBXGroup;
+			children = (
+				9D8B6F7E295AF17D00B73971 /* CustomTextView.swift */,
+			);
+			path = CustomTextView;
 			sourceTree = "<group>";
 		};
 		9DA5E86B29405228001CABB8 = {
@@ -534,6 +545,7 @@
 			files = (
 				9DE2BB4C29417C6E002731D3 /* ListPresenter.swift in Sources */,
 				9DC6B637294968A000D3EF44 /* SettingViewController.swift in Sources */,
+				9D8B6F7F295AF17D00B73971 /* CustomTextView.swift in Sources */,
 				9DCB99D42952FCD4006C8014 /* SceneDelegate.swift in Sources */,
 				9D3532EE294082BD00F12230 /* LoginPresenter.swift in Sources */,
 				9D3532DD29406CBB00F12230 /* LoginViewController.swift in Sources */,
