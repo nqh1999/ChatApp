@@ -8,6 +8,8 @@
 import UIKit
 
 class CustomTextView: UITextView {
+    
+    var didChange: ((String) -> Void)?
     var shouldReturn: (() -> Void)?
     
     override func awakeFromNib() {
@@ -31,19 +33,25 @@ class CustomTextView: UITextView {
     @objc private func doneButtonAction() {
         self.resignFirstResponder()
     }
+    
+    override func deleteBackward() {
+        super.deleteBackward()
+        self.layer.layoutIfNeeded()
+    }
 }
 
 extension CustomTextView: UITextViewDelegate {
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         if text == "\n" {
             self.resignFirstResponder()
+            self.shouldReturn?()
         }
         self.isScrollEnabled = !(self.contentSize.height <= 129)
         return true
     }
     
     func textViewDidChange(_ textView: UITextView) {
-        self.layoutSubviews()
+        self.didChange?(textView.text)
     }
 }
 

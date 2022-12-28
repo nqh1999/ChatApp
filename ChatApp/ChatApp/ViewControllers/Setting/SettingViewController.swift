@@ -59,11 +59,7 @@ final class SettingViewController: BaseViewController {
     // MARK: - Data Handler Methods
     private func setupData() {
         UIView.animate(withDuration: 0, delay: 0) { [weak self] in
-            self?.presenter.fetchUser() { [weak self] user in
-                guard let user = user else { return }
-                self?.imgView.sd_setImage(with: URL(string: user.imgUrl))
-                self?.nameLabel.text = user.name
-            }
+            self?.presenter.fetchUser()
         }
     }
     
@@ -75,10 +71,7 @@ final class SettingViewController: BaseViewController {
     }
     
     private func setImage(_ img: UIImage) {
-        self.presenter.setImgUrl(img) { [weak self] in
-            self?.imgView.image = img
-            self?.spinner.stopAnimating()
-        }
+        self.presenter.setImgUrl(img)
     }
     
     // MARK: - Button Action
@@ -125,5 +118,14 @@ extension SettingViewController: UIImagePickerControllerDelegate, UINavigationCo
 }
 
 extension SettingViewController: SettingProtocol {
+    func didGetSetImgResult(_ img: UIImage) {
+        self.imgView.image = img
+        self.spinner.stopAnimating()
+    }
     
+    func didGetFetchUserResult(_ user: User?) {
+        guard let user = user else { return }
+        self.imgView.sd_setImage(with: URL(string: user.imgUrl))
+        self.nameLabel.text = user.name
+    }
 }

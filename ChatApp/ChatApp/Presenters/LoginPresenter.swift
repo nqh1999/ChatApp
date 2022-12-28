@@ -23,11 +23,6 @@ class LoginPresenter {
         self.view = view
     }
     
-    // MARK: - Getter - setter
-    func getAllUser() -> [User] {
-        return self.users
-    }
-    
     // MARK: - Data Handler Methods
     func fetchUser() {
         FirebaseService.shared.fetchUser { [weak self] users in

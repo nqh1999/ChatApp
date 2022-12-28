@@ -9,6 +9,7 @@ import UIKit
 
 protocol RegisterProtocol: AnyObject {
     func didGetRegisterResult(result: String?)
+    func didGetSetImageResult(_ img: UIImage)
 }
 
 class RegisterPresenter {
@@ -17,6 +18,7 @@ class RegisterPresenter {
     private weak var view: RegisterProtocol?
     private var users = [User]()
     private var imgUrl: String = ""
+    
     // MARK: - Init
     init(view: RegisterProtocol) {
         self.view = view
@@ -29,10 +31,10 @@ class RegisterPresenter {
         }
     }
     
-    func setImgUrl(_ img: UIImage, completed: @escaping () -> Void) {
+    func setImgUrl(_ img: UIImage) {
         FirebaseService.shared.fetchAvtUrl(img: img) { [weak self] url in
             self?.imgUrl = url
-            completed()
+            self?.view?.didGetSetImageResult(img)
         }
     }
     

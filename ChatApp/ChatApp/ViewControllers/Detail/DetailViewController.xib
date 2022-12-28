@@ -15,7 +15,6 @@
                 <outlet property="imgButton" destination="4rx-QE-RFS" id="w6p-0W-XOY"/>
                 <outlet property="likeButton" destination="R6f-Xr-Ws9" id="cQI-sE-e0Y"/>
                 <outlet property="messageTextView" destination="zVC-wy-tlw" id="xSI-FO-xMH"/>
-                <outlet property="messageTf" destination="bkZ-Cr-xdC" id="9QO-G7-tLj"/>
                 <outlet property="messageView" destination="UC4-Y9-uDI" id="fBo-e3-Zxk"/>
                 <outlet property="reactionView" destination="d0D-AI-Ohd" id="gRN-z7-BFs"/>
                 <outlet property="sendButton" destination="4rx-QE-RFS" id="qlm-n9-CWN"/>

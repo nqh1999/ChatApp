@@ -8,7 +8,8 @@
 import UIKit
 
 protocol SettingProtocol: AnyObject {
-    
+    func didGetFetchUserResult(_ user: User?)
+    func didGetSetImgResult(_ img: UIImage)
 }
 
 class SettingPresenter {
@@ -34,13 +35,13 @@ class SettingPresenter {
     }
     
     // MARK: - Data Handler Methods
-    func fetchUser(completed: @escaping (User?) -> Void) {
+    func fetchUser() {
         FirebaseService.shared.fetchUser { [weak self] users in
             guard let userId = self?.userId else { return }
             self?.user = users.filter{ user in
                 user.id == userId
             }.first
-            completed(self?.user)
+            self?.view?.didGetFetchUserResult(self?.user)
         }
     }
     
@@ -51,9 +52,9 @@ class SettingPresenter {
         ZaloService.shared.logout()
     }
     
-    func setImgUrl(_ img: UIImage, completed: @escaping () -> Void) {
-        FirebaseService.shared.changeAvt(self.userId, img) {
-            completed()
+    func setImgUrl(_ img: UIImage) {
+        FirebaseService.shared.changeAvt(self.userId, img) { [weak self] in
+            self?.view?.didGetSetImgResult(img)
         }
     }
     

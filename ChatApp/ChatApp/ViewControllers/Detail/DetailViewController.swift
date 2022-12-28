@@ -13,7 +13,6 @@ final class DetailViewController: BaseViewController {
     @IBOutlet private weak var imgButton: UIButton!
     @IBOutlet private weak var sendButton: UIButton!
     @IBOutlet private weak var likeButton: UIButton!
-    @IBOutlet private weak var messageTf: BaseTextField!
     @IBOutlet private weak var messageTextView: CustomTextView!
     @IBOutlet private weak var tableView: UITableView!
     @IBOutlet private weak var messageView: MessageView!
@@ -47,12 +46,8 @@ final class DetailViewController: BaseViewController {
     // MARK: - Data Handler Methods
     private func setupData() {
         UIView.animate(withDuration: 0, delay: 0) { [weak self] in
-            self?.presenter.fetchUser { [weak self] user in
-                self?.setTitleView(user)
-            }
-            self?.presenter.fetchMessage { [weak self] in
-                self?.reloadData()
-            }
+            self?.presenter.fetchUser()
+            self?.presenter.fetchMessage()
         }
     }
     
@@ -91,18 +86,13 @@ final class DetailViewController: BaseViewController {
         self.messageView.confirm = { [weak self] _ in
             self?.spinner.isHidden = false
             self?.spinner.startAnimating()
-            self?.presenter.deleteAllMessage { [weak self] in
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
-                    self?.tableView.reloadData()
-                    self?.spinner.stopAnimating()
-                }
-            }
+            self?.presenter.deleteAllMessage()
         }
     }
     
     private func sendMessage() {
-        self.presenter.sendMessage(self.messageTf.text ?? "")
-        self.messageTf.text = ""
+        self.presenter.sendMessage(self.messageTextView.text ?? "")
+        self.messageTextView.text = ""
         self.showLikeButton(true)
     }
     
@@ -141,14 +131,17 @@ final class DetailViewController: BaseViewController {
     
     private func setupUI() {
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapToView)))
-        self.messageTf.shouldReturn = { [weak self] in
-            self?.sendMessage()
-        }
         self.setupTableView()
         self.spinner.isHidden = true
         self.messageView.isHidden = true
         self.showLikeButton(true)
         self.showReactionView(false)
+        self.messageTextView.didChange = { [weak self] text in
+            self?.showLikeButton(text.isEmpty)
+        }
+        self.messageTextView.shouldReturn = { [weak self] in
+            self?.sendMessage()
+        }
     }
     
     private func showReactionView(_ isShow: Bool) {
@@ -171,11 +164,6 @@ final class DetailViewController: BaseViewController {
     }
     
     // MARK: - Action Methods
-    @IBAction private func enterMessage(_ sender: UITextField) {
-        guard let text = sender.text else { return }
-        self.showLikeButton(text.isEmpty)
-    }
-    
     @IBAction private func chooseImg(_ sender: Any) {
         self.setupPickerView()
     }
@@ -193,9 +181,7 @@ final class DetailViewController: BaseViewController {
 extension DetailViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         let img = info[.originalImage] as! UIImage
-        self.presenter.sendImg(img) { [weak self] in
-            self?.spinner.stopAnimating()
-        }
+        self.presenter.sendImg(img)
         self.imgPickerView.dismiss(animated: true)
         self.spinner.isHidden = false
         self.spinner.startAnimating()
@@ -242,5 +228,24 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
 }
 
 extension DetailViewController: DetailProtocol {
+    func didGetFetchUserResult(_ user: User) {
+        self.setTitleView(user)
+    }
+    
+    func didGetFetchMessageResult() {
+        self.reloadData()
+    }
+    
+    func didGetDeleteMessageResult() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+            self?.tableView.reloadData()
+            self?.spinner.stopAnimating()
+        }
+    }
+    
+    func didGetSendImageResult() {
+        self.spinner.stopAnimating()
+    }
+    
    
 }

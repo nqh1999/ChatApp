@@ -8,7 +8,10 @@
 import UIKit
 
 protocol DetailProtocol: AnyObject {
-
+    func didGetFetchUserResult(_ user: User)
+    func didGetFetchMessageResult()
+    func didGetDeleteMessageResult()
+    func didGetSendImageResult()
 }
 
 class DetailPresenter {
@@ -47,18 +50,18 @@ class DetailPresenter {
     }
     
     // MARK: - Data Handler Methods
-    func fetchUser(completed: @escaping (User) -> Void) {
+    func fetchUser() {
         FirebaseService.shared.fetchUser { [weak self] users in
             guard let receiver = self?.receiver else { return }
             users.forEach { user in
                 if user.id == receiver.id {
-                    completed(user)
+                    self?.view?.didGetFetchUserResult(user)
                 }
             }
         }
     }
     
-    func fetchMessage(completed: @escaping () -> Void) {
+    func fetchMessage() {
         FirebaseService.shared.fetchMessage { [weak self] messages in
             guard let sender = self?.sender, let receiver = self?.receiver else { return }
             self?.messages.removeAll()
@@ -69,7 +72,7 @@ class DetailPresenter {
                     }
                 }
             }
-            completed()
+            self?.view?.didGetFetchMessageResult()
         }
     }
     
@@ -78,12 +81,12 @@ class DetailPresenter {
         FirebaseService.shared.setStateUnreadMessage(sender, receiver)
     }
     
-    func deleteAllMessage(_ completed: @escaping () -> Void) {
+    func deleteAllMessage() {
         guard let id = self.sender?.id else { return }
         self.messages.forEach { message in
             FirebaseService.shared.setMessageDelete(id, message)
         }
-        completed()
+        self.view?.didGetDeleteMessageResult()
     }
     
     func sendMessage(_ text: String) {
@@ -92,10 +95,10 @@ class DetailPresenter {
         FirebaseService.shared.sendMessage(text, receiver, sender)
     }
     
-    func sendImg(_ img: UIImage, completed: @escaping () -> Void) {
+    func sendImg(_ img: UIImage) {
         guard let receiver = self.receiver, let sender = self.sender else { return }
-        FirebaseService.shared.sendImg(img, receiver, sender) {
-            completed()
+        FirebaseService.shared.sendImg(img, receiver, sender) { [weak self] in
+            self?.view?.didGetSendImageResult()
         }
     }
     

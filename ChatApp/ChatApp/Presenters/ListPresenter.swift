@@ -8,7 +8,8 @@
 import Foundation
 
 protocol ListProtocol: AnyObject {
-    
+    func didGetFetchUserResult()
+    func didGetFetchMessageResult()
 }
 
 class ListPresenter {
@@ -53,7 +54,7 @@ class ListPresenter {
     }
     
     // MARK: - Data Handler Methods
-    func fetchUser(completed: @escaping () -> Void) {
+    func fetchUser() {
         FirebaseService.shared.fetchUser { [weak self] users in
             self?.receivers.removeAll()
             self?.searchData.removeAll()
@@ -67,11 +68,11 @@ class ListPresenter {
             }
             guard let receivers = self?.receivers else { return }
             self?.searchData = receivers
-            completed()
+            self?.view?.didGetFetchUserResult()
         }
     }
     
-    func fetchMessage(completed: @escaping () -> Void) {
+    func fetchMessage() {
         self.message.removeAll()
         FirebaseService.shared.fetchMessage { [weak self] messages in
             self?.receivers.forEach { receiver in
@@ -90,7 +91,7 @@ class ListPresenter {
                 }
                 self?.message[receiver.id] = self?.allMessage.last
             }
-            completed()
+            self?.view?.didGetFetchMessageResult()
         }
     }
     

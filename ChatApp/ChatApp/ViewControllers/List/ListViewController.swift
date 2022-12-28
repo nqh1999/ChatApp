@@ -39,11 +39,7 @@ final class ListViewController: BaseViewController {
     // MARK: - Data Handler Methods
     private func setupData() {
         UIView.animate(withDuration: 0, delay: 0) { [weak self] in
-            self?.presenter.fetchUser { [weak self] in
-                self?.presenter.fetchMessage { [weak self] in
-                    self?.tableView.reloadData()
-                }
-            }
+            self?.presenter.fetchUser()
         }
     }
     
@@ -109,5 +105,11 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
 }
 
 extension ListViewController: ListProtocol {
+    func didGetFetchUserResult() {
+        self.presenter.fetchMessage()
+    }
     
+    func didGetFetchMessageResult() {
+        self.tableView.reloadData()
+    }
 }

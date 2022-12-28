@@ -36,7 +36,7 @@ class ForgotPasswordPresenter {
                 self?.view?.didGetValidateUsernameResult(result: result, newPass: "")
             } else {
                 let newPass = randomNameString()
-                FirebaseService.shared.changePassword(id, newPass) {
+                FirebaseService.shared.changePassword(id, newPass) { [weak self] in
                     self?.view?.didGetValidateUsernameResult(result: nil, newPass: newPass)
                 }
             }

@@ -41,10 +41,7 @@ final class RegisterViewController: BaseViewController {
     }
     
     private func setImage(_ img: UIImage) {
-        self.presenter.setImgUrl(img) { [weak self] in
-            self?.avt.image = img
-            self?.spinner.stopAnimating()
-        }
+        self.presenter.setImgUrl(img)
     }
     
     // MARK: - UI Handler Methods
@@ -114,6 +111,11 @@ extension RegisterViewController: RegisterProtocol {
                 self?.navigationController?.popToRootViewController(animated: true)
             }
         }
+    }
+    
+    func didGetSetImageResult(_ img: UIImage) {
+        self.avt.image = img
+        self.spinner.stopAnimating()
     }
 }
 
