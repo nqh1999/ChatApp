@@ -21,6 +21,7 @@ final class DetailViewController: BaseViewController {
     @IBOutlet private weak var stackView: UIStackView!
     private var imgPickerView = UIImagePickerController()
     @IBOutlet private weak var bottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var heightConstraint: NSLayoutConstraint!
     lazy private var presenter = DetailPresenter(view: self)
     
     // MARK: - Lifecycle Methods
@@ -137,6 +138,13 @@ final class DetailViewController: BaseViewController {
         self.showLikeButton(true)
         self.showReactionView(false)
         self.messageTextView.didChange = { [weak self] text in
+            guard let contentHeight = self?.messageTextView.contentSize.height else { return }
+            if contentHeight < 130 {
+                self?.heightConstraint.constant = contentHeight
+            } else {
+                self?.heightConstraint.constant = 130
+            }
+            self?.view.layoutIfNeeded()
             self?.showLikeButton(text.isEmpty)
         }
         self.messageTextView.shouldReturn = { [weak self] in

@@ -28,15 +28,11 @@ class CustomTextView: UITextView {
         doneToolbar.items = [flexSpace, done]
         doneToolbar.sizeToFit()
         self.inputAccessoryView = doneToolbar
+        
     }
 
     @objc private func doneButtonAction() {
         self.resignFirstResponder()
-    }
-    
-    override func deleteBackward() {
-        super.deleteBackward()
-        self.layer.layoutIfNeeded()
     }
 }
 
@@ -46,7 +42,6 @@ extension CustomTextView: UITextViewDelegate {
             self.resignFirstResponder()
             self.shouldReturn?()
         }
-        self.isScrollEnabled = !(self.contentSize.height <= 129)
         return true
     }
     
