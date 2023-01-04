@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 final class LoginViewController: BaseViewController {
     
@@ -19,6 +21,7 @@ final class LoginViewController: BaseViewController {
     @IBOutlet private weak var messageView: MessageView!
     @IBOutlet private weak var loginFBButton: UIButton!
     lazy private var presenter = LoginPresenter(view: self)
+    lazy private var disposeBag = DisposeBag()
     
     // MARK: - Lifecycle Methods
     override func viewDidLoad() {
@@ -34,7 +37,6 @@ final class LoginViewController: BaseViewController {
     // MARK: - Data Handler Methods
     private func setupData() {
         self.presenter.fetchUser()
-        
     }
     
     private func login() {
@@ -46,12 +48,22 @@ final class LoginViewController: BaseViewController {
     private func setupUI() {
         self.userNameTf.text = "1@1.com"
         self.passwordTf.text = "123456"
-        self.userNameTf.shouldReturn = { [weak self] in
-            self?.passwordTf.becomeFirstResponder()
-        }
-        self.passwordTf.shouldReturn = { [weak self] in
-            self?.login()
-        }
+        self.userNameTf.rx
+            .controlEvent(.editingDidEndOnExit)
+            .asObservable()
+            .subscribe { [weak self] _ in
+                self?.passwordTf.becomeFirstResponder()
+            }
+            .disposed(by: disposeBag)
+        
+        self.passwordTf.rx
+            .controlEvent(.editingDidEndOnExit)
+            .asObservable()
+            .subscribe { [weak self] _ in
+                self?.login()
+            }
+            .disposed(by: disposeBag)
+        
         self.showPasswordButton.layer.cornerRadius = 1
         self.showPasswordButton.layer.borderWidth = 1
         self.passwordTf.setPass()

@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import RxSwift
+import RxRelay
 
 protocol LoginProtocol: AnyObject {
     func didGetLoginResult(result: Bool, senderId: String)
@@ -15,8 +17,11 @@ class LoginPresenter {
     
     // MARK: - Properties
     private weak var view: LoginProtocol?
+    private let userArr = BehaviorRelay<[User]>(value: [])
     private var users = [User]()
     private var newUser: User?
+    private let disposeBag = DisposeBag()
+    
     
     // MARK: - Init
     init(view: LoginProtocol) {
@@ -25,9 +30,13 @@ class LoginPresenter {
     
     // MARK: - Data Handler Methods
     func fetchUser() {
-        FirebaseService.shared.fetchUser { [weak self] users in
-            self?.users = users
-        }
+        Service.shared.fetchUsers()
+            .bind(to: self.userArr)
+            .disposed(by: disposeBag)
+        
+        self.userArr.subscribe(onNext: { users in
+            self.users = users
+        }).disposed(by: disposeBag)
     }
     
     func setState(_ id: String) {
@@ -41,21 +50,27 @@ class LoginPresenter {
     }
     
     func facebookLogin(_ vc: LoginViewController) {
-        FacebookService.shared.login(vc) { [weak self] name, id, url in
-            self?.register(name, id, url)
-        }
+        FacebookService.shared.login(vc)
+            .subscribe(onNext: { [weak self] name, id, url in
+                self?.register(name, id, url)
+            })
+            .disposed(by: disposeBag)
     }
     
     func zaloLogin(_ vc: LoginViewController) {
-        ZaloService.shared.login(vc) { [weak self] name, id, url in
-            self?.register(name, id, url)
-        }
+        ZaloService.shared.login(vc)
+            .subscribe(onNext: { [weak self] name, id, url in
+                self?.register(name, id, url)
+            })
+            .disposed(by: disposeBag)
     }
     
     func googleLogin(_ vc: LoginViewController) {
-        GoogleService.shared.login(vc) { [weak self] name, id, url in
-            self?.register(name, id, url)
-        }
+        GoogleService.shared.login(vc)
+            .subscribe(onNext: { [weak self] name, id, url in
+                self?.register(name, id, url)
+            })
+            .disposed(by: disposeBag)
     }
     
     private func register(_ name: String, _ id: String, _ url: String) {
@@ -66,8 +81,10 @@ class LoginPresenter {
             return
         }
         
-        FirebaseService.shared.register(name, id, "", url) { [weak self] in
-            self?.view?.didGetLoginResult(result: true, senderId: id)
-        }
+        Service.shared.register(name, id, "", url)
+            .subscribe(onCompleted: {
+                self.view?.didGetLoginResult(result: true, senderId: id)
+            })
+            .disposed(by: disposeBag)
     }
 }

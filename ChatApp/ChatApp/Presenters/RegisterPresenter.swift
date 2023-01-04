@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import RxSwift
+import RxRelay
 
 protocol RegisterProtocol: AnyObject {
     func didGetRegisterResult(result: String?)
@@ -18,6 +20,7 @@ class RegisterPresenter {
     private weak var view: RegisterProtocol?
     private var users = [User]()
     private var imgUrl: String = ""
+    private var disposeBag = DisposeBag()
     
     // MARK: - Init
     init(view: RegisterProtocol) {
@@ -26,16 +29,20 @@ class RegisterPresenter {
     
     // MARK: - Data Handler Methods
     func fetchUser() {
-        FirebaseService.shared.fetchUser { [weak self] users in
-            self?.users = users
-        }
+        Service.shared.fetchUsers()
+            .subscribe(onNext: { users in
+                self.users = users
+            })
+            .disposed(by: disposeBag)
     }
     
     func setImgUrl(_ img: UIImage) {
-        FirebaseService.shared.fetchAvtUrl(img: img) { [weak self] url in
-            self?.imgUrl = url
-            self?.view?.didGetSetImageResult(img)
-        }
+        Service.shared.fetchAvtUrl(img: img)
+            .subscribe(onNext: { [weak self] url in
+                self?.imgUrl = url
+                self?.view?.didGetSetImageResult(img)
+            })
+            .disposed(by: disposeBag)
     }
     
     func register(_ name: String,_ username: String,_ password: String) {
@@ -44,9 +51,11 @@ class RegisterPresenter {
                 self?.view?.didGetRegisterResult(result: result)
             } else {
                 guard let url = self?.imgUrl else { return }
-                FirebaseService.shared.register(name, username, password, url) { [weak self] in
-                    self?.view?.didGetRegisterResult(result: nil)
-                }
+                Service.shared.register(name, username, password, url)
+                    .subscribe(onCompleted: {
+                        self?.view?.didGetRegisterResult(result: nil)
+                    })
+                    .disposed(by: disposeBag)
             }
         }
     }

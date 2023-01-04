@@ -29,7 +29,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         ApplicationDelegate.shared.application(app, open: url, sourceApplication: options[UIApplication.OpenURLOptionsKey.sourceApplication] as? String, annotation: options[UIApplication.OpenURLOptionsKey.annotation])
         GIDSignIn.sharedInstance.handle(url)
         ZDKApplicationDelegate.sharedInstance().application(app, open: url, options: options)
-        GIDSignIn.sharedInstance.handle(url)
         return true
     }
 }
