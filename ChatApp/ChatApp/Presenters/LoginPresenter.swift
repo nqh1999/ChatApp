@@ -17,9 +17,7 @@ class LoginPresenter {
     
     // MARK: - Properties
     private weak var view: LoginProtocol?
-    private let userArr = BehaviorRelay<[User]>(value: [])
-    private var users = [User]()
-    private var newUser: User?
+    private var users = BehaviorRelay<[User]>(value: [])
     private let disposeBag = DisposeBag()
     
     
@@ -31,12 +29,8 @@ class LoginPresenter {
     // MARK: - Data Handler Methods
     func fetchUser() {
         Service.shared.fetchUsers()
-            .bind(to: self.userArr)
+            .bind(to: self.users)
             .disposed(by: disposeBag)
-        
-        self.userArr.subscribe(onNext: { users in
-            self.users = users
-        }).disposed(by: disposeBag)
     }
     
     func setState(_ id: String) {
@@ -44,9 +38,14 @@ class LoginPresenter {
     }
     
     func checkLogin(_ username: String, _ password: String) {
-        ValidateService.shared.checkLogin(users, username, password) { [weak self] result, senderId in
-            self?.view?.didGetLoginResult(result: result, senderId: senderId)
-        }
+        self.users
+            .subscribe { users in
+                ValidateService.shared.checkLogin(users, username, password) { [weak self] result, senderId in
+                    self?.view?.didGetLoginResult(result: result, senderId: senderId)
+                }
+            }
+            .disposed(by: disposeBag)
+        
     }
     
     func facebookLogin(_ vc: LoginViewController) {
@@ -74,17 +73,21 @@ class LoginPresenter {
     }
     
     private func register(_ name: String, _ id: String, _ url: String) {
-        if users.contains(where: { user in
-            user.id == id
-        }) {
-            self.view?.didGetLoginResult(result: true, senderId: id)
-            return
-        }
-        
-        Service.shared.register(name, id, "", url)
-            .subscribe(onCompleted: {
-                self.view?.didGetLoginResult(result: true, senderId: id)
-            })
+        self.users
+            .subscribe { [weak self] users in
+                if users.contains(where: { user in
+                    user.id == id
+                }) {
+                    self?.view?.didGetLoginResult(result: true, senderId: id)
+                    return
+                }
+                Service.shared.register(name, id, "", url)
+                    .subscribe(onCompleted: { [weak self] in
+                        self?.view?.didGetLoginResult(result: true, senderId: id)
+                    })
+                    .disposed(by: self?.disposeBag ?? DisposeBag())
+            }
             .disposed(by: disposeBag)
+        
     }
 }

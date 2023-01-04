@@ -7,6 +7,9 @@
 
 import UIKit
 import SDWebImage
+import RxSwift
+import RxCocoa
+import RxRelay
 
 final class ListViewController: BaseViewController {
     
@@ -14,6 +17,7 @@ final class ListViewController: BaseViewController {
     @IBOutlet private weak var searchBar: BaseTextField!
     @IBOutlet private weak var tableView: UITableView!
     lazy private var presenter = ListPresenter(view: self)
+    lazy private var disposeBag = DisposeBag()
     
     // MARK: - Lifecycle Methods
     override func viewDidLoad() {
@@ -38,15 +42,13 @@ final class ListViewController: BaseViewController {
     
     // MARK: - Data Handler Methods
     private func setupData() {
-        UIView.animate(withDuration: 0, delay: 0) { [weak self] in
-            self?.presenter.fetchUser()
-        }
+        self.presenter.fetchData()
     }
     
-    private func goToDetailVCByIndex(index: Int) {
-        guard let sender = self.presenter.getSender(), let receiver = self.presenter.getUserBy(index: index) else { return }
-        self.navigationController?.pushViewController(DetailViewController(sender, receiver), animated: true)
-    }
+//    private func goToDetailVCByIndex(index: Int) {
+//        guard let sender = self.presenter.getSender(), let receiver = self.presenter.getUserBy(index: index) else { return }
+//        self.navigationController?.pushViewController(DetailViewController(sender, receiver), animated: true)
+//    }
     
     // MARK: - UI Handler Methods
     private func setupUI() {
@@ -54,12 +56,11 @@ final class ListViewController: BaseViewController {
         self.setupSearchBar()
         self.navigationItem.titleView = nil
         self.title = "Chats"
+        self.presenter.searchUser(self.searchBar)
     }
     
     private func setupTableView() {
         self.tableView.register(UINib(nibName: "ListTableViewCell", bundle: .main), forCellReuseIdentifier: "cell")
-        self.tableView.delegate = self
-        self.tableView.dataSource = self
         self.tableView.separatorStyle = .none
         self.tableView.showsVerticalScrollIndicator = false
     }
@@ -82,34 +83,41 @@ final class ListViewController: BaseViewController {
 }
 
 // MARK: - Extension
-extension ListViewController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.presenter.getNumberOfUser()
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! ListTableViewCell
-        guard let user = self.presenter.getUserBy(index: indexPath.row) else { return cell}
-        cell.fillData(self.presenter.getUserBy(index: indexPath.row), self.presenter.getMessageBy(id: user.id))
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.goToDetailVCByIndex(index: indexPath.row)
-        guard let sender = self.presenter.getSender(), let receiver = self.presenter.getUserBy(index: indexPath.row) else { return }
-        guard let message = self.presenter.getMessageBy(id: receiver.id) else { return }
-        if message.receiverId == sender.id {
-            self.presenter.setState(sender, receiver)
-        }
-    }
-}
+//extension ListViewController: UITableViewDelegate, UITableViewDataSource {
+//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        return self.presenter.getNumberOfUser()
+//    }
+//
+//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! ListTableViewCell
+//        guard let user = self.presenter.getUserBy(index: indexPath.row) else { return cell}
+//        cell.fillData(self.presenter.getUserBy(index: indexPath.row), self.presenter.getMessageBy(id: user.id))
+//        return cell
+//    }
+//
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        self.goToDetailVCByIndex(index: indexPath.row)
+//        guard let sender = self.presenter.getSender(), let receiver = self.presenter.getUserBy(index: indexPath.row) else { return }
+//        guard let message = self.presenter.getMessageBy(id: receiver.id) else { return }
+//        if message.receiverId == sender.id {
+//            self.presenter.setState(sender, receiver)
+//        }
+//    }
+//}
 
 extension ListViewController: ListProtocol {
-    func didGetFetchUserResult() {
-        self.presenter.fetchMessage()
-    }
-    
-    func didGetFetchMessageResult() {
-        self.tableView.reloadData()
+    func didFetchData(_ receiver: PublishRelay<[User]>, _ message: PublishRelay<[String : Message]>) {
+        var mess = [String : Message]()
+        message.subscribe(onNext: {
+            mess = $0
+        }).disposed(by: self.disposeBag)
+        
+        
+        receiver.bind(to: tableView.rx.items(cellIdentifier: "cell", cellType: ListTableViewCell.self)) { (row, receiver, cell) in
+            
+            cell.fillData(receiver, mess[receiver.id])
+        }.disposed(by: self.disposeBag)
+        
+//        self.tableView.reloadData()
     }
 }

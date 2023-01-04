@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import RxSwift
 
 protocol ForgotPasswordProtocol: AnyObject {
     func didGetValidateUsernameResult(result: String?, newPass: String)
@@ -17,6 +18,7 @@ class ForgotPasswordPresenter {
     private weak var view: ForgotPasswordProtocol?
     private var users = [User]()
     private var newPass: String = ""
+    private let disposeBag = DisposeBag()
     
     // MARK: - Init
     init(view: ForgotPasswordProtocol) {
@@ -25,8 +27,12 @@ class ForgotPasswordPresenter {
     
     // MARK: - Data Handler Methods
     func fetchUser() {
-        FirebaseService.shared.fetchUser { [weak self] users in
-            self?.users = users
+        func fetchUser() {
+            Service.shared.fetchUsers()
+                .subscribe(onNext: { [weak self] users in
+                    self?.users = users
+                })
+                .disposed(by: disposeBag)
         }
     }
     
@@ -36,9 +42,11 @@ class ForgotPasswordPresenter {
                 self?.view?.didGetValidateUsernameResult(result: result, newPass: "")
             } else {
                 let newPass = randomNameString()
-                FirebaseService.shared.changePassword(id, newPass) { [weak self] in
-                    self?.view?.didGetValidateUsernameResult(result: nil, newPass: newPass)
-                }
+                Service.shared.changePassword(id, newPass)
+                    .subscribe(onCompleted: { [weak self] in
+                        self?.view?.didGetValidateUsernameResult(result: nil, newPass: newPass)
+                    })
+                    .disposed(by: disposeBag)
             }
         }
     }

@@ -18,7 +18,7 @@ class RegisterPresenter {
     
     // MARK: - Properties
     private weak var view: RegisterProtocol?
-    private var users = [User]()
+    private var users = BehaviorRelay<[User]>(value: [])
     private var imgUrl: String = ""
     private var disposeBag = DisposeBag()
     
@@ -30,10 +30,8 @@ class RegisterPresenter {
     // MARK: - Data Handler Methods
     func fetchUser() {
         Service.shared.fetchUsers()
-            .subscribe(onNext: { users in
-                self.users = users
-            })
-            .disposed(by: disposeBag)
+            .bind(to: self.users)
+            .disposed(by: self.disposeBag)
     }
     
     func setImgUrl(_ img: UIImage) {
@@ -42,21 +40,25 @@ class RegisterPresenter {
                 self?.imgUrl = url
                 self?.view?.didGetSetImageResult(img)
             })
-            .disposed(by: disposeBag)
+            .disposed(by: self.disposeBag)
     }
     
     func register(_ name: String,_ username: String,_ password: String) {
-        ValidateService.shared.checkRegisterData(self.users, name, username, password, self.imgUrl) { [weak self] result in
-            if let result = result {
-                self?.view?.didGetRegisterResult(result: result)
-            } else {
-                guard let url = self?.imgUrl else { return }
-                Service.shared.register(name, username, password, url)
-                    .subscribe(onCompleted: {
-                        self?.view?.didGetRegisterResult(result: nil)
-                    })
-                    .disposed(by: disposeBag)
+        self.users
+            .subscribe { [weak self] users in
+                guard let url = self?.imgUrl, let bag = self?.disposeBag else { return }
+                ValidateService.shared.checkRegisterData(users, name, username, password, url) { [weak self] result in
+                    if let result = result {
+                        self?.view?.didGetRegisterResult(result: result)
+                    } else {
+                        Service.shared.register(name, username, password, url)
+                            .subscribe(onCompleted: { [weak self] in
+                                self?.view?.didGetRegisterResult(result: nil)
+                            })
+                            .disposed(by: bag)
+                    }
+                }
             }
-        }
+            .disposed(by: self.disposeBag)
     }
 }

@@ -17,19 +17,31 @@ class Service {
     private var storage = Storage.storage().reference()
     
     func fetchUsers() -> Observable<[User]> {
-        return Observable.create { observer in
-            let listener = self.db.collection(Constant.DB_USER).addSnapshotListener { snapshot, error in
-                guard let snapshot = snapshot else {
+        return Observable.create { [weak self] observer in
+            self?.db.collection(Constant.DB_USER).addSnapshotListener { querySnapshot, error in
+                guard let querySnapshot = querySnapshot else {
                     observer.onError(error!)
                     return
                 }
-                let users = snapshot.documents.map { User(user: $0.data())}
+                let users = querySnapshot.documents.map { User(user: $0.data())}
                 observer.onNext(users)
             }
-            
-            return Disposables.create {
-                listener.remove()
+            return Disposables.create()
+        }
+    }
+    
+    func fetchMessage() -> Observable<[Message]> {
+        return Observable.create { [weak self] observer in
+            self?.db.collection(Constant.DB_MESSAGE).addSnapshotListener { querySnapshot, err in
+                guard let querySnapshot = querySnapshot, err == nil else { return }
+                let messages = querySnapshot.documents.map {
+                    Message(message: $0.data())
+                }.sorted {
+                    $0.time < $1.time
+                }
+                observer.onNext(messages)
             }
+            return Disposables.create()
         }
     }
     
@@ -57,12 +69,17 @@ class Service {
                 "password": password,
                 "name": name,
                 "imgUrl": imgUrl
-            ]) { error in
-                if let error = error {
-                    observer.onError(error)
-                } else {
-                    observer.onCompleted()
-                }
+            ]) { _ in
+                observer.onCompleted()
+            }
+            return Disposables.create()
+        }
+    }
+    
+    func changePassword(_ id: String,_ password: String) -> Observable<Void> {
+        return Observable.create { [weak self] observer in
+            self?.db.collection(Constant.DB_USER).document(id).updateData(["password": password]) { _ in
+                observer.onCompleted()
             }
             return Disposables.create()
         }
