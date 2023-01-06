@@ -28,7 +28,7 @@ class ForgotPasswordPresenter {
     // MARK: - Data Handler Methods
     func fetchUser() {
         func fetchUser() {
-            Service.shared.fetchUsers()
+            FirebaseService.shared.fetchUser()
                 .subscribe(onNext: { [weak self] users in
                     self?.users = users
                 })
@@ -42,7 +42,7 @@ class ForgotPasswordPresenter {
                 self?.view?.didGetValidateUsernameResult(result: result, newPass: "")
             } else {
                 let newPass = randomNameString()
-                Service.shared.changePassword(id, newPass)
+                FirebaseService.shared.changePassword(id, newPass)
                     .subscribe(onCompleted: { [weak self] in
                         self?.view?.didGetValidateUsernameResult(result: nil, newPass: newPass)
                     })

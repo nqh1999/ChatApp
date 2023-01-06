@@ -21,6 +21,8 @@ class DetailPresenter {
     private var sender: User?
     private var receiver: User?
     private var messages = [Message]()
+    private var senderLastMessage = [String: String]()
+    private var receiverLastMessage = [String: String]()
     
     // MARK: - Init
     init(view: DetailProtocol) {
@@ -31,6 +33,9 @@ class DetailPresenter {
     func setData(_ sender: User,_ receiver: User) {
         self.sender = sender
         self.receiver = receiver
+        self.view?.didGetFetchUserResult(receiver)
+        self.senderLastMessage = sender.lastMessages
+        self.receiverLastMessage = receiver.lastMessages
     }
     
     func getNumberOfMessage() -> Int {
@@ -50,30 +55,19 @@ class DetailPresenter {
     }
     
     // MARK: - Data Handler Methods
-    func fetchUser() {
-        FirebaseService.shared.fetchUser { [weak self] users in
-            guard let receiver = self?.receiver else { return }
-            users.forEach { user in
-                if user.id == receiver.id {
-                    self?.view?.didGetFetchUserResult(user)
-                }
-            }
-        }
-    }
-    
     func fetchMessage() {
-        FirebaseService.shared.fetchMessage { [weak self] messages in
-            guard let sender = self?.sender, let receiver = self?.receiver else { return }
-            self?.messages.removeAll()
-            messages.forEach { message in
-                if (message.receiverId == receiver.id && message.senderId == sender.id) || (message.receiverId == sender.id && message.senderId == receiver.id) {
-                    if (self?.sender?.id == message.senderId && !message.senderDeleted) || (self?.sender?.id == message.receiverId && !message.receiverDeleted) {
-                        self?.messages.append(message)
-                    }
-                }
-            }
-            self?.view?.didGetFetchMessageResult()
-        }
+//        FirebaseService.shared.fetchMessage { [weak self] messages in
+//            guard let sender = self?.sender, let receiver = self?.receiver else { return }
+//            self?.messages.removeAll()
+//            messages.forEach { message in
+//                if (message.receiverId == receiver.id && message.senderId == sender.id) || (message.receiverId == sender.id && message.senderId == receiver.id) {
+//                    if (self?.sender?.id == message.senderId && !message.senderDeleted) || (self?.sender?.id == message.receiverId && !message.receiverDeleted) {
+//                        self?.messages.append(message)
+//                    }
+//                }
+//            }
+//            self?.view?.didGetFetchMessageResult()
+//        }
     }
     
     func setState() {
@@ -92,12 +86,12 @@ class DetailPresenter {
     func sendMessage(_ text: String) {
         guard let receiver = self.receiver, let sender = self.sender else { return }
         if text.isEmpty { return }
-        FirebaseService.shared.sendMessage(text, receiver, sender)
+        FirebaseService.shared.sendMessage(text, receiver, sender, self.senderLastMessage, self.receiverLastMessage)
     }
     
     func sendImg(_ img: UIImage) {
         guard let receiver = self.receiver, let sender = self.sender else { return }
-        FirebaseService.shared.sendImg(img, receiver, sender) { [weak self] in
+        FirebaseService.shared.sendImg(img, receiver, sender, self.senderLastMessage, self.receiverLastMessage) { [weak self] in
             self?.view?.didGetSendImageResult()
         }
     }

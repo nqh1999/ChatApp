@@ -28,7 +28,7 @@ class LoginPresenter {
     
     // MARK: - Data Handler Methods
     func fetchUser() {
-        Service.shared.fetchUsers()
+        FirebaseService.shared.fetchUser()
             .bind(to: self.users)
             .disposed(by: disposeBag)
     }
@@ -81,7 +81,7 @@ class LoginPresenter {
                     self?.view?.didGetLoginResult(result: true, senderId: id)
                     return
                 }
-                Service.shared.register(name, id, "", url)
+                FirebaseService.shared.register(name, id, "", url)
                     .subscribe(onCompleted: { [weak self] in
                         self?.view?.didGetLoginResult(result: true, senderId: id)
                     })

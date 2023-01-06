@@ -29,13 +29,13 @@ class RegisterPresenter {
     
     // MARK: - Data Handler Methods
     func fetchUser() {
-        Service.shared.fetchUsers()
+        FirebaseService.shared.fetchUser()
             .bind(to: self.users)
             .disposed(by: self.disposeBag)
     }
     
     func setImgUrl(_ img: UIImage) {
-        Service.shared.fetchAvtUrl(img: img)
+        FirebaseService.shared.fetchAvtUrl(img: img)
             .subscribe(onNext: { [weak self] url in
                 self?.imgUrl = url
                 self?.view?.didGetSetImageResult(img)
@@ -51,7 +51,7 @@ class RegisterPresenter {
                     if let result = result {
                         self?.view?.didGetRegisterResult(result: result)
                     } else {
-                        Service.shared.register(name, username, password, url)
+                        FirebaseService.shared.register(name, username, password, url)
                             .subscribe(onCompleted: { [weak self] in
                                 self?.view?.didGetRegisterResult(result: nil)
                             })

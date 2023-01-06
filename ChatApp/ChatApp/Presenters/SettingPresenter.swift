@@ -36,13 +36,13 @@ class SettingPresenter {
     
     // MARK: - Data Handler Methods
     func fetchUser() {
-        FirebaseService.shared.fetchUser { [weak self] users in
-            guard let userId = self?.userId else { return }
-            self?.user = users.filter{ user in
-                user.id == userId
-            }.first
-            self?.view?.didGetFetchUserResult(self?.user)
-        }
+//        FirebaseService.shared.fetchUser { [weak self] users in
+//            guard let userId = self?.userId else { return }
+//            self?.user = users.filter{ user in
+//                user.id == userId
+//            }.first
+//            self?.view?.didGetFetchUserResult(self?.user)
+//        }
     }
     
     func setState() {

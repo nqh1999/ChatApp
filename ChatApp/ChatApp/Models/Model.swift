@@ -44,6 +44,7 @@ struct User {
     var username: String
     var password: String
     var isActive: Bool
+    var lastMessages: [String: String]
     init(user: [String: Any]) {
         self.id = user["id"] as? String ?? ""
         self.username = user["username"] as? String ?? ""
@@ -51,6 +52,7 @@ struct User {
         self.name = user["name"] as? String ?? ""
         self.imgUrl = user["imgUrl"] as? String ?? ""
         self.isActive = user["isActive"] as? Bool ?? false
+        self.lastMessages = user["lastMessages"] as? [String: String] ?? [:]
     }
 }
 

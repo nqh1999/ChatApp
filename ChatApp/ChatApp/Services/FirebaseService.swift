@@ -7,72 +7,91 @@
 
 import Firebase
 import FirebaseAuth
-class FirebaseService {
+import RxSwift
+import RxRelay
 
+class FirebaseService {
+    
     // MARK: - Properties
     static let shared = FirebaseService()
     private var db = Firestore.firestore()
     private var storage = Storage.storage().reference()
-    private var messages = [Message]()
-    private var users = [User]()
-    
+    let message = PublishSubject<Message?>()
     // MARK: Register
-    func register(_ name: String,_ username: String,_ password: String,_ imgUrl: String, completed: @escaping () -> Void) {
-        let docRef = self.db.collection(Constant.DB_USER).document(username)
-        docRef.setData([
-            "id": username,
-            "username": username,
-            "password": password,
-            "name": name,
-            "imgUrl": imgUrl
-        ])
-        completed()
+    func register(_ name: String,_ username: String,_ password: String,_ imgUrl: String) -> Observable<Void> {
+        return Observable.create { [weak self] observer in
+            self?.db.collection(Constant.DB_USER).document(username).setData([
+                "id": username,
+                "username": username,
+                "password": password,
+                "name": name,
+                "imgUrl": imgUrl,
+                "lastMessageId": ""
+            ]) { _ in
+                observer.onCompleted()
+            }
+            return Disposables.create()
+        }
     }
     
     // MARK: Fetch User
-    func fetchUser(completed: @escaping ([User]) -> Void) {
-        self.db.collection(Constant.DB_USER).addSnapshotListener { [weak self] querySnapshot, err in
-            guard let querySnapshot = querySnapshot, err == nil else { return }
-            self?.users.removeAll()
-            querySnapshot.documents.forEach { document in
-                let user = User(user: document.data())
-                self?.users.append(user)
+    
+    func fetchUser() -> Observable<[User]> {
+        return Observable.create { [weak self] observer in
+            self?.db.collection(Constant.DB_USER).addSnapshotListener { querySnapshot, error in
+                guard let querySnapshot = querySnapshot else {
+                    observer.onError(error!)
+                    return
+                }
+                let users = querySnapshot.documents.map { User(user: $0.data())}
+                observer.onNext(users)
             }
-            completed(self?.users ?? [])
+            return Disposables.create()
         }
     }
     
     // MARK: fetch all message
-    func fetchMessage(completed: @escaping ([Message]) -> Void) {
-        self.db.collection(Constant.DB_MESSAGE).addSnapshotListener { [weak self] querySnapshot, err in
-            guard let querySnapshot = querySnapshot, err == nil else { return }
-            self?.messages.removeAll()
-            querySnapshot.documents.forEach { document in
-                let message = Message(message: document.data())
-                if message.senderDeleted && message.receiverDeleted {
-                    self?.db.collection(Constant.DB_MESSAGE).document(message.messageId).delete()
-                } else {
-                    self?.messages.append(message)
-                    self?.messages = self?.messages.sorted {
-                        return $0.time < $1.time
-                    } ?? []
+    func fetchMessage() -> Observable<[Message]> {
+        return Observable.create { [weak self] observer in
+            self?.db.collection(Constant.DB_MESSAGE).addSnapshotListener { querySnapshot, err in
+                guard let querySnapshot = querySnapshot, err == nil else { return }
+                let messages = querySnapshot.documents.map {
+                    Message(message: $0.data())
+                }.sorted {
+                    $0.time < $1.time
                 }
+                observer.onNext(messages)
             }
-            completed(self?.messages ?? [])
+            return Disposables.create()
+        }
+    }
+    
+    // MARK: Fetch Message by id
+    func fetchMessageById(_ id: String) {
+        self.db.collection(Constant.DB_MESSAGE).document(id).addSnapshotListener { querySnapshot, err in
+            guard let querySnapshot = querySnapshot, let data = querySnapshot.data(), err == nil else {
+                print("return")
+                return
+            }
+            self.message.onNext(Message(message: data))
+            print("run")
         }
     }
     
     // MARK: fetch avt url
-    func fetchAvtUrl(img: UIImage, completed: @escaping (String) -> Void) {
-        let img = img.jpegData(compressionQuality: 0.5)!
-        let keyImg = NSUUID().uuidString
-        let imgFolder = storage.child(Constant.DB_IMAGE_AVATAR).child(keyImg)
-        storage.child(Constant.DB_IMAGE_AVATAR).child(keyImg).putData(img) { _ , err in
-            guard err == nil else { return }
-            imgFolder.downloadURL { url, err in
-                guard err == nil, let url = url else { return }
-                completed(url.absoluteString)
+    func fetchAvtUrl(img: UIImage) -> Observable<String> {
+        return Observable.create { [weak self] observer in
+            let img = img.jpegData(compressionQuality: 0.5)!
+            let keyImg = NSUUID().uuidString
+            let imgFolder = self?.storage.child(Constant.DB_IMAGE_AVATAR).child(keyImg)
+            self?.storage.child(Constant.DB_IMAGE_AVATAR).child(keyImg).putData(img) { _ , err in
+                guard err == nil else { return }
+                imgFolder?.downloadURL { url, err in
+                    guard err == nil, let url = url else { return }
+                    observer.onNext(url.absoluteString)
+                }
             }
+            return Disposables.create()
         }
     }
     
@@ -98,16 +117,20 @@ class FirebaseService {
     }
     
     // MARK: change password
-    func changePassword(_ id: String,_ password: String, completed: @escaping () -> Void) {
-        self.db.collection(Constant.DB_USER).document(id).updateData(["password": password])
-        completed()
+    func changePassword(_ id: String,_ password: String) -> Observable<Void> {
+        return Observable.create { [weak self] observer in
+            self?.db.collection(Constant.DB_USER).document(id).updateData(["password": password]) { _ in
+                observer.onCompleted()
+            }
+            return Disposables.create()
+        }
     }
     
     // MARK: send message
-    func sendMessage(_ text: String,_ receiver: User,_ sender: User) {
+    func sendMessage(_ text: String,_ receiver: User,_ sender: User, _ senderLastMessages: [String: String], _ receiverLastMessages: [String: String]) {
         let autoKey = self.db.collection(Constant.DB_MESSAGE).document().documentID
-        let docRef = self.db.collection(Constant.DB_MESSAGE).document(autoKey)
-        docRef.setData([
+        let ref = self.db.collection(Constant.DB_MESSAGE).document(autoKey)
+        let message: [String: Any] = [
             "messageId": autoKey,
             "receiverId": receiver.id,
             "senderId": sender.id,
@@ -119,11 +142,13 @@ class FirebaseService {
             "reaction": "",
             "senderDeleted": false,
             "receiverDeleted": false
-        ])
+        ]
+        ref.setData(message)
+        self.updateMessage(ref.documentID, sender, receiver, senderLastMessages, receiverLastMessages)
     }
     
     // MARK: send image
-    func sendImg(_ img: UIImage,_ receiver: User,_ sender: User, completed: @escaping () -> Void) {
+    func sendImg(_ img: UIImage,_ receiver: User,_ sender: User, _ senderLastMessages: [String: String], _ receiverLastMessages: [String: String], completed: @escaping () -> Void) {
         let ratio = img.size.width / img.size.height
         let img = img.jpegData(compressionQuality: 0.5)!
         let keyImg = NSUUID().uuidString
@@ -134,7 +159,7 @@ class FirebaseService {
                 guard err == nil, let url = url else { return }
                 guard let autoKey = self?.db.collection(Constant.DB_MESSAGE).document().documentID else { return }
                 guard let docRef = self?.db.collection(Constant.DB_MESSAGE).document(autoKey) else { return }
-                docRef.setData([
+                let message: [String: Any] = [
                     "messageId": autoKey,
                     "receiverId": receiver.id,
                     "senderId": sender.id,
@@ -146,10 +171,21 @@ class FirebaseService {
                     "reaction": "",
                     "senderDeleted": false,
                     "receiverDeleted": false
-                ])
+                ]
+                docRef.setData(message)
+                self?.updateMessage(docRef.documentID, sender, receiver, senderLastMessages, receiverLastMessages)
             }
             completed()
         }
+    }
+    
+    private func updateMessage(_ ref: String,_ sender: User,_ receiver: User, _ senderLastMessages: [String: String], _ receiverLastMessages: [String: String]) {
+        var senderLastMessage = senderLastMessages
+        var receiverLastMessage = receiverLastMessages
+        senderLastMessage[receiver.id] = ref
+        receiverLastMessage[sender.id] = ref
+        self.db.collection(Constant.DB_USER).document(sender.id).updateData(["lastMessages" : senderLastMessage])
+        self.db.collection(Constant.DB_USER).document(receiver.id).updateData(["lastMessages" : receiverLastMessage])
     }
     
     // MARK: Send Reaction

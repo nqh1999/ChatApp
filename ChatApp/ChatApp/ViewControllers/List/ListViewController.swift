@@ -22,12 +22,13 @@ final class ListViewController: BaseViewController {
     // MARK: - Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.setupData()
         self.setupUI()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.setupData()
+        //        self.setupData()
         self.tabBarController?.tabBar.isHidden = false
     }
     
@@ -45,79 +46,84 @@ final class ListViewController: BaseViewController {
         self.presenter.fetchData()
     }
     
-//    private func goToDetailVCByIndex(index: Int) {
-//        guard let sender = self.presenter.getSender(), let receiver = self.presenter.getUserBy(index: index) else { return }
-//        self.navigationController?.pushViewController(DetailViewController(sender, receiver), animated: true)
-//    }
-    
     // MARK: - UI Handler Methods
     private func setupUI() {
         self.setupTableView()
         self.setupSearchBar()
         self.navigationItem.titleView = nil
         self.title = "Chats"
-        self.presenter.searchUser(self.searchBar)
     }
     
     private func setupTableView() {
         self.tableView.register(UINib(nibName: "ListTableViewCell", bundle: .main), forCellReuseIdentifier: "cell")
         self.tableView.separatorStyle = .none
         self.tableView.showsVerticalScrollIndicator = false
+        
+        self.dataObservable()
+          .flatMap { Observable.from($0) }
+          .flatMapLatest { [weak self] user -> Observable<(User?, Message?)> in
+            guard let senderId = self?.presenter.getSenderId(), let id = user.lastMessages[senderId] else { return Observable.just((user, nil)) }
+            return self!.presenter.fetchMessageById(id)
+              .map { message -> (User?, Message?) in (user, message) }
+          }
+          .bind(to: self.tableView.rx.items(cellIdentifier: "cell", cellType: ListTableViewCell.self)) { row, element, cell in
+//            let (user, message) = element
+//            cell.fillData(user, message) 
+          }
+          .disposed(by: self.disposeBag)
+        
+        self.tableView.rx.modelSelected(User.self)
+            .subscribe(onNext: { [weak self] receiver in
+                guard let sender = self?.presenter.getSender() else { return }
+                self?.navigationController?.pushViewController(DetailViewController(sender, receiver), animated: true)
+                //                guard let message = receiver.lastMessages[sender.id] else { return }
+                //                if message.receiverId == sender.id {
+                //                    self?.presenter.setState(sender, data.0)
+                //                }
+            })
+            .disposed(by: self.disposeBag)
+        
     }
     
     private func setupSearchBar() {
         self.searchBar.layer.cornerRadius = 10
         self.searchBar.layer.borderWidth = 1
         self.searchBar.layer.masksToBounds = true
-        self.searchBar.shouldReturn = { [weak self] in
-            self?.view.endEditing(true)
-        }
+        self.searchBar.rx
+            .controlEvent(.editingDidEndOnExit)
+            .subscribe { [weak self] _ in
+                self?.view.endEditing(true)
+            }
+            .disposed(by: self.disposeBag)
+//        setupSearch()
     }
     
-    // search by name
-    @IBAction private func search(_ sender: UITextField) {
-        guard let text = sender.text else { return }
-        self.presenter.filterData(text: text)
-        self.tableView.reloadData()
-    }
+//    private func setupSearch() {
+//        var data: [User] = []
+//
+//        self.searchBar.rx.text
+//            .orEmpty
+//            .debounce(.milliseconds(300), scheduler: MainScheduler.instance)
+//            .distinctUntilChanged()
+//            .subscribe(onNext: { [weak self] query in
+//                self?.presenter.sett(self?.searchBar.text?.isEmpty ?? true)
+//                if query.isEmpty {
+//                    return
+//                }
+//                let filteredData = data.filter { user in
+//                    user.name.lowercased().contains(query.lowercased())
+//                }
+////                data.accept(filteredData)
+//                self?.tableView.reloadData()
+//            })
+//            .disposed(by: self.disposeBag)
+//    }
+
 }
 
 // MARK: - Extension
-//extension ListViewController: UITableViewDelegate, UITableViewDataSource {
-//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return self.presenter.getNumberOfUser()
-//    }
-//
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! ListTableViewCell
-//        guard let user = self.presenter.getUserBy(index: indexPath.row) else { return cell}
-//        cell.fillData(self.presenter.getUserBy(index: indexPath.row), self.presenter.getMessageBy(id: user.id))
-//        return cell
-//    }
-//
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        self.goToDetailVCByIndex(index: indexPath.row)
-//        guard let sender = self.presenter.getSender(), let receiver = self.presenter.getUserBy(index: indexPath.row) else { return }
-//        guard let message = self.presenter.getMessageBy(id: receiver.id) else { return }
-//        if message.receiverId == sender.id {
-//            self.presenter.setState(sender, receiver)
-//        }
-//    }
-//}
-
 extension ListViewController: ListProtocol {
-    func didFetchData(_ receiver: PublishRelay<[User]>, _ message: PublishRelay<[String : Message]>) {
-        var mess = [String : Message]()
-        message.subscribe(onNext: {
-            mess = $0
-        }).disposed(by: self.disposeBag)
-        
-        
-        receiver.bind(to: tableView.rx.items(cellIdentifier: "cell", cellType: ListTableViewCell.self)) { (row, receiver, cell) in
-            
-            cell.fillData(receiver, mess[receiver.id])
-        }.disposed(by: self.disposeBag)
-        
-//        self.tableView.reloadData()
+    func dataObservable() -> Observable<[User]> {
+        return self.presenter.dataObservable()
     }
 }

@@ -23,7 +23,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="MqK-8G-rbi">
-                    <rect key="frame" x="15" y="58" width="384" height="804"/>
+                    <rect key="frame" x="15" y="10" width="384" height="886"/>
                     <subviews>
                         <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Search" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="xla-9Z-y3e" customClass="BaseTextField" customModule="ChatApp" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="0.0" width="384" height="40"/>
@@ -47,12 +47,9 @@
                                     <real key="value" value="10"/>
                                 </userDefinedRuntimeAttribute>
                             </userDefinedRuntimeAttributes>
-                            <connections>
-                                <action selector="search:" destination="-1" eventType="editingChanged" id="ZAD-Ua-LI5"/>
-                            </connections>
                         </textField>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="pOY-6Q-Zaw">
-                            <rect key="frame" x="0.0" y="60" width="384" height="744"/>
+                            <rect key="frame" x="0.0" y="60" width="384" height="826"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </tableView>
                     </subviews>

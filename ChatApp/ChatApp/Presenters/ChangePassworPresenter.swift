@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import RxSwift
 
 protocol ChangePasswordProtocol: AnyObject {
     func didGetChangePasswordResult(result: String?)
@@ -15,6 +16,7 @@ class ChangePasswordPresenter {
     // MARK: - Properties
     private weak var view: ChangePasswordProtocol?
     private var user: User?
+    private var disposeBag = DisposeBag()
     
     // MARK: - Init
     init(view: ChangePasswordProtocol) {
@@ -33,9 +35,11 @@ class ChangePasswordPresenter {
             if let result = result {
                 self?.view?.didGetChangePasswordResult(result: result)
             } else {
-                FirebaseService.shared.changePassword(user.id, newPassword) { [weak self] in
-                    self?.view?.didGetChangePasswordResult(result: nil)
-                }
+                FirebaseService.shared.changePassword(user.id, newPassword)
+                    .subscribe(onCompleted: { [weak self] in
+                        self?.view?.didGetChangePasswordResult(result: nil)
+                    })
+                    .disposed(by: disposeBag)
             }
         }
     }
