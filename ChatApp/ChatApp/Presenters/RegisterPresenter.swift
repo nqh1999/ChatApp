@@ -29,33 +29,29 @@ class RegisterPresenter {
     
     // MARK: - Data Handler Methods
     func fetchUser() {
-        FirebaseService.shared.fetchUser()
-            .bind(to: self.users)
-            .disposed(by: self.disposeBag)
+        FirebaseService.shared.fetchUser { [weak self] users in
+            self?.users.accept(users)
+        }
     }
     
     func setImgUrl(_ img: UIImage) {
-        FirebaseService.shared.fetchAvtUrl(img: img)
-            .subscribe(onNext: { [weak self] url in
-                self?.imgUrl = url
-                self?.view?.didGetSetImageResult(img)
-            })
-            .disposed(by: self.disposeBag)
+        FirebaseService.shared.fetchAvtUrl(img: img) { [weak self] url in
+            self?.imgUrl = url
+            self?.view?.didGetSetImageResult(img)
+        }
     }
     
     func register(_ name: String,_ username: String,_ password: String) {
         self.users
             .subscribe { [weak self] users in
-                guard let url = self?.imgUrl, let bag = self?.disposeBag else { return }
+                guard let url = self?.imgUrl else { return }
                 ValidateService.shared.checkRegisterData(users, name, username, password, url) { [weak self] result in
                     if let result = result {
                         self?.view?.didGetRegisterResult(result: result)
                     } else {
-                        FirebaseService.shared.register(name, username, password, url)
-                            .subscribe(onCompleted: { [weak self] in
-                                self?.view?.didGetRegisterResult(result: nil)
-                            })
-                            .disposed(by: bag)
+                        FirebaseService.shared.register(name, username, password, url) { [weak self] in
+                            self?.view?.didGetRegisterResult(result: nil)
+                        }
                     }
                 }
             }

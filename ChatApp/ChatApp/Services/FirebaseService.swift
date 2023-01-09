@@ -7,8 +7,6 @@
 
 import Firebase
 import FirebaseAuth
-import RxSwift
-import RxRelay
 
 class FirebaseService {
     
@@ -16,82 +14,65 @@ class FirebaseService {
     static let shared = FirebaseService()
     private var db = Firestore.firestore()
     private var storage = Storage.storage().reference()
-    let message = PublishSubject<Message?>()
+    
     // MARK: Register
-    func register(_ name: String,_ username: String,_ password: String,_ imgUrl: String) -> Observable<Void> {
-        return Observable.create { [weak self] observer in
-            self?.db.collection(Constant.DB_USER).document(username).setData([
-                "id": username,
-                "username": username,
-                "password": password,
-                "name": name,
-                "imgUrl": imgUrl,
-                "lastMessageId": ""
-            ]) { _ in
-                observer.onCompleted()
-            }
-            return Disposables.create()
+    func register(_ name: String,_ username: String,_ password: String,_ imgUrl: String, completed: @escaping () -> Void) {
+        self.db.collection(Constant.DB_USER).document(username).setData([
+            "id": username,
+            "username": username,
+            "password": password,
+            "name": name,
+            "imgUrl": imgUrl,
+            "lastMessageId": ""
+        ]) { _ in
+            completed()
         }
     }
     
     // MARK: Fetch User
     
-    func fetchUser() -> Observable<[User]> {
-        return Observable.create { [weak self] observer in
-            self?.db.collection(Constant.DB_USER).addSnapshotListener { querySnapshot, error in
-                guard let querySnapshot = querySnapshot else {
-                    observer.onError(error!)
-                    return
-                }
-                let users = querySnapshot.documents.map { User(user: $0.data())}
-                observer.onNext(users)
-            }
-            return Disposables.create()
+    func fetchUser(completed: @escaping (([User])-> Void)) {
+        self.db.collection(Constant.DB_USER).addSnapshotListener { querySnapshot, error in
+            guard let querySnapshot = querySnapshot else { return }
+            let users = querySnapshot.documents.map { User(user: $0.data())}
+            completed(users)
         }
     }
     
     // MARK: fetch all message
-    func fetchMessage() -> Observable<[Message]> {
-        return Observable.create { [weak self] observer in
-            self?.db.collection(Constant.DB_MESSAGE).addSnapshotListener { querySnapshot, err in
-                guard let querySnapshot = querySnapshot, err == nil else { return }
-                let messages = querySnapshot.documents.map {
-                    Message(message: $0.data())
-                }.sorted {
-                    $0.time < $1.time
-                }
-                observer.onNext(messages)
+    func fetchMessage(completed: @escaping (([Message])-> Void)) {
+        self.db.collection(Constant.DB_MESSAGE).addSnapshotListener { querySnapshot, err in
+            guard let querySnapshot = querySnapshot, err == nil else { return }
+            let messages = querySnapshot.documents.map {
+                Message(message: $0.data())
+            }.sorted {
+                $0.time < $1.time
             }
-            return Disposables.create()
+            completed(messages)
         }
     }
     
     // MARK: Fetch Message by id
-    func fetchMessageById(_ id: String) {
+    func fetchMessageById(_ id: String, completed: @escaping ((Message?)-> Void)){
         self.db.collection(Constant.DB_MESSAGE).document(id).addSnapshotListener { querySnapshot, err in
-            guard let querySnapshot = querySnapshot, let data = querySnapshot.data(), err == nil else {
-                print("return")
+            guard let data = querySnapshot?.data(), err == nil else {
                 return
             }
-            self.message.onNext(Message(message: data))
-            print("run")
+            completed(Message(message: data))
         }
     }
     
     // MARK: fetch avt url
-    func fetchAvtUrl(img: UIImage) -> Observable<String> {
-        return Observable.create { [weak self] observer in
-            let img = img.jpegData(compressionQuality: 0.5)!
-            let keyImg = NSUUID().uuidString
-            let imgFolder = self?.storage.child(Constant.DB_IMAGE_AVATAR).child(keyImg)
-            self?.storage.child(Constant.DB_IMAGE_AVATAR).child(keyImg).putData(img) { _ , err in
-                guard err == nil else { return }
-                imgFolder?.downloadURL { url, err in
-                    guard err == nil, let url = url else { return }
-                    observer.onNext(url.absoluteString)
-                }
+    func fetchAvtUrl(img: UIImage, completed: @escaping (String) -> Void) {
+        let img = img.jpegData(compressionQuality: 0.5)!
+        let keyImg = NSUUID().uuidString
+        let imgFolder = self.storage.child(Constant.DB_IMAGE_AVATAR).child(keyImg)
+        self.storage.child(Constant.DB_IMAGE_AVATAR).child(keyImg).putData(img) { _ , err in
+            guard err == nil else { return }
+            imgFolder.downloadURL { url, err in
+                guard err == nil, let url = url else { return }
+                completed(url.absoluteString)
             }
-            return Disposables.create()
         }
     }
     
@@ -117,12 +98,9 @@ class FirebaseService {
     }
     
     // MARK: change password
-    func changePassword(_ id: String,_ password: String) -> Observable<Void> {
-        return Observable.create { [weak self] observer in
-            self?.db.collection(Constant.DB_USER).document(id).updateData(["password": password]) { _ in
-                observer.onCompleted()
-            }
-            return Disposables.create()
+    func changePassword(_ id: String,_ password: String, completed: @escaping () -> Void) {
+        self.db.collection(Constant.DB_USER).document(id).updateData(["password": password]) { _ in
+            completed()
         }
     }
     

@@ -9,7 +9,6 @@ import UIKit
 import SDWebImage
 import RxSwift
 import RxCocoa
-import RxRelay
 
 final class ListViewController: BaseViewController {
     
@@ -28,7 +27,6 @@ final class ListViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        //        self.setupData()
         self.tabBarController?.tabBar.isHidden = false
     }
     
@@ -59,30 +57,13 @@ final class ListViewController: BaseViewController {
         self.tableView.separatorStyle = .none
         self.tableView.showsVerticalScrollIndicator = false
         
-        self.dataObservable()
-          .flatMap { Observable.from($0) }
-          .flatMapLatest { [weak self] user -> Observable<(User?, Message?)> in
-            guard let senderId = self?.presenter.getSenderId(), let id = user.lastMessages[senderId] else { return Observable.just((user, nil)) }
-            return self!.presenter.fetchMessageById(id)
-              .map { message -> (User?, Message?) in (user, message) }
-          }
-          .bind(to: self.tableView.rx.items(cellIdentifier: "cell", cellType: ListTableViewCell.self)) { row, element, cell in
-//            let (user, message) = element
-//            cell.fillData(user, message) 
-          }
-          .disposed(by: self.disposeBag)
-        
-        self.tableView.rx.modelSelected(User.self)
-            .subscribe(onNext: { [weak self] receiver in
+        self.tableView.rx.modelSelected((User,Message?).self)
+            .subscribe(onNext: { [weak self] receiver, message in
                 guard let sender = self?.presenter.getSender() else { return }
                 self?.navigationController?.pushViewController(DetailViewController(sender, receiver), animated: true)
-                //                guard let message = receiver.lastMessages[sender.id] else { return }
-                //                if message.receiverId == sender.id {
-                //                    self?.presenter.setState(sender, data.0)
-                //                }
+                self?.presenter.setState(sender, receiver, message)
             })
             .disposed(by: self.disposeBag)
-        
     }
     
     private func setupSearchBar() {
@@ -95,35 +76,16 @@ final class ListViewController: BaseViewController {
                 self?.view.endEditing(true)
             }
             .disposed(by: self.disposeBag)
-//        setupSearch()
     }
-    
-//    private func setupSearch() {
-//        var data: [User] = []
-//
-//        self.searchBar.rx.text
-//            .orEmpty
-//            .debounce(.milliseconds(300), scheduler: MainScheduler.instance)
-//            .distinctUntilChanged()
-//            .subscribe(onNext: { [weak self] query in
-//                self?.presenter.sett(self?.searchBar.text?.isEmpty ?? true)
-//                if query.isEmpty {
-//                    return
-//                }
-//                let filteredData = data.filter { user in
-//                    user.name.lowercased().contains(query.lowercased())
-//                }
-////                data.accept(filteredData)
-//                self?.tableView.reloadData()
-//            })
-//            .disposed(by: self.disposeBag)
-//    }
-
 }
 
 // MARK: - Extension
 extension ListViewController: ListProtocol {
-    func dataObservable() -> Observable<[User]> {
-        return self.presenter.dataObservable()
+    func didFetchData(_ observable: BehaviorRelay<[(User, Message?)]>) {
+        observable
+            .bind(to: self.tableView.rx.items(cellIdentifier: "cell", cellType: ListTableViewCell.self)) { row, data, cell in
+                cell.fillData(data.0, data.1)
+            }
+            .disposed(by: disposeBag)
     }
 }

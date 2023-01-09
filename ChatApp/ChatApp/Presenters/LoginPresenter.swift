@@ -20,7 +20,6 @@ class LoginPresenter {
     private var users = BehaviorRelay<[User]>(value: [])
     private let disposeBag = DisposeBag()
     
-    
     // MARK: - Init
     init(view: LoginProtocol) {
         self.view = view
@@ -28,9 +27,9 @@ class LoginPresenter {
     
     // MARK: - Data Handler Methods
     func fetchUser() {
-        FirebaseService.shared.fetchUser()
-            .bind(to: self.users)
-            .disposed(by: disposeBag)
+        FirebaseService.shared.fetchUser() { [weak self] users in
+            self?.users.accept(users)
+        }
     }
     
     func setState(_ id: String) {
@@ -81,13 +80,10 @@ class LoginPresenter {
                     self?.view?.didGetLoginResult(result: true, senderId: id)
                     return
                 }
-                FirebaseService.shared.register(name, id, "", url)
-                    .subscribe(onCompleted: { [weak self] in
-                        self?.view?.didGetLoginResult(result: true, senderId: id)
-                    })
-                    .disposed(by: self?.disposeBag ?? DisposeBag())
+                FirebaseService.shared.register(name, id, "", url) { [weak self] in
+                    self?.view?.didGetLoginResult(result: true, senderId: id)
+                }
             }
             .disposed(by: disposeBag)
-        
     }
 }

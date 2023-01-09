@@ -10,7 +10,7 @@ import RxSwift
 import RxRelay
 
 protocol ListProtocol: AnyObject {
-    func dataObservable() -> Observable<[User]>
+    func didFetchData(_ observable: BehaviorRelay<[(User,Message?)]>)
 }
 
 class ListPresenter {
@@ -19,10 +19,11 @@ class ListPresenter {
     private weak var view: ListProtocol?
     private var allUsers = BehaviorRelay<[User]>(value: [])
     private var receivers = BehaviorRelay<[User]>(value: [])
-    private var sender = BehaviorRelay<[User]>(value: [])
+    private var sender = BehaviorRelay<User?>(value: nil)
+    private var userMessage = BehaviorRelay<[(User,Message?)]>(value: [])
     private var senderId: String = ""
+    
     private var disposeBag = DisposeBag()
-    private var message: Message?
     
     // MARK: - Init
     init(view: ListProtocol) {
@@ -34,57 +35,70 @@ class ListPresenter {
         self.senderId = id
     }
     
-    func setState(_ sender: User, _ receiver: User) {
-        FirebaseService.shared.setStateUnreadMessage(sender, receiver)
+    func setState(_ sender: User, _ receiver: User, _ message: Message?) {
+        guard let message = message else { return }
+        if message.receiverId == self.senderId {
+            FirebaseService.shared.setStateUnreadMessage(sender, receiver)
+        }
     }
-    
-//    func getReceiver() -> [User] {
-//        if isTrue {
-//            return self.receivers.value
-//        } else {
-//            return self.search.value
-//        }
-//    }
     
     func getSender() -> User? {
-        FirebaseService.shared.fetchUser()
-            .map({ users in
-                users.filter { user in
-                    user.id == self.senderId
-                }
-            })
-            .bind(to: self.sender)
-            .disposed(by: self.disposeBag)
-        return self.sender.value.last
+        return self.sender.value
     }
     
-    func getSenderId() -> String {
-        return self.senderId
-    }
-    
-    func getMessage() -> Message? {
-        return self.message
-    }
-    
-    // MARK: - Data Handler Methods
+    // MARK: Fetch Data
     func fetchData() {
-        FirebaseService.shared.fetchUser()
-            .map({ users in
-                users.filter { user in
-                    user.id != self.senderId
+        FirebaseService.shared.fetchUser() { [weak self] users in
+            let tmp = users.filter { user in
+                user.id != self?.senderId
+            }
+            self?.receivers.accept(tmp)
+        }
+        
+        FirebaseService.shared.fetchUser() { [weak self] users in
+            let tmp = users.filter { user in
+                    user.id == self?.senderId
+            }.first
+            self?.sender.accept(tmp)
+        }
+        self.dataHandler()
+    }
+    
+    // MARK: Hanler Data
+    private func dataHandler() {
+        self.receivers.subscribe(onNext: { [weak self] users in
+            var arr = [(User,Message?)]()
+            guard let senderId = self?.senderId else { return }
+            users.forEach { user in
+                if let id = user.lastMessages[senderId] {
+                    FirebaseService.shared.fetchMessageById(id) { [weak self] message in
+                        for (index, value) in arr.enumerated() {
+                            if value.0 == user {
+                                arr.remove(at: index)
+                                arr.insert((user,message), at: 0)
+                                self?.userMessage.accept(arr)
+                                return
+                            } else {
+                                arr.insert((user,message), at: 0)
+                                self?.userMessage.accept(arr)
+                                return
+                            }
+                        }
+                    }
+                } else {
+//                    if arr.contains(where: { value in
+//                        value.0 == user
+//                    }) {
+//                        return
+//                    } else {
+                        arr.append((user,nil))
+                        self?.userMessage.accept(arr)
+                        return
+//                    }
                 }
-            })
-            .bind(to: self.receivers)
-            .disposed(by: self.disposeBag)
-    }
-    
-    func fetchMessageById(_ id: String?) -> Observable<Message?> {
-        guard let id = id else { return Observable.never()}
-        FirebaseService.shared.fetchMessageById(id)
-        return FirebaseService.shared.message
-    }
-    
-    func dataObservable() -> Observable<[User]> {
-        return self.receivers.asObservable()
+            }
+        }).disposed(by: self.disposeBag)
+        
+        self.view?.didFetchData(self.userMessage)
     }
 }

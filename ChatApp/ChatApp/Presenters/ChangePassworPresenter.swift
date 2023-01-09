@@ -35,11 +35,9 @@ class ChangePasswordPresenter {
             if let result = result {
                 self?.view?.didGetChangePasswordResult(result: result)
             } else {
-                FirebaseService.shared.changePassword(user.id, newPassword)
-                    .subscribe(onCompleted: { [weak self] in
-                        self?.view?.didGetChangePasswordResult(result: nil)
-                    })
-                    .disposed(by: disposeBag)
+                FirebaseService.shared.changePassword(user.id, newPassword) { [weak self] in
+                    self?.view?.didGetChangePasswordResult(result: nil)
+                }
             }
         }
     }

@@ -37,7 +37,7 @@ struct Constant {
 }
 
 // MARK: User Model
-struct User {
+struct User: Equatable {
     var id: String
     var name: String
     var imgUrl: String
@@ -57,7 +57,7 @@ struct User {
 }
 
 // MARK: Message Model
-struct Message {
+struct Message: Equatable {
     var messageId: String
     var receiverId: String
     var senderId: String
