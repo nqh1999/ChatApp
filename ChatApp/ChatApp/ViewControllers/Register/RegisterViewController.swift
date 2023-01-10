@@ -50,15 +50,15 @@ final class RegisterViewController: BaseViewController {
         self.chooseImgButton.layer.cornerRadius = 5
         self.avt.layer.borderWidth = 1
         self.avt.layer.borderColor = UIColor.white.cgColor
-        self.nameTf.shouldReturn = { [weak self] in
-            self?.usernameTf.becomeFirstResponder()
-        }
-        self.usernameTf.shouldReturn = { [weak self] in
-            self?.passwordTf.becomeFirstResponder()
-        }
-        self.passwordTf.shouldReturn = { [weak self] in
-            self?.passwordTf.resignFirstResponder()
-        }
+//        self.nameTf.shouldReturn = { [weak self] in
+//            self?.usernameTf.becomeFirstResponder()
+//        }
+//        self.usernameTf.shouldReturn = { [weak self] in
+//            self?.passwordTf.becomeFirstResponder()
+//        }
+//        self.passwordTf.shouldReturn = { [weak self] in
+//            self?.passwordTf.resignFirstResponder()
+//        }
         self.spinner.isHidden = true
         self.messageView.isHidden = true
         self.avt.layer.borderWidth = 1

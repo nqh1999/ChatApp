@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 class MessageView: UIView {
     @IBOutlet private var contentView: UIView!
@@ -14,6 +16,8 @@ class MessageView: UIView {
     @IBOutlet private weak var confirmButton: CustomButton!
     @IBOutlet private weak var cancelButton: CustomButton!
     @IBOutlet private weak var containerView: UIView!
+    
+    private var bag = DisposeBag()
     
     var confirm: ((String) -> Void)?
     
@@ -60,10 +64,13 @@ class MessageView: UIView {
         self.messageTf.isHidden = false
         self.cancelButton.isHidden = false
         self.messageLabel.text = "Change name"
-        self.messageTf.shouldReturn = { [weak self] in
-            completed(self?.messageTf.text ?? "")
-            self?.messageTf.text = ""
-        }
+        self.messageTf.rx
+            .controlEvent(.editingDidEndOnExit)
+            .subscribe(onNext: { [weak self] _ in
+                completed(self?.messageTf.text ?? "")
+                self?.messageTf.text = ""
+            })
+            .disposed(by: self.bag)
     }
     
 }

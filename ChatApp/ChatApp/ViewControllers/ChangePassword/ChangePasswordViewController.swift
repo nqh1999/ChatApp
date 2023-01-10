@@ -32,16 +32,16 @@ final class ChangePasswordViewController: BaseViewController {
         self.navigationItem.titleView = nil
         self.title = "Change Password"
         self.setBackButton()
-        self.currentPasswordTf.shouldReturn = { [weak self] in
-            self?.newPasswordTf.becomeFirstResponder()
-        }
-        self.newPasswordTf.shouldReturn = { [weak self] in
-            self?.reEnterNewPasswordTf.becomeFirstResponder()
-        }
-        self.reEnterNewPasswordTf.shouldReturn = { [weak self] in
-            self?.reEnterNewPasswordTf.resignFirstResponder()
-            self?.sendChangePasswordData()
-        }
+//        self.currentPasswordTf.shouldReturn = { [weak self] in
+//            self?.newPasswordTf.becomeFirstResponder()
+//        }
+//        self.newPasswordTf.shouldReturn = { [weak self] in
+//            self?.reEnterNewPasswordTf.becomeFirstResponder()
+//        }
+//        self.reEnterNewPasswordTf.shouldReturn = { [weak self] in
+//            self?.reEnterNewPasswordTf.resignFirstResponder()
+//            self?.sendChangePasswordData()
+//        }
         self.messageView.isHidden = true
     }
     

@@ -5,7 +5,10 @@
 //  Created by BeeTech on 07/12/2022.
 //
 
+import UIKit
 import SDWebImage
+import RxCocoa
+import RxSwift
 
 final class DetailViewController: BaseViewController {
     
@@ -20,8 +23,10 @@ final class DetailViewController: BaseViewController {
     @IBOutlet private weak var reactionView: ReactionView!
     @IBOutlet private weak var stackView: UIStackView!
     private var imgPickerView = UIImagePickerController()
+    
     @IBOutlet private weak var bottomConstraint: NSLayoutConstraint!
     @IBOutlet private weak var heightConstraint: NSLayoutConstraint!
+    
     lazy private var presenter = DetailPresenter(view: self)
     
     // MARK: - Lifecycle Methods
@@ -250,6 +255,4 @@ extension DetailViewController: DetailProtocol {
     func didGetSendImageResult() {
         self.spinner.stopAnimating()
     }
-    
-   
 }

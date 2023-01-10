@@ -43,7 +43,7 @@ class RegisterPresenter {
     
     func register(_ name: String,_ username: String,_ password: String) {
         self.users
-            .subscribe { [weak self] users in
+            .subscribe(onNext: { [weak self] users in
                 guard let url = self?.imgUrl else { return }
                 ValidateService.shared.checkRegisterData(users, name, username, password, url) { [weak self] result in
                     if let result = result {
@@ -54,7 +54,7 @@ class RegisterPresenter {
                         }
                     }
                 }
-            }
+            })
             .disposed(by: self.disposeBag)
     }
 }

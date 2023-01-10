@@ -19,7 +19,6 @@ class BaseTextField: UITextField {
             self.updateView()
         }
     }
-    var shouldReturn: (() -> Void)?
     
     func updateView() {
         if let image = leftImage {
@@ -45,7 +44,6 @@ class BaseTextField: UITextField {
         super.awakeFromNib()
         self.layer.cornerRadius = 5
         self.layer.borderWidth = 0.25
-        self.delegate = self
         self.font = UIFont(name: "futura-medium", size: 17)
         self.addDoneButtonOnKeyboard()
     }
@@ -61,12 +59,5 @@ class BaseTextField: UITextField {
 
     @objc private func doneButtonAction() {
         self.resignFirstResponder()
-    }
-}
-
-extension BaseTextField: UITextFieldDelegate {
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        self.shouldReturn?()
-        return true
     }
 }

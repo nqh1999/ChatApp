@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 class PasswordTextField: BaseTextField {
     
@@ -22,6 +24,7 @@ class PasswordTextField: BaseTextField {
     
     func setState(isShow: Bool) {
         self.isShow = isShow
+        self.setText()
     }
     
     func getState() -> Bool {
@@ -41,7 +44,9 @@ class PasswordTextField: BaseTextField {
         self.hidePass = String(repeating: "*", count: pass.count)
         self.text = self.isShow ? self.pass : self.hidePass
     }
-    
+}
+
+extension PasswordTextField: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         if textField.text!.isEmpty {
             self.pass = ""

@@ -17,7 +17,7 @@ class ListPresenter {
     
     // MARK: - Properties
     private weak var view: ListProtocol?
-    private var allUsers = BehaviorRelay<[User]>(value: [])
+    
     private var receivers = BehaviorRelay<[User]>(value: [])
     private var sender = BehaviorRelay<User?>(value: nil)
     private var userMessage = BehaviorRelay<[(User,Message?)]>(value: [])

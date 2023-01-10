@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 final class ForgotPasswordViewController: BaseViewController {
     
@@ -15,12 +17,14 @@ final class ForgotPasswordViewController: BaseViewController {
     @IBOutlet private weak var resetPasswordButton: CustomButton!
     @IBOutlet private weak var messageView: MessageView!
     lazy private var presenter = ForgotPasswordPresenter(view: self)
+    private var disposeBag = DisposeBag()
     
     // MARK: - Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupUI()
         self.setupData()
+        self.setupButton()
     }
     
     // MARK: - Data Handler Methods
@@ -37,20 +41,31 @@ final class ForgotPasswordViewController: BaseViewController {
     // MARK: - UI Handler Methods
     private func setupUI() {
         self.navigationController?.navigationBar.isHidden = true
-        self.usernameTf.shouldReturn = { [weak self] in
-            self?.usernameTf.resignFirstResponder()
-            self?.resetPassword()
-        }
         self.messageView.isHidden = true
+        
+        self.usernameTf.rx
+            .controlEvent(.editingDidEndOnExit)
+            .asObservable()
+            .subscribe { [weak self] _ in
+                self?.usernameTf.resignFirstResponder()
+                self?.resetPassword()
+            }
+            .disposed(by: disposeBag)
     }
 
-    // MARK: - Button Action
-    @IBAction private func resetPassword(_ sender: Any) {
-        self.resetPassword()
-    }
-    
-    @IBAction private func cancel(_ sender: Any) {
-        self.navigationController?.popViewController(animated: true)
+    // MARK: Button Action
+    private func setupButton() {
+        self.resetPasswordButton.rx.tap
+            .subscribe(onNext: { [weak self] _ in
+                self?.resetPassword()
+            })
+            .disposed(by: self.disposeBag)
+        
+        self.cancelButton.rx.tap
+            .subscribe(onNext: { [weak self] _ in
+                self?.navigationController?.popViewController(animated: true)
+            })
+            .disposed(by: self.disposeBag)
     }
 }
 

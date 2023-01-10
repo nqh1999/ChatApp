@@ -20,13 +20,18 @@ final class LoginViewController: BaseViewController {
     @IBOutlet private weak var passwordTf: PasswordTextField!
     @IBOutlet private weak var messageView: MessageView!
     @IBOutlet private weak var loginFBButton: UIButton!
+    @IBOutlet private weak var loginZaloButton: UIButton!
+    @IBOutlet private weak var loginGoogleButton: UIButton!
+    
     lazy private var presenter = LoginPresenter(view: self)
-    lazy private var disposeBag = DisposeBag()
+    private var disposeBag = DisposeBag()
     
     // MARK: - Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupUI()
+        self.setupButton()
+        self.setupTextField()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -48,22 +53,6 @@ final class LoginViewController: BaseViewController {
     private func setupUI() {
         self.userNameTf.text = "1@1.com"
         self.passwordTf.text = "123456"
-        self.userNameTf.rx
-            .controlEvent(.editingDidEndOnExit)
-            .asObservable()
-            .subscribe { [weak self] _ in
-                self?.passwordTf.becomeFirstResponder()
-            }
-            .disposed(by: disposeBag)
-        
-        self.passwordTf.rx
-            .controlEvent(.editingDidEndOnExit)
-            .asObservable()
-            .subscribe { [weak self] _ in
-                self?.login()
-            }
-            .disposed(by: disposeBag)
-        
         self.showPasswordButton.layer.cornerRadius = 1
         self.showPasswordButton.layer.borderWidth = 1
         self.passwordTf.setPass()
@@ -71,41 +60,91 @@ final class LoginViewController: BaseViewController {
         self.navigationController?.navigationBar.isHidden = true
     }
     
-    // MARK: - Button Action
-    @IBAction private func checkLogin(_ sender: Any) {
-        self.login()
+    // MARK: Setup TextField Event
+    private func setupTextField() {
+        self.userNameTf.rx
+            .controlEvent(.editingDidEndOnExit)
+            .asObservable()
+            .subscribe { [weak self] _ in
+                self?.passwordTf.becomeFirstResponder()
+            }
+            .disposed(by: self.disposeBag)
+        
+        self.passwordTf.rx
+            .controlEvent(.editingDidEndOnExit)
+            .asObservable()
+            .subscribe { [weak self] _ in
+                self?.login()
+            }
+            .disposed(by: self.disposeBag)
     }
     
-    @IBAction private func register(_ sender: Any) {
-        self.navigationController?.pushViewController(RegisterViewController(), animated: true)
+    // MARK: Button Action
+    private func setupButton() {
+        self.loginButton.rx.tap
+            .subscribe(onNext: { [weak self] _ in
+                self?.login()
+            })
+            .disposed(by: self.disposeBag)
+        
+        self.registerButton.rx.tap
+            .subscribe(onNext: { [weak self] _ in
+                self?.navigationController?.pushViewController(RegisterViewController(), animated: true)
+            })
+            .disposed(by: self.disposeBag)
+        
+        self.forgotPasswordButton.rx.tap
+            .subscribe(onNext: { [weak self] _ in
+                self?.navigationController?.pushViewController(ForgotPasswordViewController(), animated: true)
+            })
+            .disposed(by: self.disposeBag)
+        
+        self.loginFBButton.rx.tap
+            .subscribe(onNext: { [weak self] _ in
+                guard let vc = self else { return }
+                self?.presenter.facebookLogin(vc)
+            })
+            .disposed(by: self.disposeBag)
+        
+        self.loginZaloButton.rx.tap
+            .subscribe(onNext: { [weak self] _ in
+                guard let vc = self else { return }
+                self?.presenter.zaloLogin(vc)
+            })
+            .disposed(by: self.disposeBag)
+        
+        self.loginGoogleButton.rx.tap
+            .subscribe(onNext: { [weak self] _ in
+                guard let vc = self else { return }
+                self?.presenter.googleLogin(vc)
+            })
+            .disposed(by: self.disposeBag)
+        
+        self.showPasswordButton.rx.tap
+            .subscribe(onNext: { [weak self] _ in
+                self?.passwordTf.setState(isShow: !self!.passwordTf.getState())
+                let img = self!.passwordTf.getState() ? UIImage(systemName: "checkmark") : UIImage()
+                self?.showPasswordButton.setImage(img, for: .normal)
+            })
+            .disposed(by: self.disposeBag)
     }
     
-    @IBAction private func goToForgotPasswordView(_ sender: Any) {
-        self.navigationController?.pushViewController(ForgotPasswordViewController(), animated: true)
-    }
-    
-    @IBAction private func showPassword(_ sender: Any) {
-        self.passwordTf.setState(isShow: !self.passwordTf.getState())
-        let img = self.passwordTf.getState() ? UIImage(systemName: "checkmark") : UIImage()
-        self.showPasswordButton.setImage(img, for: .normal)
-        self.passwordTf.setText()
-    }
-    
-    @IBAction private func loginWithFacebook(_ sender: Any) {
-        self.presenter.facebookLogin(self)
-    }
-    
-    @IBAction private func loginWithGoogle(_ sender: Any) {
-        self.presenter.googleLogin(self)
-    }
-    
-    @IBAction private func loginWithZalo(_ sender: Any) {
-        self.presenter.zaloLogin(self)
+    // MARK: Setup Tabbar
+    private func createTabBar(_ senderId: String) {
+        let tabBar = UITabBarController()
+        let listNav = UINavigationController(rootViewController: ListViewController(senderId))
+        let settingNav = UINavigationController(rootViewController: SettingViewController(senderId))
+        listNav.tabBarItem = UITabBarItem(title: "Chats", image: UIImage(systemName: "message.fill"), tag: 0)
+        settingNav.tabBarItem = UITabBarItem(title: "Setting", image: UIImage(systemName: "person.circle.fill"), tag: 1)
+        tabBar.setViewControllers([listNav, settingNav], animated: false)
+        tabBar.tabBar.tintColor = .blue
+        tabBar.tabBar.unselectedItemTintColor = .gray
+        (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first?.rootViewController =
+        tabBar
     }
 }
 
 // MARK: - Extension
-
 extension LoginViewController: LoginProtocol {
     func didGetLoginResult(result: Bool, senderId: String) {
         self.messageView.isHidden = false
@@ -115,16 +154,7 @@ extension LoginViewController: LoginProtocol {
             self.messageView.showMessage(Constant.MESSAGE_LOGIN_SUCCESS)
             self.messageView.confirm = { [weak self] _ in
                 self?.presenter.setState(senderId)
-                let tabBar = UITabBarController()
-                let listNav = UINavigationController(rootViewController: ListViewController(senderId))
-                let settingNav = UINavigationController(rootViewController: SettingViewController(senderId))
-                listNav.tabBarItem = UITabBarItem(title: "Chats", image: UIImage(systemName: "message.fill"), tag: 0)
-                settingNav.tabBarItem = UITabBarItem(title: "Setting", image: UIImage(systemName: "person.circle.fill"), tag: 1)
-                tabBar.setViewControllers([listNav, settingNav], animated: false)
-                tabBar.tabBar.tintColor = .blue
-                tabBar.tabBar.unselectedItemTintColor = .gray
-                (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first?.rootViewController =
-                tabBar
+                self?.createTabBar(senderId)
             }
         }
     }

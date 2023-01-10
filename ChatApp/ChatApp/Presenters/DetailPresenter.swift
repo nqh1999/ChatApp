@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import RxSwift
+import RxRelay
 
 protocol DetailProtocol: AnyObject {
     func didGetFetchUserResult(_ user: User)
@@ -21,6 +23,7 @@ class DetailPresenter {
     private var sender: User?
     private var receiver: User?
     private var messages = [Message]()
+    private var allMessages = BehaviorRelay<[Message]>(value: [])
     private var senderLastMessage = [String: String]()
     private var receiverLastMessage = [String: String]()
     
@@ -56,18 +59,18 @@ class DetailPresenter {
     
     // MARK: - Data Handler Methods
     func fetchMessage() {
-//        FirebaseService.shared.fetchMessage { [weak self] messages in
-//            guard let sender = self?.sender, let receiver = self?.receiver else { return }
-//            self?.messages.removeAll()
-//            messages.forEach { message in
-//                if (message.receiverId == receiver.id && message.senderId == sender.id) || (message.receiverId == sender.id && message.senderId == receiver.id) {
-//                    if (self?.sender?.id == message.senderId && !message.senderDeleted) || (self?.sender?.id == message.receiverId && !message.receiverDeleted) {
-//                        self?.messages.append(message)
-//                    }
-//                }
-//            }
-//            self?.view?.didGetFetchMessageResult()
-//        }
+        FirebaseService.shared.fetchMessage { [weak self] messages in
+            guard let sender = self?.sender, let receiver = self?.receiver else { return }
+            self?.messages.removeAll()
+            messages.forEach { message in
+                if (message.receiverId == receiver.id && message.senderId == sender.id) || (message.receiverId == sender.id && message.senderId == receiver.id) {
+                    if (self?.sender?.id == message.senderId && !message.senderDeleted) || (self?.sender?.id == message.receiverId && !message.receiverDeleted) {
+                        self?.messages.append(message)
+                    }
+                }
+            }
+            self?.view?.didGetFetchMessageResult()
+        }
     }
     
     func setState() {
