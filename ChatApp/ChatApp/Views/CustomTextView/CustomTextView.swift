@@ -39,7 +39,6 @@ class CustomTextView: UITextView {
 extension CustomTextView: UITextViewDelegate {
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         if text == "\n" {
-            self.resignFirstResponder()
             self.shouldReturn?()
         }
         return true

@@ -6,8 +6,6 @@
 //
 
 import Foundation
-import RxSwift
-import RxRelay
 
 protocol ForgotPasswordProtocol: AnyObject {
     func didGetValidateUsernameResult(result: String?, newPass: String)
@@ -17,8 +15,7 @@ class ForgotPasswordPresenter {
     
     // MARK: - Properties
     private weak var view: ForgotPasswordProtocol?
-    private var users = BehaviorRelay<[User]>(value: [])
-    private let disposeBag = DisposeBag()
+    private var users = [User]()
     
     // MARK: - Init
     init(view: ForgotPasswordProtocol) {
@@ -28,12 +25,12 @@ class ForgotPasswordPresenter {
     // MARK: - Data Handler Methods
     func fetchUser() {
         FirebaseService.shared.fetchUser() { [weak self] users in
-            self?.users.accept(users)
+            self?.users = users
         }
     }
     
     func checkUsername(_ username: String) {
-        ValidateService.shared.checkUsername(self.users.value, username) { [weak self] result, id in
+        ValidateService.shared.checkUsername(self.users, username) { [weak self] result, id in
             if let result = result {
                 self?.view?.didGetValidateUsernameResult(result: result, newPass: "")
             } else {

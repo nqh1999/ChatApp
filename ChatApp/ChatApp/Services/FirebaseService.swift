@@ -30,7 +30,6 @@ class FirebaseService {
     }
     
     // MARK: Fetch User
-    
     func fetchUser(completed: @escaping (([User])-> Void)) {
         self.db.collection(Constant.DB_USER).addSnapshotListener { querySnapshot, error in
             guard let querySnapshot = querySnapshot else { return }

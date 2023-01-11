@@ -17,17 +17,17 @@ final class ForgotPasswordViewController: BaseViewController {
     @IBOutlet private weak var resetPasswordButton: CustomButton!
     @IBOutlet private weak var messageView: MessageView!
     lazy private var presenter = ForgotPasswordPresenter(view: self)
-    private var disposeBag = DisposeBag()
+    private let disposeBag = DisposeBag()
     
     // MARK: - Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupUI()
         self.setupData()
-        self.setupButton()
+        
     }
     
-    // MARK: - Data Handler Methods
+    // MARK: - Setup Data
     private func setupData() {
         UIView.animate(withDuration: 0, delay: 0) { [weak self] in
             self?.presenter.fetchUser()
@@ -38,34 +38,34 @@ final class ForgotPasswordViewController: BaseViewController {
         self.presenter.checkUsername(self.usernameTf.text ?? "")
     }
     
-    // MARK: - UI Handler Methods
+    // MARK: - Setup UI
     private func setupUI() {
         self.navigationController?.navigationBar.isHidden = true
         self.messageView.isHidden = true
-        
-        self.usernameTf.rx
-            .controlEvent(.editingDidEndOnExit)
-            .asObservable()
-            .subscribe { [weak self] _ in
-                self?.usernameTf.resignFirstResponder()
-                self?.resetPassword()
-            }
-            .disposed(by: disposeBag)
+        self.setupButton()
+        self.setupTextField()
+    }
+    
+    //MARK: Setup Textfield
+    private func setupTextField() {
+        self.usernameTf.rx.controlEvent(.editingDidEndOnExit).subscribe { [weak self] _ in
+            self?.usernameTf.resignFirstResponder()
+            self?.resetPassword()
+        }
+        .disposed(by: disposeBag)
     }
 
-    // MARK: Button Action
+    // MARK: Setup Button
     private func setupButton() {
-        self.resetPasswordButton.rx.tap
-            .subscribe(onNext: { [weak self] _ in
-                self?.resetPassword()
-            })
-            .disposed(by: self.disposeBag)
+        self.resetPasswordButton.rx.tap.subscribe(onNext: { [weak self] _ in
+            self?.resetPassword()
+        })
+        .disposed(by: self.disposeBag)
         
-        self.cancelButton.rx.tap
-            .subscribe(onNext: { [weak self] _ in
-                self?.navigationController?.popViewController(animated: true)
-            })
-            .disposed(by: self.disposeBag)
+        self.cancelButton.rx.tap.subscribe(onNext: { [weak self] _ in
+            self?.navigationController?.popViewController(animated: true)
+        })
+        .disposed(by: self.disposeBag)
     }
 }
 

@@ -22,7 +22,7 @@ class GoogleService {
             GIDSignIn.sharedInstance.signIn(with: config, presenting: vc) { user, _ in
                 guard let authentication = user?.authentication,
                       let idToken = authentication.idToken
-                      else { return }
+                else { return }
                 let credential = GoogleAuthProvider.credential(withIDToken: idToken, accessToken: authentication.accessToken)
                 self?.firebaseAuth.signIn(with: credential) { result, error in
                     guard let result = result, error == nil else { return }

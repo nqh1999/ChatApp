@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -35,9 +36,6 @@
                             <buttonConfiguration key="configuration" style="plain" title="❤️">
                                 <fontDescription key="titleFontDescription" type="system" pointSize="23"/>
                             </buttonConfiguration>
-                            <connections>
-                                <action selector="reactButtonTapped:" destination="-1" eventType="touchUpInside" id="yq7-cl-yno"/>
-                            </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zoe-iZ-8Nz">
                             <rect key="frame" x="41" y="0.0" width="51" height="41.5"/>
@@ -45,9 +43,6 @@
                             <buttonConfiguration key="configuration" style="plain" title="😆">
                                 <fontDescription key="titleFontDescription" type="system" pointSize="23"/>
                             </buttonConfiguration>
-                            <connections>
-                                <action selector="reactButtonTapped:" destination="-1" eventType="touchUpInside" id="pjJ-Xr-aiD"/>
-                            </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cXR-H1-VPo">
                             <rect key="frame" x="82" y="0.0" width="51" height="41.5"/>
@@ -55,9 +50,6 @@
                             <buttonConfiguration key="configuration" style="plain" title="😮">
                                 <fontDescription key="titleFontDescription" type="system" pointSize="23"/>
                             </buttonConfiguration>
-                            <connections>
-                                <action selector="reactButtonTapped:" destination="-1" eventType="touchUpInside" id="n5d-3c-5mG"/>
-                            </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZMs-i2-ZP9">
                             <rect key="frame" x="123" y="0.0" width="51" height="41.5"/>
@@ -65,9 +57,6 @@
                             <buttonConfiguration key="configuration" style="plain" title="😢">
                                 <fontDescription key="titleFontDescription" type="system" pointSize="23"/>
                             </buttonConfiguration>
-                            <connections>
-                                <action selector="reactButtonTapped:" destination="-1" eventType="touchUpInside" id="dvS-Yx-16B"/>
-                            </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tf0-wc-Qd2">
                             <rect key="frame" x="164" y="0.0" width="51" height="41.5"/>
@@ -75,9 +64,6 @@
                             <buttonConfiguration key="configuration" style="plain" title="😠">
                                 <fontDescription key="titleFontDescription" type="system" pointSize="23"/>
                             </buttonConfiguration>
-                            <connections>
-                                <action selector="reactButtonTapped:" destination="-1" eventType="touchUpInside" id="NPL-hn-jiI"/>
-                            </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QPM-IJ-FCV">
                             <rect key="frame" x="205" y="0.0" width="51" height="41.5"/>
@@ -85,9 +71,6 @@
                             <buttonConfiguration key="configuration" style="plain" title="👍">
                                 <fontDescription key="titleFontDescription" type="system" pointSize="23"/>
                             </buttonConfiguration>
-                            <connections>
-                                <action selector="reactButtonTapped:" destination="-1" eventType="touchUpInside" id="WTL-XJ-odN"/>
-                            </connections>
                         </button>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

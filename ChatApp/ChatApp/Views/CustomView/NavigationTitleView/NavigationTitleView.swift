@@ -5,6 +5,7 @@
 //  Created by BeeTech on 07/12/2022.
 //
 
+import UIKit
 import SDWebImage
 
 final class NavigationTitleView: UIView {

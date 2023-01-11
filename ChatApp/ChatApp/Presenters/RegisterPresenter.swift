@@ -18,9 +18,9 @@ class RegisterPresenter {
     
     // MARK: - Properties
     private weak var view: RegisterProtocol?
-    private var users = BehaviorRelay<[User]>(value: [])
+    private let users = BehaviorRelay<[User]>(value: [])
     private var imgUrl: String = ""
-    private var disposeBag = DisposeBag()
+    private let disposeBag = DisposeBag()
     
     // MARK: - Init
     init(view: RegisterProtocol) {
@@ -42,19 +42,18 @@ class RegisterPresenter {
     }
     
     func register(_ name: String,_ username: String,_ password: String) {
-        self.users
-            .subscribe(onNext: { [weak self] users in
-                guard let url = self?.imgUrl else { return }
-                ValidateService.shared.checkRegisterData(users, name, username, password, url) { [weak self] result in
-                    if let result = result {
-                        self?.view?.didGetRegisterResult(result: result)
-                    } else {
-                        FirebaseService.shared.register(name, username, password, url) { [weak self] in
-                            self?.view?.didGetRegisterResult(result: nil)
-                        }
+        self.users.subscribe(onNext: { [weak self] users in
+            guard let url = self?.imgUrl else { return }
+            ValidateService.shared.checkRegisterData(users, name, username, password, url) { [weak self] result in
+                if let result = result {
+                    self?.view?.didGetRegisterResult(result: result)
+                } else {
+                    FirebaseService.shared.register(name, username, password, url) { [weak self] in
+                        self?.view?.didGetRegisterResult(result: nil)
                     }
                 }
-            })
-            .disposed(by: self.disposeBag)
+            }
+        })
+        .disposed(by: self.disposeBag)
     }
 }

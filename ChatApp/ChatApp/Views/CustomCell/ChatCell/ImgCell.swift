@@ -5,6 +5,7 @@
 //  Created by BeeTech on 09/12/2022.
 //
 
+import UIKit
 import SDWebImage
 
 class ImgCell: UITableViewCell {

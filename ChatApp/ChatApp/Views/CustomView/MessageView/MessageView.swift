@@ -17,7 +17,7 @@ class MessageView: UIView {
     @IBOutlet private weak var cancelButton: CustomButton!
     @IBOutlet private weak var containerView: UIView!
     
-    private var bag = DisposeBag()
+    private let disposeBag = DisposeBag()
     
     var confirm: ((String) -> Void)?
     
@@ -38,17 +38,7 @@ class MessageView: UIView {
         self.messageTf.isHidden = true
         self.cancelButton.isHidden = true
         self.contentView.layer.borderWidth = 1
-    }
-    
-    @IBAction private func confirm(_ sender: Any) {
-        self.confirm?(self.messageTf.text ?? "")
-        self.isHidden = true
-    }
-    
-    @IBAction private func cancel(_ sender: Any) {
-        self.messageTf.text = ""
-        self.messageLabel.text = ""
-        self.isHidden = true
+        self.setupButton()
     }
     
     func showMessage(_ message: String) {
@@ -64,13 +54,26 @@ class MessageView: UIView {
         self.messageTf.isHidden = false
         self.cancelButton.isHidden = false
         self.messageLabel.text = "Change name"
-        self.messageTf.rx
-            .controlEvent(.editingDidEndOnExit)
-            .subscribe(onNext: { [weak self] _ in
-                completed(self?.messageTf.text ?? "")
-                self?.messageTf.text = ""
-            })
-            .disposed(by: self.bag)
+        self.messageTf.rx.controlEvent(.editingDidEndOnExit).subscribe(onNext: { [weak self] _ in
+            completed(self?.messageTf.text ?? "")
+            self?.messageTf.text = ""
+        })
+        .disposed(by: self.disposeBag)
     }
     
+    // MARK: Setup Button Event
+    private func setupButton() {
+        self.confirmButton.rx.tap.subscribe(onNext: { [weak self] _ in
+            self?.confirm?(self?.messageTf.text ?? "")
+            self?.isHidden = true
+        })
+        .disposed(by: self.disposeBag)
+        
+        self.cancelButton.rx.tap.subscribe(onNext: { [weak self] _ in
+            self?.messageTf.text = ""
+            self?.messageLabel.text = ""
+            self?.isHidden = true
+        })
+        .disposed(by: self.disposeBag)
+    }
 }

@@ -16,7 +16,7 @@ final class ListViewController: BaseViewController {
     @IBOutlet private weak var searchBar: BaseTextField!
     @IBOutlet private weak var tableView: UITableView!
     lazy private var presenter = ListPresenter(view: self)
-    lazy private var disposeBag = DisposeBag()
+    private let disposeBag = DisposeBag()
     
     // MARK: - Lifecycle Methods
     override func viewDidLoad() {
@@ -39,12 +39,12 @@ final class ListViewController: BaseViewController {
         self.presenter.setData(id)
     }
     
-    // MARK: - Data Handler Methods
+    // MARK: - Setup Data
     private func setupData() {
         self.presenter.fetchData()
     }
     
-    // MARK: - UI Handler Methods
+    // MARK: - Setup UI
     private func setupUI() {
         self.setupTableView()
         self.setupSearchBar()
@@ -52,40 +52,42 @@ final class ListViewController: BaseViewController {
         self.title = "Chats"
     }
     
+    // MARK: Setup Table View
     private func setupTableView() {
         self.tableView.register(UINib(nibName: "ListTableViewCell", bundle: .main), forCellReuseIdentifier: "cell")
         self.tableView.separatorStyle = .none
         self.tableView.showsVerticalScrollIndicator = false
-        
-        self.tableView.rx.modelSelected((User,Message?).self)
-            .subscribe(onNext: { [weak self] receiver, message in
-                guard let sender = self?.presenter.getSender() else { return }
-                self?.navigationController?.pushViewController(DetailViewController(sender, receiver), animated: true)
-                self?.presenter.setState(sender, receiver, message)
-            })
-            .disposed(by: self.disposeBag)
+        self.tableView.rx.modelSelected((User,Message?).self).subscribe(onNext: { [weak self] receiver, message in
+            guard let sender = self?.presenter.getSender() else { return }
+            self?.navigationController?.pushViewController(DetailViewController(sender, receiver), animated: true)
+            self?.presenter.setState(sender, receiver, message)
+        })
+        .disposed(by: self.disposeBag)
     }
-    
+
+    // MARK: Setup Search Bar
     private func setupSearchBar() {
         self.searchBar.layer.cornerRadius = 10
         self.searchBar.layer.borderWidth = 1
         self.searchBar.layer.masksToBounds = true
-        self.searchBar.rx
-            .controlEvent(.editingDidEndOnExit)
-            .subscribe { [weak self] _ in
-                self?.view.endEditing(true)
-            }
-            .disposed(by: self.disposeBag)
+        self.searchBar.rx.controlEvent(.editingDidEndOnExit).subscribe { [weak self] _ in
+            self?.view.endEditing(true)
+        }
+        .disposed(by: self.disposeBag)
+        
+        self.searchBar.rx.controlEvent(.editingChanged).subscribe(onNext: { [weak self] _ in
+            self?.presenter.searchUserWithText(self?.searchBar.text)
+        })
+        .disposed(by: self.disposeBag)
     }
 }
 
 // MARK: - Extension
 extension ListViewController: ListProtocol {
     func didFetchData(_ observable: BehaviorRelay<[(User, Message?)]>) {
-        observable
-            .bind(to: self.tableView.rx.items(cellIdentifier: "cell", cellType: ListTableViewCell.self)) { row, data, cell in
-                cell.fillData(data.0, data.1)
-            }
-            .disposed(by: disposeBag)
+        observable.bind(to: self.tableView.rx.items(cellIdentifier: "cell", cellType: ListTableViewCell.self)) { row, data, cell in
+            cell.fillData(data.0, data.1)
+        }
+        .disposed(by: disposeBag)
     }
 }

@@ -128,9 +128,6 @@
                                                     <buttonConfiguration key="configuration" style="plain" title="Choose Image">
                                                         <fontDescription key="titleFontDescription" name="Futura-Medium" family="Futura" pointSize="14"/>
                                                     </buttonConfiguration>
-                                                    <connections>
-                                                        <action selector="chooseImage:" destination="-1" eventType="touchUpInside" id="YRu-Ub-yQz"/>
-                                                    </connections>
                                                 </button>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="defaultAvt" translatesAutoresizingMaskIntoConstraints="NO" id="xlf-DD-J1j">
                                                     <rect key="frame" x="235" y="0.0" width="100" height="100"/>
@@ -170,9 +167,6 @@
                                                 <fontDescription key="titleFontDescription" name="Futura-Medium" family="Futura" pointSize="20"/>
                                                 <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </buttonConfiguration>
-                                            <connections>
-                                                <action selector="register:" destination="-1" eventType="touchUpInside" id="Gj6-cD-gL3"/>
-                                            </connections>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YVZ-4g-KcO" userLabel="back">
                                             <rect key="frame" x="127.5" y="50" width="80.5" height="37.5"/>
@@ -182,9 +176,6 @@
                                             <buttonConfiguration key="configuration" style="plain" title="Cancel">
                                                 <fontDescription key="titleFontDescription" name="Futura-Medium" family="Futura" pointSize="18"/>
                                             </buttonConfiguration>
-                                            <connections>
-                                                <action selector="backToLogin:" destination="-1" eventType="touchUpInside" id="Djf-Gc-Hhr"/>
-                                            </connections>
                                         </button>
                                     </subviews>
                                     <constraints>

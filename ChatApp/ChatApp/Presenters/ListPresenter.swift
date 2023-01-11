@@ -18,12 +18,14 @@ class ListPresenter {
     // MARK: - Properties
     private weak var view: ListProtocol?
     
-    private var receivers = BehaviorRelay<[User]>(value: [])
-    private var sender = BehaviorRelay<User?>(value: nil)
-    private var userMessage = BehaviorRelay<[(User,Message?)]>(value: [])
+    private let receivers = BehaviorRelay<[User]>(value: [])
+    private var searchData = BehaviorRelay<[User]>(value: [])
+    private let sender = BehaviorRelay<User?>(value: nil)
+    private let userMessage = BehaviorRelay<[(User,Message?)]>(value: [])
+    private var searchText = PublishSubject<String>()
     private var senderId: String = ""
     
-    private var disposeBag = DisposeBag()
+    private let disposeBag = DisposeBag()
     
     // MARK: - Init
     init(view: ListProtocol) {
@@ -55,16 +57,21 @@ class ListPresenter {
             self?.receivers.accept(tmp)
         }
         
+        self.receivers.subscribe(onNext: { [weak self] users in
+            self?.searchData.accept(users)
+        })
+        .disposed(by: self.disposeBag)
+        
         FirebaseService.shared.fetchUser() { [weak self] users in
             let tmp = users.filter { user in
-                    user.id == self?.senderId
+                user.id == self?.senderId
             }.first
             self?.sender.accept(tmp)
         }
         self.dataHandler()
     }
     
-    // MARK: Hanler Data
+    // MARK: Handler Data
     private func dataHandler() {
         self.receivers.subscribe(onNext: { [weak self] users in
             var arr = [(User,Message?)]()
@@ -86,19 +93,32 @@ class ListPresenter {
                         }
                     }
                 } else {
-//                    if arr.contains(where: { value in
-//                        value.0 == user
-//                    }) {
-//                        return
-//                    } else {
-                        arr.append((user,nil))
-                        self?.userMessage.accept(arr)
-                        return
-//                    }
+                    arr.append((user,nil))
+                    self?.userMessage.accept(arr)
+                    return
                 }
+                
             }
-        }).disposed(by: self.disposeBag)
+        })
+        .disposed(by: self.disposeBag)
         
         self.view?.didFetchData(self.userMessage)
+    }
+    
+    func searchUserWithText(_ text: String?) {
+        let text = text ?? ""
+        self.searchText.onNext(text)
+        
+        self.searchText.subscribe(onNext: { [weak self] text in
+            if text.isEmpty {
+                self?.searchData.accept(self?.receivers.value ?? [])
+            } else {
+                let arr = self?.receivers.value.filter { user in
+                    user.name.lowercased().contains(text.lowercased())
+                }
+                self?.searchData.accept(arr ?? [])
+            }
+        })
+        .disposed(by: self.disposeBag)
     }
 }

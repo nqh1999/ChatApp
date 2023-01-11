@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 final class ChangePasswordViewController: BaseViewController {
     
@@ -14,7 +16,10 @@ final class ChangePasswordViewController: BaseViewController {
     @IBOutlet private weak var newPasswordTf: BaseTextField!
     @IBOutlet private weak var reEnterNewPasswordTf: BaseTextField!
     @IBOutlet private weak var messageView: MessageView!
+    @IBOutlet private weak var changePasswordButton: CustomButton!
+    @IBOutlet private weak var cancelButton: UIButton!
     lazy private var presenter = ChangePasswordPresenter(view: self)
+    private let disposeBag = DisposeBag()
     
     // MARK: - Lifecycle Methods
     override func viewDidLoad() {
@@ -32,17 +37,28 @@ final class ChangePasswordViewController: BaseViewController {
         self.navigationItem.titleView = nil
         self.title = "Change Password"
         self.setBackButton()
-//        self.currentPasswordTf.shouldReturn = { [weak self] in
-//            self?.newPasswordTf.becomeFirstResponder()
-//        }
-//        self.newPasswordTf.shouldReturn = { [weak self] in
-//            self?.reEnterNewPasswordTf.becomeFirstResponder()
-//        }
-//        self.reEnterNewPasswordTf.shouldReturn = { [weak self] in
-//            self?.reEnterNewPasswordTf.resignFirstResponder()
-//            self?.sendChangePasswordData()
-//        }
         self.messageView.isHidden = true
+        self.setupTextField()
+        self.setupButton()
+    }
+    
+    // MARK: Setup Textfield Event
+    private func setupTextField() {
+        self.currentPasswordTf.rx.controlEvent(.editingDidEndOnExit).subscribe(onNext: { [weak self] _ in
+            self?.newPasswordTf.becomeFirstResponder()
+        })
+        .disposed(by: self.disposeBag)
+        
+        self.newPasswordTf.rx.controlEvent(.editingDidEndOnExit).subscribe(onNext: { [weak self] _ in
+            self?.reEnterNewPasswordTf.becomeFirstResponder()
+        })
+        .disposed(by: self.disposeBag)
+        
+        self.reEnterNewPasswordTf.rx.controlEvent(.editingDidEndOnExit).subscribe(onNext: { [weak self] _ in
+            self?.reEnterNewPasswordTf.resignFirstResponder()
+            self?.sendChangePasswordData()
+        })
+        .disposed(by: self.disposeBag)
     }
     
     // MARK: - Data Handler Methods
@@ -50,13 +66,17 @@ final class ChangePasswordViewController: BaseViewController {
         self.presenter.handlerData(self.currentPasswordTf.text ?? "", self.newPasswordTf.text ?? "", self.reEnterNewPasswordTf.text ?? "")
     }
     
-    // MARK: - Button Action
-    @IBAction private func changePassword(_ sender: Any) {
-        self.sendChangePasswordData()
-    }
-    
-    @IBAction private func cancel(_ sender: Any) {
-        self.navigationController?.popViewController(animated: true)
+    // MARK: Setup Button Action
+    private func setupButton() {
+        self.changePasswordButton.rx.tap.subscribe(onNext: { [weak self] _ in
+            self?.sendChangePasswordData()
+        })
+        .disposed(by: self.disposeBag)
+        
+        self.cancelButton.rx.tap.subscribe(onNext: { [weak self] _ in
+            self?.navigationController?.popViewController(animated: true)
+        })
+        .disposed(by: self.disposeBag)
     }
 }
 

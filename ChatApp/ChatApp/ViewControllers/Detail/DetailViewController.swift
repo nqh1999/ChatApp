@@ -28,6 +28,7 @@ final class DetailViewController: BaseViewController {
     @IBOutlet private weak var heightConstraint: NSLayoutConstraint!
     
     lazy private var presenter = DetailPresenter(view: self)
+    lazy private var disposeBag = DisposeBag()
     
     // MARK: - Lifecycle Methods
     override func viewDidLoad() {
@@ -49,18 +50,22 @@ final class DetailViewController: BaseViewController {
         self.presenter.setData(sender,receiver)
     }
     
-    // MARK: - Data Handler Methods
+    // MARK: - Setup Data
     private func setupData() {
         UIView.animate(withDuration: 0, delay: 0) { [weak self] in
             self?.presenter.fetchMessage()
         }
     }
     
+    // MARK: Reload TableView
     private func reloadData() {
-        self.tableView.reloadData()
-        self.scrollToBottom()
+        DispatchQueue.main.async { [weak self] in
+            self?.tableView.reloadData()
+            self?.scrollToBottom()
+        }
     }
     
+    // MARK: Setup ReactionView
     private func setupReactionView(_ cell: MessageCell, _ id: String) {
         cell.longPress = { [weak self] reaction in
             self?.showReactionView(true)
@@ -78,12 +83,13 @@ final class DetailViewController: BaseViewController {
         }
     }
     
-    // MARK: - Override Methods
+    // MARK: Back To Previous VC
     override func backToPreVC() {
         super.backToPreVC()
         self.presenter.setState()
     }
     
+    // MARK: Delete Message
     override func deleteMessage() {
         super.deleteMessage()
         self.messageView.isHidden = false
@@ -95,18 +101,21 @@ final class DetailViewController: BaseViewController {
         }
     }
     
-    private func sendMessage() {
-        self.presenter.sendMessage(self.messageTextView.text ?? "")
+    // MARK: Send Message
+    private func sendMessage(_ message: String) {
+        self.presenter.sendMessage(message)
         self.messageTextView.text = ""
         self.showLikeButton(true)
         self.heightConstraint.constant = 39
     }
     
+    // MARK: Show like button
     private func showLikeButton(_ isShow: Bool) {
         self.likeButton.isHidden = !isShow
         self.sendButton.isHidden = isShow
     }
     
+    // MARK: Scroll to bottom
     private func scrollToBottom() {
         DispatchQueue.main.async {
             guard self.presenter.getNumberOfMessage() > 0 else { return }
@@ -115,6 +124,7 @@ final class DetailViewController: BaseViewController {
         }
     }
     
+    // MARK: Handler event show - hide keyboard
     override func keyboardWillShow(_ notification: NSNotification) {
         let keyboardHeight = (notification.userInfo![UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue.height
         self.bottomConstraint.constant = keyboardHeight + 6
@@ -128,20 +138,27 @@ final class DetailViewController: BaseViewController {
         self.scrollToBottom()
     }
     
-    // MARK: - UI Handler Methods
+    // MARK: Setup Picker View
     private func setupPickerView() {
         self.imgPickerView.delegate = self
         self.imgPickerView.sourceType = .photoLibrary
         self.present(self.imgPickerView, animated: true)
     }
     
+    // MARK: Setup UI
     private func setupUI() {
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapToView)))
-        self.setupTableView()
         self.spinner.isHidden = true
         self.messageView.isHidden = true
         self.showLikeButton(true)
         self.showReactionView(false)
+        self.setupTableView()
+        self.setupButton()
+        self.setupTextView()
+    }
+    
+    // MARK: Setup TextView
+    private func setupTextView() {
         self.messageTextView.didChange = { [weak self] text in
             guard let contentHeight = self?.messageTextView.contentSize.height else { return }
             self?.heightConstraint.constant = (contentHeight < 130) ? contentHeight : 130
@@ -149,20 +166,22 @@ final class DetailViewController: BaseViewController {
             self?.showLikeButton(text.isEmpty)
         }
         self.messageTextView.shouldReturn = { [weak self] in
-            self?.sendMessage()
+            self?.sendMessage(self?.messageTextView.text ?? "")
+            self?.messageTextView.text = ""
         }
     }
     
+    // MARK: Show reaction view
     private func showReactionView(_ isShow: Bool) {
         self.reactionView.isHidden = !isShow
         self.stackView.isHidden = isShow
     }
     
+    // MARK: Setup Table View
     private func setupTableView() {
         self.tableView.register(UINib(nibName: "MessageCell", bundle: .main), forCellReuseIdentifier: "messageCell")
         self.tableView.register(UINib(nibName: "ImgCell", bundle: .main), forCellReuseIdentifier: "imgCell")
         self.tableView.delegate = self
-        self.tableView.dataSource = self
         self.tableView.separatorStyle = .none
         self.tableView.showsVerticalScrollIndicator = false
     }
@@ -172,17 +191,22 @@ final class DetailViewController: BaseViewController {
         self.showReactionView(false)
     }
     
-    // MARK: - Action Methods
-    @IBAction private func chooseImg(_ sender: Any) {
-        self.setupPickerView()
-    }
-    
-    @IBAction private func sendMessage(_ sender: Any) {
-        self.sendMessage()
-    }
-    
-    @IBAction private func likeButtonTapped(_ sender: Any) {
-        self.presenter.sendMessage("👍")
+    // MARK: - Setup Button
+    private func setupButton() {
+        self.imgButton.rx.tap.subscribe(onNext: { [weak self] _ in
+            self?.setupPickerView()
+        })
+        .disposed(by: self.disposeBag)
+        
+        self.sendButton.rx.tap.subscribe(onNext: { [weak self] _ in
+            self?.sendMessage(self?.messageTextView.text ?? "")
+        })
+        .disposed(by: self.disposeBag)
+        
+        self.likeButton.rx.tap.subscribe(onNext: { [weak self] _ in
+            self?.sendMessage("👍")
+        })
+        .disposed(by: self.disposeBag)
     }
 }
 
@@ -197,34 +221,7 @@ extension DetailViewController: UIImagePickerControllerDelegate, UINavigationCon
     }
 }
 
-extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.presenter.getNumberOfMessage()
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let message = self.presenter.getMessageBy(index: indexPath.row)
-        if message.text.isEmpty {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "imgCell", for: indexPath) as! ImgCell
-            cell.setupImg(message)
-            if message.senderId == self.presenter.getSender()?.id {
-                cell.setupSentImg()
-            } else {
-                cell.setupReceivedImg()
-            }
-            return cell
-        } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "messageCell", for: indexPath) as! MessageCell
-            if message.senderId == self.presenter.getSender()?.id {
-                cell.setupSentMessage(message)
-                self.setupReactionView(cell, message.messageId)
-            } else {
-                cell.setupReceivedMessage(message)
-                self.setupReactionView(cell, message.messageId)
-            }
-            return cell
-        }
-    }
+extension DetailViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let message = self.presenter.getMessageBy(index: indexPath.row)
@@ -241,7 +238,31 @@ extension DetailViewController: DetailProtocol {
         self.setTitleView(user)
     }
     
-    func didGetFetchMessageResult() {
+    func didGetFetchMessageResult(_ messages: RxRelay.BehaviorRelay<[Message]>, _ sender: User?) {
+
+        messages.bind(to: self.tableView.rx.items) { [weak self] tableview, index, message in
+            guard let senderId = sender?.id else { return UITableViewCell() }
+            if message.text.isEmpty {
+                let cell = tableview.dequeueReusableCell(withIdentifier: "imgCell") as! ImgCell
+                cell.setupImg(message)
+                if message.senderId == senderId {
+                    cell.setupSentImg()
+                } else {
+                    cell.setupReceivedImg()
+                }
+                return cell
+            } else {
+                let cell = tableview.dequeueReusableCell(withIdentifier: "messageCell") as! MessageCell
+                if message.senderId == senderId {
+                    cell.setupSentMessage(message)
+                    self?.setupReactionView(cell, message.messageId)
+                } else {
+                    cell.setupReceivedMessage(message)
+                    self?.setupReactionView(cell, message.messageId)
+                }
+                return cell
+            }
+        }.disposed(by: self.disposeBag)
         self.reloadData()
     }
     
@@ -254,5 +275,10 @@ extension DetailViewController: DetailProtocol {
     
     func didGetSendImageResult() {
         self.spinner.stopAnimating()
+        self.reloadData()
+    }
+    
+    func didSendMessage() {
+        self.reloadData()
     }
 }

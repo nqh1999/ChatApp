@@ -11,9 +11,10 @@ import RxRelay
 
 protocol DetailProtocol: AnyObject {
     func didGetFetchUserResult(_ user: User)
-    func didGetFetchMessageResult()
+    func didGetFetchMessageResult(_ messages: BehaviorRelay<[Message]>,_ sender: User?)
     func didGetDeleteMessageResult()
     func didGetSendImageResult()
+    func didSendMessage()
 }
 
 class DetailPresenter {
@@ -22,10 +23,10 @@ class DetailPresenter {
     private weak var view: DetailProtocol?
     private var sender: User?
     private var receiver: User?
-    private var messages = [Message]()
-    private var allMessages = BehaviorRelay<[Message]>(value: [])
+    private let allMessages = BehaviorRelay<[Message]>(value: [])
     private var senderLastMessage = [String: String]()
     private var receiverLastMessage = [String: String]()
+    private let disposeBag = DisposeBag()
     
     // MARK: - Init
     init(view: DetailProtocol) {
@@ -42,35 +43,24 @@ class DetailPresenter {
     }
     
     func getNumberOfMessage() -> Int {
-        return self.messages.count
+        return self.allMessages.value.count
     }
     
     func getMessageBy(index: Int) -> Message {
-        return self.messages[index]
-    }
-    
-    func getReceiver() -> User? {
-        return self.receiver
-    }
-    
-    func getSender() -> User? {
-        return self.sender
+        return self.allMessages.value[index]
     }
     
     // MARK: - Data Handler Methods
     func fetchMessage() {
         FirebaseService.shared.fetchMessage { [weak self] messages in
             guard let sender = self?.sender, let receiver = self?.receiver else { return }
-            self?.messages.removeAll()
-            messages.forEach { message in
-                if (message.receiverId == receiver.id && message.senderId == sender.id) || (message.receiverId == sender.id && message.senderId == receiver.id) {
-                    if (self?.sender?.id == message.senderId && !message.senderDeleted) || (self?.sender?.id == message.receiverId && !message.receiverDeleted) {
-                        self?.messages.append(message)
-                    }
-                }
+            let arr = messages.filter { message in
+                (message.receiverId == receiver.id && message.senderId == sender.id && !message.senderDeleted) || (message.receiverId == sender.id && message.senderId == receiver.id && !message.receiverDeleted)
             }
-            self?.view?.didGetFetchMessageResult()
+            self?.allMessages.accept(arr)
         }
+        
+        self.view?.didGetFetchMessageResult(self.allMessages, self.sender)
     }
     
     func setState() {
@@ -79,10 +69,10 @@ class DetailPresenter {
     }
     
     func deleteAllMessage() {
-        guard let id = self.sender?.id else { return }
-        self.messages.forEach { message in
-            FirebaseService.shared.setMessageDelete(id, message)
-        }
+//        guard let id = self.sender?.id else { return }
+//        self.allMessages.value.forEach { message in
+//            FirebaseService.shared.setMessageDelete(id, message)
+//        }
         self.view?.didGetDeleteMessageResult()
     }
     
@@ -90,6 +80,7 @@ class DetailPresenter {
         guard let receiver = self.receiver, let sender = self.sender else { return }
         if text.isEmpty { return }
         FirebaseService.shared.sendMessage(text, receiver, sender, self.senderLastMessage, self.receiverLastMessage)
+        self.view?.didSendMessage()
     }
     
     func sendImg(_ img: UIImage) {

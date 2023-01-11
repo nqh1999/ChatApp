@@ -36,23 +36,23 @@ class ValidateService {
             return
         }
         
-        if password.isEmpty {
-            completed(Constant.MESSAGE_PASSWORD_IS_EMPTY)
-            return
-        }
-        
-        if imgUrl.isEmpty {
-            completed(Constant.MESSAGE_IMAGE_IS_EMPTY)
-            return
-        }
-        
         if !username.isValidEmail {
             completed(Constant.MESSAGE_INVALID_USERNAME)
             return
         }
         
+        if password.isEmpty {
+            completed(Constant.MESSAGE_PASSWORD_IS_EMPTY)
+            return
+        }
+        
         if password.count < 6 {
             completed(Constant.MESSAGE_INVALID_PASSWORD)
+            return
+        }
+        
+        if imgUrl.isEmpty {
+            completed(Constant.MESSAGE_IMAGE_IS_EMPTY)
             return
         }
         

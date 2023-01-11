@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import RxSwift
+import RxRelay
 
 protocol SettingProtocol: AnyObject {
     func didGetFetchUserResult(_ user: User?)
@@ -19,6 +21,7 @@ class SettingPresenter {
     private var user: User?
     private var imgUrl: String = ""
     private var userId: String = ""
+    private let disposeBag = DisposeBag()
     
     // MARK: - Init
     init(view: SettingProtocol) {

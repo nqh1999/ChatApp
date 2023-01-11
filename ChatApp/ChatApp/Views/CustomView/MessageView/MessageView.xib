@@ -64,9 +64,6 @@
                                             <buttonConfiguration key="configuration" style="plain" title="Ok">
                                                 <fontDescription key="titleFontDescription" name="Futura-Medium" family="Futura" pointSize="16"/>
                                             </buttonConfiguration>
-                                            <connections>
-                                                <action selector="confirm:" destination="-1" eventType="touchUpInside" id="nG8-yY-rKr"/>
-                                            </connections>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3en-k3-Y6d" customClass="CustomButton" customModule="ChatApp" customModuleProvider="target">
                                             <rect key="frame" x="115" y="0.0" width="100" height="35"/>
@@ -79,9 +76,6 @@
                                             <buttonConfiguration key="configuration" style="plain" title="Cancel">
                                                 <fontDescription key="titleFontDescription" name="Futura-Medium" family="Futura" pointSize="16"/>
                                             </buttonConfiguration>
-                                            <connections>
-                                                <action selector="cancel:" destination="-1" eventType="touchUpInside" id="GPO-gw-boG"/>
-                                            </connections>
                                         </button>
                                     </subviews>
                                 </stackView>
