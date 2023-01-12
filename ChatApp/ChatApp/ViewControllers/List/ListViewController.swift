@@ -30,10 +30,6 @@ final class ListViewController: BaseViewController {
         self.tabBarController?.tabBar.isHidden = false
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-    }
-    
     convenience init(_ id: String) {
         self.init()
         self.presenter.setData(id)

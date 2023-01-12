@@ -156,6 +156,7 @@ class FirebaseService {
         }
     }
     
+    // MARK: Update Message
     private func updateMessage(_ ref: String,_ sender: User,_ receiver: User, _ senderLastMessages: [String: String], _ receiverLastMessages: [String: String]) {
         var senderLastMessage = senderLastMessages
         var receiverLastMessage = receiverLastMessages
@@ -184,6 +185,17 @@ class FirebaseService {
                 "receiverDeleted": true
             ])
             return
+        }
+        
+        self.db.collection(Constant.DB_MESSAGE).getDocuments { [weak self] querySnapshot, err in
+            guard let querySnapshot = querySnapshot, err == nil else { return }
+            querySnapshot.documents.map {
+                Message(message: $0.data())
+            }.filter { message in
+                message.receiverDeleted && message.senderDeleted
+            }.forEach { message in
+                self?.db.collection(Constant.DB_MESSAGE).document(message.messageId).delete()
+            }
         }
     }
     

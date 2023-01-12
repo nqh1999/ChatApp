@@ -73,31 +73,30 @@ class ListPresenter {
     
     // MARK: Handler Data
     private func dataHandler() {
-        self.receivers.subscribe(onNext: { [weak self] users in
+        self.receivers.subscribe(onNext: { [weak self] receivers in
             var arr = [(User,Message?)]()
             guard let senderId = self?.senderId else { return }
-            users.forEach { user in
-                if let id = user.lastMessages[senderId] {
+            receivers.forEach { receiver in
+                if let id = receiver.lastMessages[senderId] {
                     FirebaseService.shared.fetchMessageById(id) { [weak self] message in
+                        guard let message = message else { return }
                         for (index, value) in arr.enumerated() {
-                            if value.0 == user {
+                            if value.1?.messageId == message.messageId {
                                 arr.remove(at: index)
-                                arr.insert((user,message), at: 0)
-                                self?.userMessage.accept(arr)
-                                return
-                            } else {
-                                arr.insert((user,message), at: 0)
-                                self?.userMessage.accept(arr)
-                                return
                             }
                         }
+                        if (message.senderId == senderId && message.senderDeleted) || (message.receiverId == senderId && message.receiverDeleted) || (message.senderDeleted && message.receiverDeleted) {
+                            arr.append((receiver,nil))
+                        } else {
+                            arr.insert((receiver,message), at: 0)
+                        }
+                        self?.userMessage.accept(arr)
                     }
                 } else {
-                    arr.append((user,nil))
+                    arr.append((receiver,nil))
                     self?.userMessage.accept(arr)
                     return
                 }
-                
             }
         })
         .disposed(by: self.disposeBag)
@@ -120,5 +119,10 @@ class ListPresenter {
             }
         })
         .disposed(by: self.disposeBag)
+    }
+    
+    // MARK: Check deleted or not
+    private func checkMessage(_ message: Message?) {
+        
     }
 }

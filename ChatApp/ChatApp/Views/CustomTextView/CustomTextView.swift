@@ -10,7 +10,6 @@ import UIKit
 class CustomTextView: UITextView {
     
     var didChange: ((String) -> Void)?
-    var shouldReturn: (() -> Void)?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -37,13 +36,6 @@ class CustomTextView: UITextView {
 }
 
 extension CustomTextView: UITextViewDelegate {
-    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        if text == "\n" {
-            self.shouldReturn?()
-        }
-        return true
-    }
-    
     func textViewDidChange(_ textView: UITextView) {
         self.didChange?(textView.text)
     }

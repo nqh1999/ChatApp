@@ -69,15 +69,16 @@ class DetailPresenter {
     }
     
     func deleteAllMessage() {
-//        guard let id = self.sender?.id else { return }
-//        self.allMessages.value.forEach { message in
-//            FirebaseService.shared.setMessageDelete(id, message)
-//        }
+        guard let id = self.sender?.id else { return }
+        self.allMessages.value.forEach { message in
+            FirebaseService.shared.setMessageDelete(id, message)
+        }
         self.view?.didGetDeleteMessageResult()
     }
     
     func sendMessage(_ text: String) {
         guard let receiver = self.receiver, let sender = self.sender else { return }
+        let text = text.trimmingCharacters(in: .whitespaces).trimmingCharacters(in: .newlines)
         if text.isEmpty { return }
         FirebaseService.shared.sendMessage(text, receiver, sender, self.senderLastMessage, self.receiverLastMessage)
         self.view?.didSendMessage()

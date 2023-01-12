@@ -165,10 +165,6 @@ final class DetailViewController: BaseViewController {
             self?.view.layoutIfNeeded()
             self?.showLikeButton(text.isEmpty)
         }
-        self.messageTextView.shouldReturn = { [weak self] in
-            self?.sendMessage(self?.messageTextView.text ?? "")
-            self?.messageTextView.text = ""
-        }
     }
     
     // MARK: Show reaction view
@@ -239,7 +235,6 @@ extension DetailViewController: DetailProtocol {
     }
     
     func didGetFetchMessageResult(_ messages: RxRelay.BehaviorRelay<[Message]>, _ sender: User?) {
-
         messages.bind(to: self.tableView.rx.items) { [weak self] tableview, index, message in
             guard let senderId = sender?.id else { return UITableViewCell() }
             if message.text.isEmpty {
@@ -262,7 +257,8 @@ extension DetailViewController: DetailProtocol {
                 }
                 return cell
             }
-        }.disposed(by: self.disposeBag)
+        }
+        .disposed(by: self.disposeBag)
         self.reloadData()
     }
     
