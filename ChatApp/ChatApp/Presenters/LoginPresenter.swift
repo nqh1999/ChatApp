@@ -38,7 +38,8 @@ class LoginPresenter {
     }
     
     // MARK: Check Login
-    func checkLogin(_ username: String, _ password: String) {
+    func checkLogin(_ username: String?, _ password: String) {
+        let username = username ?? ""
         ValidateService.shared.checkLogin(users.value, username, password) { [weak self] result, senderId in
             self?.view?.didGetLoginResult(result: result, senderId: senderId)
         }

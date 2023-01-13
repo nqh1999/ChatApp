@@ -24,13 +24,14 @@ class ForgotPasswordPresenter {
         self.view = view
     }
     
-    // MARK: - Data Handler Methods
+    // MARK: Fetch User
     func fetchUser() {
         FirebaseService.shared.fetchUser() { [weak self] users in
             self?.users = users
         }
     }
     
+    // MARK: Check Username
     func checkUsername(_ username: String) {
         ValidateService.shared.checkUsername(self.users, username) { [weak self] result, id in
             if let result = result {

@@ -6,18 +6,24 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 class CustomTextView: UITextView {
     
-    var didChange: ((String) -> Void)?
+    private let disposeBag = DisposeBag()
+    var textViewDidChange: ((String?) -> Void)?
     
     override func awakeFromNib() {
         super.awakeFromNib()
         self.layer.cornerRadius = 5
         self.layer.borderWidth = 0.25
-        self.delegate = self
         self.font = UIFont(name: "futura-medium", size: 17)
         self.addDoneButtonOnKeyboard()
+        self.rx.didChange.subscribe(onNext: { [weak self] _ in
+            self?.textViewDidChange?(self?.text)
+        })
+        .disposed(by: self.disposeBag)
     }
     
     private func addDoneButtonOnKeyboard() {
@@ -32,12 +38,6 @@ class CustomTextView: UITextView {
 
     @objc private func doneButtonAction() {
         self.resignFirstResponder()
-    }
-}
-
-extension CustomTextView: UITextViewDelegate {
-    func textViewDidChange(_ textView: UITextView) {
-        self.didChange?(textView.text)
     }
 }
 

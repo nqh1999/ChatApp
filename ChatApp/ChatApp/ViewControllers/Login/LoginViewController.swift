@@ -45,7 +45,7 @@ final class LoginViewController: BaseViewController {
     // MARK: Login
     private func login() {
         self.view.endEditing(true)
-        self.presenter.checkLogin(self.userNameTf.text ?? "", self.passwordTf.getPass())
+        self.presenter.checkLogin(self.userNameTf.text, self.passwordTf.getPass())
     }
     
     // MARK: Setup UI

@@ -200,6 +200,7 @@ class FirebaseService {
             return
         }
         
+        // delete message if sender and receiver both deleted
         self.db.collection(Constant.DB_MESSAGE).getDocuments { [weak self] querySnapshot, err in
             guard let querySnapshot = querySnapshot, err == nil else { return }
             querySnapshot.documents.map {

@@ -48,13 +48,15 @@ class SettingPresenter {
         }
     }
     
-    func setState() {
+    // MARK: Logout
+    func logout() {
         FirebaseService.shared.setStateIsActive(userId, false)
         FacebookService.shared.logout()
         GoogleService.shared.logout()
         ZaloService.shared.logout()
     }
     
+    // MARK: Fetch Img Url
     func setImgUrl(_ img: UIImage) {
         FirebaseService.shared.changeAvt(self.userId, img).subscribe(onNext: { [weak self] in
             self?.view?.didGetSetImgResult(img)
@@ -62,6 +64,7 @@ class SettingPresenter {
         .disposed(by: self.disposeBag)
     }
     
+    // MARK: Change Name
     func changeName(_ name: String) {
         FirebaseService.shared.changeName(self.userId, name)
     }

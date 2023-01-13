@@ -92,7 +92,7 @@ final class DetailViewController: BaseViewController {
     override func deleteMessage() {
         super.deleteMessage()
         self.messageView.isHidden = false
-        self.messageView.showDeleteMessage("Delete all message?")
+        self.messageView.showDeleteMessage()
         self.messageView.confirm = { [weak self] _ in
             self?.spinner.isHidden = false
             self?.spinner.startAnimating()
@@ -158,7 +158,8 @@ final class DetailViewController: BaseViewController {
     
     // MARK: Setup TextView
     private func setupTextView() {
-        self.messageTextView.didChange = { [weak self] text in
+        self.messageTextView.textViewDidChange = { [weak self] text in
+            let text = text ?? ""
             guard let contentHeight = self?.messageTextView.contentSize.height else { return }
             self?.heightConstraint.constant = (contentHeight < 130) ? contentHeight : 130
             self?.view.layoutIfNeeded()
@@ -217,7 +218,6 @@ extension DetailViewController: UIImagePickerControllerDelegate, UINavigationCon
 }
 
 extension DetailViewController: UITableViewDelegate {
-    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let message = self.presenter.getMessageBy(index: indexPath.row)
         if message.text.isEmpty {

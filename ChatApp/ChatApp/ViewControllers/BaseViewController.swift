@@ -22,15 +22,17 @@ class BaseViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification , object:nil)
     }
     
-    // MARK: - Setting UI Methods
+    // MARK: Set title view
     func setTitleView(_ user: User) {
         self.titleView.setTitleView(with: user)
     }
     
+    // MARK: Set back button
     func setBackButton() {
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "arrow.left"), style: .plain, target: self, action: #selector(backToPreVC))
     }
     
+    // MARK: Set delete button
     func setDeleteButton() {
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "trash.fill"), style: .plain, target: self, action: #selector(deleteMessage))
     }

@@ -50,7 +50,7 @@ class DetailPresenter {
         return self.allMessages.value[index]
     }
     
-    // MARK: - Data Handler Methods
+    // MARK: - Fetch Message
     func fetchMessage() {
         FirebaseService.shared.fetchMessage { [weak self] messages in
             guard let sender = self?.sender, let receiver = self?.receiver else { return }
@@ -63,11 +63,13 @@ class DetailPresenter {
         self.view?.didGetFetchMessageResult(self.allMessages, self.sender)
     }
     
+    // MARK: Set Message State
     func setState() {
         guard let sender = self.sender, let receiver = self.receiver else { return }
         FirebaseService.shared.setStateUnreadMessage(sender, receiver)
     }
     
+    // MARK: Delete Message
     func deleteAllMessage() {
         guard let id = self.sender?.id else { return }
         self.allMessages.value.forEach { message in
@@ -76,6 +78,7 @@ class DetailPresenter {
         self.view?.didGetDeleteMessageResult()
     }
     
+    // MARK: Send Message
     func sendMessage(_ text: String) {
         guard let receiver = self.receiver, let sender = self.sender else { return }
         let text = text.trimmingCharacters(in: .whitespaces).trimmingCharacters(in: .newlines)
@@ -84,6 +87,7 @@ class DetailPresenter {
         self.view?.didSendMessage()
     }
     
+    // MARK: Send Picture
     func sendImg(_ img: UIImage) {
         guard let receiver = self.receiver, let sender = self.sender else { return }
         FirebaseService.shared.sendImg(img, receiver, sender, self.senderLastMessage, self.receiverLastMessage).subscribe(onCompleted: { [weak self] in
@@ -92,6 +96,7 @@ class DetailPresenter {
         .disposed(by: self.disposeBag)
     }
     
+    // MARK: Send reaction
     func sendReaction(_ id: String, _ reaction: String) {
         FirebaseService.shared.sendReaction(id, reaction)
     }

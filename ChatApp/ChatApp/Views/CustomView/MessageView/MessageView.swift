@@ -45,9 +45,9 @@ class MessageView: UIView {
         self.messageLabel.text = message
     }
     
-    func showDeleteMessage(_ message: String) {
+    func showDeleteMessage() {
         self.cancelButton.isHidden = false
-        self.messageLabel.text = message
+        self.messageLabel.text = "Delete all message?"
     }
     
     func showChangeNameMessage(completed: @escaping (String) -> Void) {

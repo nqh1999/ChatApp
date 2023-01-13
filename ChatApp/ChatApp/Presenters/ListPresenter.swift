@@ -66,7 +66,7 @@ class ListPresenter {
         self.dataHandler()
     }
     
-    // MARK: Handler Data
+    // MARK: Map to [(User,Message)]
     private func dataHandler() {
         self.searchData.subscribe(onNext: { [weak self] receivers in
             var arr = [(User,Message?)]()
@@ -98,6 +98,7 @@ class ListPresenter {
         self.view?.didFetchData(self.userMessage)
     }
     
+    // MARK: Search User
     func searchUserWithText(_ text: String?) {
         let text = text ?? ""
         if text.isEmpty {

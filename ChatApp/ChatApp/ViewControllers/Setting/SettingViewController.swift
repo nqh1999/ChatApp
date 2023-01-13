@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 final class SettingViewController: BaseViewController {
     
@@ -19,8 +21,10 @@ final class SettingViewController: BaseViewController {
     @IBOutlet private weak var editName: UIButton!
     @IBOutlet private weak var spinner: UIActivityIndicatorView!
     @IBOutlet private weak var messageView: MessageView!
-    lazy private var presenter = SettingPresenter(view: self)
     private var imgPickerView = UIImagePickerController()
+    
+    lazy private var presenter = SettingPresenter(view: self)
+    private let disposeBag = DisposeBag()
     
     // MARK: - Lifecycle Methods
     override func viewDidLoad() {
@@ -38,7 +42,7 @@ final class SettingViewController: BaseViewController {
         self.presenter.setUserId(id)
     }
     
-    // MARK: - UI Handler Methods
+    // MARK: Setup UI
     private func setupUI() {
         self.imgView.layer.cornerRadius = self.imgView.frame.width / 2
         self.imgView.layer.borderWidth = 2
@@ -47,8 +51,10 @@ final class SettingViewController: BaseViewController {
         self.navigationItem.titleView = nil
         self.title = "Setting"
         self.messageView.isHidden = true
+        self.setupButton()
     }
     
+    // MARK: Setup Picker View
     private func setupPickerView() {
         self.imgPickerView.delegate = self
         self.imgPickerView.sourceType = .photoLibrary
@@ -56,13 +62,14 @@ final class SettingViewController: BaseViewController {
         self.present(self.imgPickerView, animated: true)
     }
     
-    // MARK: - Data Handler Methods
+    // MARK: Setup Data
     private func setupData() {
         UIView.animate(withDuration: 0, delay: 0) { [weak self] in
             self?.presenter.fetchUser()
         }
     }
     
+    // MARK: Change name
     private func changeName(_ name: String) {
         guard !name.isEmpty else { return }
         self.presenter.changeName(name)
@@ -70,36 +77,40 @@ final class SettingViewController: BaseViewController {
         self.messageView.isHidden = true
     }
     
+    // MARK: Set Image
     private func setImage(_ img: UIImage) {
         self.presenter.setImgUrl(img)
     }
     
-    // MARK: - Button Action
-    @IBAction func logout(_ sender: Any) {
-        self.presenter.setState()
-        (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first?.rootViewController = UINavigationController(rootViewController: LoginViewController())
-    }
-    
-    @IBAction private func chooseImg(_ sender: Any) {
-        self.setupPickerView()
-    }
-    
-    @IBAction private func editName(_ sender: Any) {
-        self.messageView.isHidden = false
-        self.messageView.showChangeNameMessage { name in
-            self.changeName(name)
-        }
-        self.messageView.confirm = { [weak self] name in
-            self?.changeName(name)
-        }
-    }
-    
-    @IBAction private func goToEditProfileView(_ sender: Any) {
+    // MARK: Setup Button
+    private func setupButton() {
+        self.logoutButton.rx.tap.subscribe(onNext: { [weak self] _ in
+            self?.presenter.logout()
+            (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first?.rootViewController = UINavigationController(rootViewController: LoginViewController())
+        })
+        .disposed(by: self.disposeBag)
         
-    }
-    
-    @IBAction private func goToChangePasswordView(_ sender: Any) {
-        self.navigationController?.pushViewController(ChangePasswordViewController(self.presenter.getUser()), animated: true)
+        self.chooseImageButton.rx.tap.subscribe(onNext: { [weak self] _ in
+            self?.setupPickerView()
+        })
+        .disposed(by: self.disposeBag)
+        
+        self.editName.rx.tap.subscribe(onNext: { [weak self] _ in
+            self?.presenter.logout()
+            self?.messageView.isHidden = false
+            self?.messageView.showChangeNameMessage { [weak self] name in
+                self?.changeName(name)
+            }
+            self?.messageView.confirm = { [weak self] name in
+                self?.changeName(name)
+            }
+        })
+        .disposed(by: self.disposeBag)
+        
+        self.changePasswordButton.rx.tap.subscribe(onNext: { [weak self] _ in
+            self?.navigationController?.pushViewController(ChangePasswordViewController(self?.presenter.getUser()), animated: true)
+        })
+        .disposed(by: self.disposeBag)
     }
 }
 

@@ -42,7 +42,7 @@ final class RegisterViewController: BaseViewController {
     
     // MARK: Send register data
     private func sendRegisterData() {
-        self.presenter.register(self.nameTf.text ?? "", self.usernameTf.text ?? "", self.passwordTf.text ?? "")
+        self.presenter.register(self.nameTf.text, self.usernameTf.text, self.passwordTf.text)
     }
     
     // MARK: Send Img

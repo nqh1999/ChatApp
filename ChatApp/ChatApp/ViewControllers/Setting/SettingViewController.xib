@@ -13,7 +13,6 @@
                 <outlet property="changePasswordButton" destination="xmU-P4-sdN" id="zf6-Gr-cQK"/>
                 <outlet property="chooseImageButton" destination="cQ9-Bv-Rf3" id="7pn-7L-lTi"/>
                 <outlet property="editName" destination="kiT-ic-S7B" id="1zy-Ne-luZ"/>
-                <outlet property="editProfileButton" destination="avp-JJ-ydz" id="OMh-D7-bfG"/>
                 <outlet property="imgView" destination="7XB-vs-m5T" id="Wo9-wD-bqu"/>
                 <outlet property="logoutButton" destination="f6U-Q2-D67" id="CSs-JQ-Uyl"/>
                 <outlet property="messageView" destination="jwR-8e-6Yx" id="GMn-k3-aQg"/>
@@ -58,54 +57,23 @@
                                             <buttonConfiguration key="configuration" style="plain" image="highlighter" catalog="system">
                                                 <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </buttonConfiguration>
-                                            <connections>
-                                                <action selector="editName:" destination="-1" eventType="touchUpInside" id="4vU-Fv-X7I"/>
-                                            </connections>
                                         </button>
                                     </subviews>
                                 </stackView>
                             </subviews>
                         </stackView>
-                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="bfo-00-i8o">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xmU-P4-sdN" customClass="CustomButton" customModule="ChatApp" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="190" width="280" height="45"/>
-                            <subviews>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="avp-JJ-ydz" customClass="CustomButton" customModule="ChatApp" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="0.0" width="280" height="45"/>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="45" id="6nQ-2m-p5k"/>
-                                    </constraints>
-                                    <state key="normal" title="Button"/>
-                                    <buttonConfiguration key="configuration" style="plain" title="Edit Profile">
-                                        <fontDescription key="titleFontDescription" name="Futura-Medium" family="Futura" pointSize="18"/>
-                                        <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    </buttonConfiguration>
-                                    <connections>
-                                        <action selector="goToEditProfileView:" destination="-1" eventType="touchUpInside" id="IdJ-SQ-fXf"/>
-                                    </connections>
-                                </button>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xmU-P4-sdN" customClass="CustomButton" customModule="ChatApp" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="0.0" width="280" height="45"/>
-                                    <color key="backgroundColor" white="0.8439360119" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="45" id="hg0-zM-Rbq"/>
-                                    </constraints>
-                                    <state key="normal" title="Button"/>
-                                    <buttonConfiguration key="configuration" style="plain" title="Change password">
-                                        <fontDescription key="titleFontDescription" name="Futura-Medium" family="Futura" pointSize="18"/>
-                                        <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    </buttonConfiguration>
-                                    <connections>
-                                        <action selector="goToChangePasswordView:" destination="-1" eventType="touchUpInside" id="bij-zx-4aM"/>
-                                    </connections>
-                                </button>
-                            </subviews>
-                            <variation key="default">
-                                <mask key="subviews">
-                                    <exclude reference="avp-JJ-ydz"/>
-                                </mask>
-                            </variation>
-                        </stackView>
+                            <color key="backgroundColor" white="0.8439360119" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="45" id="hg0-zM-Rbq"/>
+                            </constraints>
+                            <state key="normal" title="Button"/>
+                            <buttonConfiguration key="configuration" style="plain" title="Change password">
+                                <fontDescription key="titleFontDescription" name="Futura-Medium" family="Futura" pointSize="18"/>
+                                <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </buttonConfiguration>
+                        </button>
                     </subviews>
                 </stackView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cQ9-Bv-Rf3">
@@ -117,9 +85,6 @@
                     <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <state key="normal" title="Button"/>
                     <buttonConfiguration key="configuration" style="plain" image="camera.fill" catalog="system"/>
-                    <connections>
-                        <action selector="chooseImg:" destination="-1" eventType="touchUpInside" id="v6i-Q9-TQ0"/>
-                    </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f6U-Q2-D67" customClass="CustomButton" customModule="ChatApp" customModuleProvider="target">
                     <rect key="frame" x="20" y="503" width="280" height="45"/>
@@ -132,9 +97,6 @@
                         <fontDescription key="titleFontDescription" name="Futura-Medium" family="Futura" pointSize="18"/>
                         <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </buttonConfiguration>
-                    <connections>
-                        <action selector="logout:" destination="-1" eventType="touchUpInside" id="VxS-8l-xnl"/>
-                    </connections>
                 </button>
                 <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Bbo-a8-LeO">
                     <rect key="frame" x="150" y="80" width="20" height="20"/>
