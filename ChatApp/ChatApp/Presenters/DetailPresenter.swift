@@ -86,9 +86,10 @@ class DetailPresenter {
     
     func sendImg(_ img: UIImage) {
         guard let receiver = self.receiver, let sender = self.sender else { return }
-        FirebaseService.shared.sendImg(img, receiver, sender, self.senderLastMessage, self.receiverLastMessage) { [weak self] in
+        FirebaseService.shared.sendImg(img, receiver, sender, self.senderLastMessage, self.receiverLastMessage).subscribe(onCompleted: { [weak self] in
             self?.view?.didGetSendImageResult()
-        }
+        })
+        .disposed(by: self.disposeBag)
     }
     
     func sendReaction(_ id: String, _ reaction: String) {

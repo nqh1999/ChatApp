@@ -7,7 +7,6 @@
 
 import UIKit
 import RxSwift
-import RxRelay
 
 protocol RegisterProtocol: AnyObject {
     func didGetRegisterResult(result: String?)
@@ -18,7 +17,7 @@ class RegisterPresenter {
     
     // MARK: - Properties
     private weak var view: RegisterProtocol?
-    private let users = BehaviorRelay<[User]>(value: [])
+    private var users = [User]()
     private var imgUrl: String = ""
     private let disposeBag = DisposeBag()
     
@@ -30,7 +29,7 @@ class RegisterPresenter {
     // MARK: - Data Handler Methods
     func fetchUser() {
         FirebaseService.shared.fetchUser { [weak self] users in
-            self?.users.accept(users)
+            self?.users = users
         }
     }
     
@@ -42,18 +41,16 @@ class RegisterPresenter {
     }
     
     func register(_ name: String,_ username: String,_ password: String) {
-        self.users.subscribe(onNext: { [weak self] users in
-            guard let url = self?.imgUrl else { return }
-            ValidateService.shared.checkRegisterData(users, name, username, password, url) { [weak self] result in
-                if let result = result {
-                    self?.view?.didGetRegisterResult(result: result)
-                } else {
-                    FirebaseService.shared.register(name, username, password, url) { [weak self] in
-                        self?.view?.didGetRegisterResult(result: nil)
-                    }
-                }
+        ValidateService.shared.checkRegisterData(self.users, name, username, password, self.imgUrl) { [weak self] result in
+            if let result = result {
+                self?.view?.didGetRegisterResult(result: result)
+            } else {
+                guard let url = self?.imgUrl else { return }
+                FirebaseService.shared.register(name, username, password, url).subscribe(onCompleted: { [weak self] in
+                    self?.view?.didGetRegisterResult(result: nil)
+                })
+                .disposed(by: self!.disposeBag)
             }
-        })
-        .disposed(by: self.disposeBag)
+        }
     }
 }

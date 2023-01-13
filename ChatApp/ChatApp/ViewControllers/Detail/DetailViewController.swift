@@ -59,10 +59,9 @@ final class DetailViewController: BaseViewController {
     
     // MARK: Reload TableView
     private func reloadData() {
-        DispatchQueue.main.async { [weak self] in
-            self?.tableView.reloadData()
-            self?.scrollToBottom()
-        }
+//        self.tableView.reloadData()
+        self.view.layoutIfNeeded()
+        self.scrollToBottom()
     }
     
     // MARK: Setup ReactionView
@@ -117,10 +116,10 @@ final class DetailViewController: BaseViewController {
     
     // MARK: Scroll to bottom
     private func scrollToBottom() {
-        DispatchQueue.main.async {
-            guard self.presenter.getNumberOfMessage() > 0 else { return }
-            let indexPath = IndexPath(row: self.presenter.getNumberOfMessage()-1, section: 0)
-            self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
+        DispatchQueue.main.async { [weak self] in
+            guard let count = self?.presenter.getNumberOfMessage(), count > 0 else { return }
+            let indexPath = IndexPath(row: count-1, section: 0)
+            self?.tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
         }
     }
     
@@ -259,7 +258,11 @@ extension DetailViewController: DetailProtocol {
             }
         }
         .disposed(by: self.disposeBag)
-        self.reloadData()
+        
+        messages.subscribe(onNext: { [weak self] _ in
+            self?.reloadData()
+        })
+        .disposed(by: self.disposeBag)
     }
     
     func didGetDeleteMessageResult() {

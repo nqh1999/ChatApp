@@ -77,9 +77,10 @@ class LoginPresenter {
                 self?.view?.didGetLoginResult(result: true, senderId: id)
                 return
             }
-            FirebaseService.shared.register(name, id, "", url) { [weak self] in
+            FirebaseService.shared.register(name, id, "", url).subscribe(onCompleted: { [weak self] in
                 self?.view?.didGetLoginResult(result: true, senderId: id)
-            }
+            })
+            .disposed(by: self!.disposeBag)
         })
         .disposed(by: self.disposeBag)
     }

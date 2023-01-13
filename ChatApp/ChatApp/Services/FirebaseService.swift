@@ -7,6 +7,7 @@
 
 import Firebase
 import FirebaseAuth
+import RxSwift
 
 class FirebaseService {
     
@@ -16,16 +17,19 @@ class FirebaseService {
     private var storage = Storage.storage().reference()
     
     // MARK: Register
-    func register(_ name: String,_ username: String,_ password: String,_ imgUrl: String, completed: @escaping () -> Void) {
-        self.db.collection(Constant.DB_USER).document(username).setData([
-            "id": username,
-            "username": username,
-            "password": password,
-            "name": name,
-            "imgUrl": imgUrl,
-            "lastMessageId": ""
-        ]) { _ in
-            completed()
+    func register(_ name: String,_ username: String,_ password: String,_ imgUrl: String) -> Observable<Void> {
+        return Observable.create { [weak self] observer in
+            self?.db.collection(Constant.DB_USER).document(username).setData([
+                "id": username,
+                "username": username,
+                "password": password,
+                "name": name,
+                "imgUrl": imgUrl,
+                "lastMessageId": ""
+            ]) { _ in
+                observer.onCompleted()
+            }
+            return Disposables.create()
         }
     }
     
@@ -77,17 +81,20 @@ class FirebaseService {
     
     
     // MARK: change avt
-    func changeAvt(_ id: String,_ img: UIImage, completed: @escaping () -> Void) {
-        let img = img.jpegData(compressionQuality: 0.5)!
-        let keyImg = NSUUID().uuidString
-        let imgFolder = storage.child(Constant.DB_IMAGE_AVATAR).child(keyImg)
-        storage.child(Constant.DB_IMAGE_AVATAR).child(keyImg).putData(img) { [weak self] _ , err in
-            guard err == nil else { return }
-            imgFolder.downloadURL { [weak self] url, err in
-                guard err == nil, let url = url else { return }
-                self?.db.collection(Constant.DB_USER).document(id).updateData(["imgUrl" : url.absoluteString])
-                completed()
+    func changeAvt(_ id: String,_ img: UIImage) -> Observable<Void> {
+        return Observable.create { [weak self] observer in
+            let img = img.jpegData(compressionQuality: 0.5)!
+            let keyImg = NSUUID().uuidString
+            let imgFolder = self?.storage.child(Constant.DB_IMAGE_AVATAR).child(keyImg)
+            self?.storage.child(Constant.DB_IMAGE_AVATAR).child(keyImg).putData(img) { [weak self] _ , err in
+                guard err == nil else { return }
+                imgFolder?.downloadURL { [weak self] url, err in
+                    guard err == nil, let url = url else { return }
+                    self?.db.collection(Constant.DB_USER).document(id).updateData(["imgUrl" : url.absoluteString])
+                    observer.onCompleted()
+                }
             }
+            return Disposables.create()
         }
     }
     
@@ -97,9 +104,12 @@ class FirebaseService {
     }
     
     // MARK: change password
-    func changePassword(_ id: String,_ password: String, completed: @escaping () -> Void) {
-        self.db.collection(Constant.DB_USER).document(id).updateData(["password": password]) { _ in
-            completed()
+    func changePassword(_ id: String,_ password: String) -> Observable<Void> {
+        return Observable.create { [weak self] observer in
+            self?.db.collection(Constant.DB_USER).document(id).updateData(["password": password]) { _ in
+                observer.onCompleted()
+            }
+            return Disposables.create()
         }
     }
     
@@ -125,34 +135,37 @@ class FirebaseService {
     }
     
     // MARK: send image
-    func sendImg(_ img: UIImage,_ receiver: User,_ sender: User, _ senderLastMessages: [String: String], _ receiverLastMessages: [String: String], completed: @escaping () -> Void) {
-        let ratio = img.size.width / img.size.height
-        let img = img.jpegData(compressionQuality: 0.5)!
-        let keyImg = NSUUID().uuidString
-        let imgFolder = storage.child(Constant.DB_IMAGE_MESSAGE).child(keyImg)
-        storage.child(Constant.DB_IMAGE_MESSAGE).child(keyImg).putData(img) { [weak self] _ , err in
-            guard err == nil else { return }
-            imgFolder.downloadURL { url, err in
-                guard err == nil, let url = url else { return }
-                guard let autoKey = self?.db.collection(Constant.DB_MESSAGE).document().documentID else { return }
-                guard let docRef = self?.db.collection(Constant.DB_MESSAGE).document(autoKey) else { return }
-                let message: [String: Any] = [
-                    "messageId": autoKey,
-                    "receiverId": receiver.id,
-                    "senderId": sender.id,
-                    "text": "",
-                    "img": url.absoluteString,
-                    "ratio": ratio,
-                    "time": Date.now.timeIntervalSince1970,
-                    "read": false,
-                    "reaction": "",
-                    "senderDeleted": false,
-                    "receiverDeleted": false
-                ]
-                docRef.setData(message)
-                self?.updateMessage(docRef.documentID, sender, receiver, senderLastMessages, receiverLastMessages)
+    func sendImg(_ img: UIImage,_ receiver: User,_ sender: User, _ senderLastMessages: [String: String], _ receiverLastMessages: [String: String]) -> Observable<Void> {
+        return Observable.create { [weak self] observer in
+            let ratio = img.size.width / img.size.height
+            let img = img.jpegData(compressionQuality: 0.5)!
+            let keyImg = NSUUID().uuidString
+            let imgFolder = self?.storage.child(Constant.DB_IMAGE_MESSAGE).child(keyImg)
+            self?.storage.child(Constant.DB_IMAGE_MESSAGE).child(keyImg).putData(img) { [weak self] _ , err in
+                guard err == nil else { return }
+                imgFolder?.downloadURL { url, err in
+                    guard err == nil, let url = url else { return }
+                    guard let autoKey = self?.db.collection(Constant.DB_MESSAGE).document().documentID else { return }
+                    guard let docRef = self?.db.collection(Constant.DB_MESSAGE).document(autoKey) else { return }
+                    let message: [String: Any] = [
+                        "messageId": autoKey,
+                        "receiverId": receiver.id,
+                        "senderId": sender.id,
+                        "text": "",
+                        "img": url.absoluteString,
+                        "ratio": ratio,
+                        "time": Date.now.timeIntervalSince1970,
+                        "read": false,
+                        "reaction": "",
+                        "senderDeleted": false,
+                        "receiverDeleted": false
+                    ]
+                    docRef.setData(message)
+                    self?.updateMessage(docRef.documentID, sender, receiver, senderLastMessages, receiverLastMessages)
+                }
+                observer.onCompleted()
             }
-            completed()
+            return Disposables.create()
         }
     }
     

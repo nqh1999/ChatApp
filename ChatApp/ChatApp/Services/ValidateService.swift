@@ -8,7 +8,7 @@
 import Foundation
 
 class ValidateService {
-
+    
     static let shared = ValidateService()
     
     // MARK: Check login data
@@ -26,6 +26,14 @@ class ValidateService {
     
     // MARK: Check register data
     func checkRegisterData(_ users: [User], _ name: String,_ username: String,_ password: String, _ imgUrl: String, completed: (String?) -> Void) {
+        
+        if users.contains(where: { user in
+            user.username == username
+        }) {
+            completed(Constant.MESSAGE_USERNAME_EXIST)
+            return
+        }
+        
         if name.isEmpty {
             completed(Constant.MESSAGE_NAME_IS_EMPTY)
             return
@@ -53,13 +61,6 @@ class ValidateService {
         
         if imgUrl.isEmpty {
             completed(Constant.MESSAGE_IMAGE_IS_EMPTY)
-            return
-        }
-        
-        if users.contains(where: { user in
-            user.username == username
-        }) {
-            completed(Constant.MESSAGE_USERNAME_EXIST)
             return
         }
         

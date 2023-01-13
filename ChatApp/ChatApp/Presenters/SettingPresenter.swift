@@ -56,9 +56,10 @@ class SettingPresenter {
     }
     
     func setImgUrl(_ img: UIImage) {
-        FirebaseService.shared.changeAvt(self.userId, img) { [weak self] in
+        FirebaseService.shared.changeAvt(self.userId, img).subscribe(onNext: { [weak self] in
             self?.view?.didGetSetImgResult(img)
-        }
+        })
+        .disposed(by: self.disposeBag)
     }
     
     func changeName(_ name: String) {
