@@ -14,7 +14,6 @@ protocol ListProtocol: AnyObject {
 }
 
 class ListPresenter {
-    
     // MARK: - Properties
     private weak var view: ListProtocol?
     
@@ -29,6 +28,11 @@ class ListPresenter {
     // MARK: - Init
     init(view: ListProtocol) {
         self.view = view
+        
+        self.receivers.subscribe(onNext: { [weak self] users in
+            self?.searchData.accept(users)
+        })
+        .disposed(by: self.disposeBag)
     }
     
     // MARK: - Getter - Setter
@@ -54,7 +58,6 @@ class ListPresenter {
                 user.id != self?.senderId
             }
             self?.receivers.accept(tmp)
-            self?.searchData.accept(tmp)
         }
         
         FirebaseService.shared.fetchUser() { [weak self] users in
@@ -71,26 +74,30 @@ class ListPresenter {
         self.searchData.subscribe(onNext: { [weak self] receivers in
             var arr = [(User,Message?)]()
             guard let senderId = self?.senderId else { return }
-            receivers.forEach { receiver in
-                if let id = receiver.lastMessages[senderId] {
-                    FirebaseService.shared.fetchMessageById(id) { [weak self] message in
-                        guard let message = message else { return }
-                        for (index, value) in arr.enumerated() {
-                            if value.1?.messageId == message.messageId {
-                                arr.remove(at: index)
+            if receivers.isEmpty {
+                self?.userMessage.accept([])
+            } else {
+                receivers.forEach { receiver in
+                    if let id = receiver.lastMessages[senderId] {
+                        FirebaseService.shared.fetchMessageById(id) { [weak self] message in
+                            guard let message = message else { return }
+                            for (index, value) in arr.enumerated() {
+                                if value.1?.messageId == message.messageId {
+                                    arr.remove(at: index)
+                                }
                             }
+                            if (message.senderId == senderId && message.senderDeleted) || (message.receiverId == senderId && message.receiverDeleted) || (message.senderDeleted && message.receiverDeleted) {
+                                arr.append((receiver,nil))
+                            } else {
+                                arr.insert((receiver,message), at: 0)
+                            }
+                            self?.userMessage.accept(arr)
                         }
-                        if (message.senderId == senderId && message.senderDeleted) || (message.receiverId == senderId && message.receiverDeleted) || (message.senderDeleted && message.receiverDeleted) {
-                            arr.append((receiver,nil))
-                        } else {
-                            arr.insert((receiver,message), at: 0)
-                        }
+                    } else {
+                        arr.append((receiver,nil))
                         self?.userMessage.accept(arr)
+                        return
                     }
-                } else {
-                    arr.append((receiver,nil))
-                    self?.userMessage.accept(arr)
-                    return
                 }
             }
         })

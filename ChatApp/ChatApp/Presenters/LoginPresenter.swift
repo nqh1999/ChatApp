@@ -27,7 +27,7 @@ class LoginPresenter {
     
     // MARK: Fetch User
     func fetchUser() {
-        FirebaseService.shared.fetchUser() { [weak self] users in
+        FirebaseService.shared.fetchUser { [weak self] users in
             self?.users.accept(users)
         }
     }
