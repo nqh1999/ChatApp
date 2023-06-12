@@ -1,0 +1,3 @@
+${PODS_ROOT}/Target Support Files/ZaloSDK/ZaloSDK-xcframeworks.sh
+${PODS_ROOT}/ZaloSDK/ZaloSDK/Frameworks/ZaloSDKCoreKit.xcframework
+${PODS_ROOT}/ZaloSDK/ZaloSDK/Frameworks/ZaloSDK.xcframework

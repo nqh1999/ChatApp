@@ -16,7 +16,6 @@ final class ListViewController: BaseViewController {
     @IBOutlet private weak var searchBar: BaseTextField!
     @IBOutlet private weak var tableView: UITableView!
     lazy private var presenter = ListPresenter(view: self)
-    private let disposeBag = DisposeBag()
     
     // MARK: - Lifecycle Methods
     override func viewDidLoad() {

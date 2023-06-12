@@ -24,7 +24,6 @@ final class SettingViewController: BaseViewController {
     private var imgPickerView = UIImagePickerController()
     
     lazy private var presenter = SettingPresenter(view: self)
-    private let disposeBag = DisposeBag()
     
     // MARK: - Lifecycle Methods
     override func viewDidLoad() {

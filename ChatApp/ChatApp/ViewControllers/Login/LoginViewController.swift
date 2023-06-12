@@ -21,11 +21,9 @@ final class LoginViewController: BaseViewController {
     @IBOutlet private weak var loginGoogleButton: UIButton!
     @IBOutlet private weak var userNameTf: BaseTextField!
     @IBOutlet private weak var passwordTf: PasswordTextField!
-    @IBOutlet private weak var messageView: MessageView!
     
     lazy private var presenter = LoginPresenter(view: self)
-    private let disposeBag = DisposeBag()
-    
+    private var viewModel = LoginViewModel()
     // MARK: - Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,7 +48,6 @@ final class LoginViewController: BaseViewController {
     
     // MARK: Setup UI
     private func setupUI() {
-        self.messageView.isHidden = true
         self.navigationController?.navigationBar.isHidden = true
         self.setupButton()
         self.setupTextField()
@@ -74,6 +71,9 @@ final class LoginViewController: BaseViewController {
     
     // MARK: Setup Button
     private func setupButton() {
+        self.loginZaloButton.setImage(Asset.zalo.image.withRenderingMode(.alwaysOriginal), for: .normal)
+        self.loginGoogleButton.setImage(Asset.google.image.withRenderingMode(.alwaysOriginal), for: .normal)
+        self.loginFBButton.setImage(Asset.facebook.image.withRenderingMode(.alwaysOriginal), for: .normal)
         self.showPasswordButton.layer.cornerRadius = 1
         self.showPasswordButton.layer.borderWidth = 1
         self.loginButton.rx.tap.subscribe(onNext: { [weak self] _ in
@@ -104,10 +104,9 @@ final class LoginViewController: BaseViewController {
         .disposed(by: self.disposeBag)
         
         self.loginGoogleButton.rx.tap.subscribe(onNext: { [weak self] _ in
-            guard let vc = self else { return }
-            self?.presenter.googleLogin(vc)
-        })
-        .disposed(by: self.disposeBag)
+            guard let self = self else { return }
+            self.loginWithGoogle()
+        }).disposed(by: self.disposeBag)
         
         self.showPasswordButton.rx.tap.subscribe(onNext: { [weak self] _ in
             guard let state = self?.passwordTf.getState() else { return }
@@ -116,6 +115,13 @@ final class LoginViewController: BaseViewController {
             self?.showPasswordButton.setImage(img, for: .normal)
         })
         .disposed(by: self.disposeBag)
+    }
+    
+    // MARK: - Login Social
+    private func loginWithGoogle() {
+        GoogleService.shared.login(self).subscribe(onNext: { [weak self] name, id, url in
+            self?.viewModel.register(name, id, url)
+        }).disposed(by: self.disposeBag)
     }
     
     // MARK: Setup Tabbar
@@ -136,14 +142,13 @@ final class LoginViewController: BaseViewController {
 // MARK: - Extension
 extension LoginViewController: LoginProtocol {
     func didGetLoginResult(result: Bool, senderId: String) {
-        self.messageView.isHidden = false
         if !result {
-            self.messageView.showMessage(Constant.MESSAGE_LOGIN_FAILED)
+            ToastUtil.show(L10n.loginFailed)
         } else {
-            self.messageView.showMessage(Constant.MESSAGE_LOGIN_SUCCESS)
-            self.messageView.confirm = { [weak self] _ in
-                self?.presenter.setState(senderId)
-                self?.createTabBar(senderId)
+            ToastUtil.show(L10n.loginSuccess)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+                self.presenter.setState(senderId)
+                self.createTabBar(senderId)
             }
         }
     }

@@ -28,7 +28,6 @@ final class DetailViewController: BaseViewController {
     @IBOutlet private weak var heightConstraint: NSLayoutConstraint!
     
     lazy private var presenter = DetailPresenter(view: self)
-    lazy private var disposeBag = DisposeBag()
     
     // MARK: - Lifecycle Methods
     override func viewDidLoad() {

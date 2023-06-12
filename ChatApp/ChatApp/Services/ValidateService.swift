@@ -8,7 +8,6 @@
 import Foundation
 
 class ValidateService {
-    
     static let shared = ValidateService()
     
     // MARK: Check login data
@@ -30,37 +29,37 @@ class ValidateService {
         if users.contains(where: { user in
             user.username == username
         }) {
-            completed(Constant.MESSAGE_USERNAME_EXIST)
+            completed(L10n.usernameIsExist)
             return
         }
         
         if name.isEmpty {
-            completed(Constant.MESSAGE_NAME_IS_EMPTY)
+            completed(L10n.enterName)
             return
         }
         
         if username.isEmpty {
-            completed(Constant.MESSAGE_USERNAME_IS_EMPTY)
+            completed(L10n.enterUsername)
             return
         }
         
         if !username.isValidEmail {
-            completed(Constant.MESSAGE_INVALID_USERNAME)
+            completed(L10n.invalidUsername)
             return
         }
         
         if password.isEmpty {
-            completed(Constant.MESSAGE_PASSWORD_IS_EMPTY)
+            completed(L10n.enterPassword)
             return
         }
         
         if password.count < 6 {
-            completed(Constant.MESSAGE_INVALID_PASSWORD)
+            completed(L10n.invalidPassword)
             return
         }
         
         if imgUrl.isEmpty {
-            completed(Constant.MESSAGE_IMAGE_IS_EMPTY)
+            completed(L10n.enterImage)
             return
         }
         
@@ -70,32 +69,32 @@ class ValidateService {
     // MARK: Check change password data
     func checkChangePasswordData(_ user: User, _ currentPassword: String, _ newPassword: String, _ reEnterNewPassword: String, completed: (String?) -> Void) {
         if currentPassword.isEmpty {
-            completed(Constant.MESSAGE_CURRENT_PASSWORD_IS_EMPTY)
+            completed(L10n.enterCurrentPassword)
             return
         }
         
         if currentPassword != user.password {
-            completed(Constant.MESSAGE_INCORRECT)
+            completed(L10n.incorrectCurrentPassword)
             return
         }
         
         if newPassword.isEmpty {
-            completed(Constant.MESSAGE_NEW_PASSWORD_IS_EMPTY)
+            completed(L10n.enterNewPassword)
             return
         }
         
         if reEnterNewPassword.isEmpty {
-            completed(Constant.MESSAGE_RE_ENTER_PASSWORD_IS_EMPTY)
+            completed(L10n.enterReEnterPassword)
             return
         }
         
         if newPassword.count < 6 {
-            completed(Constant.MESSAGE_INVALID_NEW_PASSWORD)
+            completed(L10n.invalidNewPassword)
             return
         }
         
         if newPassword != reEnterNewPassword {
-            completed(Constant.MESSAGE_COMPARE_FAILED)
+            completed(L10n.compareFailed)
             return
         }
         
@@ -110,7 +109,7 @@ class ValidateService {
         }.first?.id ?? ""
         
         if username.isEmpty {
-            completed(Constant.MESSAGE_USERNAME_IS_EMPTY, userId)
+            completed(L10n.enterUsername, userId)
             return
         }
         
@@ -121,6 +120,6 @@ class ValidateService {
             return
         }
         
-        completed(Constant.MESSAGE_INVALID_USERNAME, userId)
+        completed(L10n.invalidUsername, userId)
     }
 }

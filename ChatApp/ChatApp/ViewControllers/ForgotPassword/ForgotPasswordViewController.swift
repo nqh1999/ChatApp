@@ -17,7 +17,6 @@ final class ForgotPasswordViewController: BaseViewController {
     @IBOutlet private weak var resetPasswordButton: CustomButton!
     @IBOutlet private weak var messageView: MessageView!
     lazy private var presenter = ForgotPasswordPresenter(view: self)
-    private let disposeBag = DisposeBag()
     
     // MARK: - Lifecycle Methods
     override func viewDidLoad() {

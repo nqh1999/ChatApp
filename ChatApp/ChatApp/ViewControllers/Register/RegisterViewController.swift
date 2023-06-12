@@ -24,7 +24,6 @@ final class RegisterViewController: BaseViewController {
     private var imgPickerView = UIImagePickerController()
     
     lazy private var presenter = RegisterPresenter(view: self)
-    private let disposeBag = DisposeBag()
     
     // MARK: - Lifecycle Methods
     override func viewDidLoad() {
@@ -129,7 +128,7 @@ extension RegisterViewController: RegisterProtocol {
         if let result = result {
             self.messageView.showMessage(result)
         } else {
-            self.messageView.showMessage(Constant.MESSAGE_REGISTER_SUCCESS)
+            self.messageView.showMessage(L10n.registerSuccess)
             self.messageView.confirm = { [weak self] _ in
                 self?.navigationController?.popToRootViewController(animated: true)
             }

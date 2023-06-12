@@ -1,0 +1,2 @@
+${PODS_XCFRAMEWORKS_BUILD_DIR}/ZaloSDK/Core/ZaloSDKCoreKit.framework
+${PODS_XCFRAMEWORKS_BUILD_DIR}/ZaloSDK/Main/ZaloSDK.framework

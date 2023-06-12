@@ -1,0 +1,17 @@
+"enter_username"                = "Username can't be blank";
+"enter_password"                = "Password can't be blank";
+"enter_current_password"        = "Current password can't be blank";
+"enter_new_password"            = "New password can't be blank";
+"enter_re_enter_password"       = "Password re-enter can't be blank";
+"enter_name"                    = "Name can't be blank";
+"enter_image"                   = "Please choose your image";
+"invalid_username"              = "Invalid username";
+"invalid_password"              = "Invalid password";
+"invalid_new_password"          = "Invalid new password";
+"incorrect_current_password"    = "Current password incorrect";
+"compare_failed"                = "Re-entered password is incorrect";
+"username_is_exist"             = "Username already exists";
+"login_success"                 = "Login success";
+"login_failed"                  = "Login failed";
+"register_success"              = "Register success";
+"change_password_success"       = "Change password success";

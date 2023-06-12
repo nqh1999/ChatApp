@@ -20,7 +20,7 @@ extension String {
 extension UITableViewCell {
     
     func setTimestamp(epochTime: Double) -> String {
-        let currentDate = Date.now
+        let currentDate = Date()
         let epochDate = Date(timeIntervalSince1970: epochTime)
         let calendar = Calendar.current
         

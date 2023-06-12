@@ -19,7 +19,6 @@ final class ChangePasswordViewController: BaseViewController {
     @IBOutlet private weak var changePasswordButton: CustomButton!
     @IBOutlet private weak var cancelButton: UIButton!
     lazy private var presenter = ChangePasswordPresenter(view: self)
-    private let disposeBag = DisposeBag()
     
     // MARK: - Lifecycle Methods
     override func viewDidLoad() {
@@ -87,7 +86,7 @@ extension ChangePasswordViewController: ChangePasswordProtocol {
         if let result = result {
             self.messageView.showMessage(result)
         } else {
-            self.messageView.showMessage(Constant.MESSAGE_CHANGE_PASSWORD_SUCCESS)
+            self.messageView.showMessage(L10n.changePasswordSuccess)
             self.messageView.confirm = { [weak self] _ in
                 self?.navigationController?.popViewController(animated: true)
             }

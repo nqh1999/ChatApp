@@ -1,0 +1,18 @@
+strings:
+  inputs:
+    ChatApp/Resources/en.lproj/Localizable.strings
+  outputs:
+    - templateName: structured-swift5
+      output: ChatApp/Resources/Generated/Strings.swift
+xcassets:
+  - inputs:
+      - ChatApp/Resources/Assets.xcassets
+    outputs:
+      - templateName: swift4
+        output: ChatApp/Resources/Generated/Assets.swift
+#fonts:
+#  inputs:
+#    - MedicalRecords/Resources/Fonts
+#  outputs:
+#    - templateName: swift5
+#      output: MedicalRecords/Resources/Generated/Fonts.swift
