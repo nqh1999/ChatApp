@@ -38,7 +38,8 @@ final class ForgotPasswordViewController: BaseViewController {
     }
     
     // MARK: - Setup UI
-    private func setupUI() {
+    override func setupUI() {
+        super.setupUI()
         self.navigationController?.navigationBar.isHidden = true
         self.messageView.isHidden = true
         self.setupButton()

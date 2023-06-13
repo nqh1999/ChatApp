@@ -42,7 +42,8 @@ final class SettingViewController: BaseViewController {
     }
     
     // MARK: Setup UI
-    private func setupUI() {
+    override func setupUI() {
+        super.setupUI()
         self.imgView.layer.cornerRadius = self.imgView.frame.width / 2
         self.imgView.layer.borderWidth = 2
         self.imgView.layer.borderColor = UIColor.black.cgColor

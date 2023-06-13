@@ -50,7 +50,8 @@ final class RegisterViewController: BaseViewController {
     }
     
     // MARK: - setup UI
-    private func setupUI() {
+    override func setupUI() {
+        super.setupUI()
         self.navigationController?.navigationBar.isHidden = true
         self.avt.layer.borderWidth = 1
         self.avt.layer.borderColor = UIColor.white.cgColor

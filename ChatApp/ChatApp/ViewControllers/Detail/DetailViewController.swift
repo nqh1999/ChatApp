@@ -144,7 +144,8 @@ final class DetailViewController: BaseViewController {
     }
     
     // MARK: Setup UI
-    private func setupUI() {
+    override func setupUI() {
+        super.setupUI()
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapToView)))
         self.spinner.isHidden = true
         self.messageView.isHidden = true
@@ -173,7 +174,7 @@ final class DetailViewController: BaseViewController {
     }
     
     // MARK: Setup Table View
-    private func setupTableView() {
+    override func setupTableView() {
         self.tableView.register(UINib(nibName: "MessageCell", bundle: .main), forCellReuseIdentifier: "messageCell")
         self.tableView.register(UINib(nibName: "ImgCell", bundle: .main), forCellReuseIdentifier: "imgCell")
         self.tableView.delegate = self
@@ -229,7 +230,7 @@ extension DetailViewController: UITableViewDelegate {
 
 extension DetailViewController: DetailProtocol {
     func didGetFetchUserResult(_ user: User) {
-        self.setTitleView(user)
+        self.titleView.setTitleView(with: user)
     }
     
     func didGetFetchMessageResult(_ messages: RxRelay.BehaviorRelay<[Message]>, _ sender: User?) {

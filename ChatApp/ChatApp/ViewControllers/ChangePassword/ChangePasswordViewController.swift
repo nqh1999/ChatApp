@@ -32,7 +32,8 @@ final class ChangePasswordViewController: BaseViewController {
     }
     
     // MARK: - UI Handler Methods
-    private func setupUI() {
+    override func setupUI() {
+        super.setupUI()
         self.navigationItem.titleView = nil
         self.title = "Change Password"
         self.setBackButton()

@@ -40,7 +40,8 @@ final class ListViewController: BaseViewController {
     }
     
     // MARK: - Setup UI
-    private func setupUI() {
+    override func setupUI() {
+        super.setupUI()
         self.setupTableView()
         self.setupSearchBar()
         self.navigationItem.titleView = nil
@@ -48,7 +49,7 @@ final class ListViewController: BaseViewController {
     }
     
     // MARK: Setup Table View
-    private func setupTableView() {
+    override func setupTableView() {
         self.tableView.register(UINib(nibName: "ListTableViewCell", bundle: .main), forCellReuseIdentifier: "cell")
         self.tableView.separatorStyle = .none
         self.tableView.showsVerticalScrollIndicator = false

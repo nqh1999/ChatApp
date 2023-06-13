@@ -8,6 +8,8 @@
 import Foundation
 
 struct Constant {
+    static let defaultEmail = "1@1.com"
+    static let defaultPassword = "123456"
     static let EXT_INFO = ["appVersion": "1.0.0"]
     static let ZALO_APP_ID = "997497054471494660"
     
